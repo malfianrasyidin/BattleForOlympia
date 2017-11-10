@@ -2,7 +2,7 @@
 Tugas Besar Algoritma dan Struktur Data
 
 **MODULE COMMAND**
-\n
+<br/>
 <code>func move()</code>
 
 
