@@ -3,7 +3,7 @@ Tugas Besar Algoritma dan Struktur Data
 
 **MODULE COMMAND**
 <br/>
-<code>#include <ALL ADT> </code>
+<code>#include ALL ADT </code>
 <br/>
 <code>func move()</code>
 <br/>
