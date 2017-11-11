@@ -54,13 +54,27 @@ ElType GetElmtDiagonal (MatriksMap M, indeks i){
 void PrintMap(MatriksMap M){
 /*Memprint Peta M ke Layar*/
 	for (int i = 1 ; i <= NBrsEff(M) ; i++){
+		printf("#");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("______\n");
-			printf("| %c |\n", Building(Elmt(M,i,j)));
-			printf("| %c |\n", UnitIn(Elmt(M,i,j)));
-			printf("|    |\n");
-			printf("______\n");
+			printf("______");
 		}
+		printf("#\n#");
+		for (int j = 1 ; j <= NKolEff(M) ; j++){
+			printf("| %c |", Building(Elmt(M,i,j)));
+		}
+		printf("#\n#");
+		for (int j = 1 ; j <= NKolEff(M) ; j++){
+			printf("| %c |", UnitIn(Elmt(M,i,j)));
+		}
+		printf("#\n#");
+		for (int j = 1 ; j <= NKolEff(M) ; j++){
+			printf("|    |");
+		}
+		printf("#\n#");
+		for (int j = 1 ; j <= NKolEff(M) ; j++){
+			printf("______");
+		}
+		printf("#\n");
 	}
 }
 
@@ -71,19 +85,29 @@ MatriksMap MatGen(indeks NB, indeks NK){
 	MakeMATRIKS(NB,NK, &M);
 	int SB = NB/2;
 	Building(Elmt(M,SB,2)) = 'T';
+	Owner(Elmt(M,SB,2)) = 1;
 	Building(Elmt(M,SB,1)) = 'C';
+	Owner(Elmt(M,SB,2)) = 1;
 	Building(Elmt(M,SB,3)) = 'C';
+	Owner(Elmt(M,SB,3)) = 1;
 	Building(Elmt(M,SB + 1, 2)) = 'C';
+	Owner(Elmt(M,SB + 1,2)) = 1;
 	Building(Elmt(M,SB - 1, 2)) = 'C';
+	Owner(Elmt(M,SB - 1, 2)) = 1;
 	Building(Elmt(M,SB,NK - 1)) = 'T';
+	Owner(Elmt(M,SB,NK - 1)) = 2;
 	Building(Elmt(M,SB,NK)) = 'C';
+	Owner(Elmt(M,SB,NK)) = 2;
 	Building(Elmt(M,SB,NK + 1)) = 'C';
+	Owner(Elmt(M,SB,NK + 1)) = 2;
 	Building(Elmt(M,SB + 1, NK)) = 'C';
+	Owner(Elmt(M,SB + 1, NK)) = 2;
 	Building(Elmt(M,SB - 1, NK)) = 'C';
+	Owner(Elmt(M,SB - 1, NK)) = 2;
 	for (int i = 1 ; i <= NBrsEff(M) ; i++){
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
 			if (Building(Elmt(M,i,j)) != ' '){
-				R = rand() % 4;
+				R = (unsigned) rand() % 4;
 				if(R == 0){
 					Building(Elmt(M,i,j)) = 'V';
 				}
@@ -95,5 +119,4 @@ MatriksMap MatGen(indeks NB, indeks NK){
 	}
 	return(M);
 }
-
 
