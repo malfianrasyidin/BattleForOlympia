@@ -46,10 +46,13 @@ typedef struct{
 #define Tipe(U) (U).KarType
 #define MP(U) (U).CurrMP
 #define Owner(U) (U).POwner
-#define MaxHP(U) (U).MaxHP
-#define MaxMP(U) (U).MaxMP
+#define MaxHP(U) (U).MaximumHP
+#define MaxMP(U) (U).MaximumMP
 #define TabAttack (U).TAttack
 #define Attack(U,i) (U).TAttack[i-1]
+
+//FUNGSI NULLITAS
+Unit NullUnit ();
 
 //FUNGSI LOCATION
 boolean IsNormal (Location L);
@@ -57,9 +60,6 @@ boolean IsNormal (Location L);
 
 boolean IsUnitIn (Location L);
 //Mengembalikan true jika ada unit di L dan false jika tidak
-
-boolean IsMoveValid (Unit U, POINT P);
-//Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
 
 //FUNGSI FUNGSI UNIT
 boolean IsUnitAdjacent (Unit U1, Unit U2);

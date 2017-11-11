@@ -1,6 +1,21 @@
-#include "MatMap.h"
 #include "unit.h"
+#include "MatriksMap.h"
+#include "point.h"
 #include "boolean.h"
+
+//FUNGSI NULLITAS
+Unit NullUnit(){
+	Unit U;
+	Absis(Locate(U)) = 0;
+	Ordinat(Locate(U)) = 0;
+	MaxHP(U) = 0;
+	MaxMP(U) = 0;
+	HP(U) = 0;
+	MP(U) = 0;
+	Owner(U) = 0;
+	Tipe(U) = ' ';
+	return(U);
+}
 
 //FUNGSI LOCATION
 boolean IsNormal (Location L){
@@ -11,37 +26,6 @@ boolean IsNormal (Location L){
 boolean IsUnitIn (Location L){
 //Mengembalikan true jika ada unit di L dan false jika tidak
 	return(UnitIn(L) == ' ');
-}
-
-boolean IsMoveValid (Unit U, POINT P){
-//Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
-	if (MP(U) == 0){
-		return(false);
-	}
-	else if (!PointInMap){
-		return(false);
-	}
-	else{
-		int M = MP(U);
-		POINT PointU = Locate(U);
-		while (Absis(PointU) > Absis(P)){
-			Absis(PointU)++;
-			M--;
-		}
-		while (Absis(PointU) < Absis(P)){
-			Absis(PointU)--;
-			M--;
-		}
-		while (Ordinat(PointU) > Ordinat(P)){
-			Ordinat(PointU)++;
-			M--;
-		}
-		while (!(Ordinat(PointU) < Ordinat(P)){
-			Ordinat(PointU)--;
-			M--;
-		}
-		return(M != 0);
-	}
 }
 
 //FUNGSI FUNGSI UNIT
