@@ -1,6 +1,14 @@
 # BattleForOlympia
 Tugas Besar Algoritma dan Struktur Data<br/>
-Semester 1 Tahun 2017/2018
+Semester 1 Tahun 2017/2018<br/>
+
+> **LINK PENTING:**<br/>
+Pedoman Tugas Besar<br/>
+https://olympia.id/pluginfile.php/70458/mod_resource/content/1/IF2110_PedomanTB_sem11718.pdf<br/>
+Spesifikasi Tugas Besar<br/>
+https://olympia.id/pluginfile.php/68313/mod_resource/content/1/IF2110_SpesifikasiTB_sem1_1718.pdf<br/>
+Forum Tanya Jawab Tugas Besar<br/>
+https://docs.google.com/spreadsheets/d/11jaW6ppxqdL87yGen9YjgA3Rt6bkSvPB5eC-ww4n6rs<br/>
 
 **MODULE COMMAND**<br/>
 <code>#include ALL ADT </code><br/>
@@ -14,11 +22,3 @@ Semester 1 Tahun 2017/2018
 <code>func end_turn()</code><br/>
 <code>func save()</code><br/>
 <code>func exit()</code><br/>
-
-**LINK PENTING:**<br/>
-Pedoman Tugas Besar<br/>
-https://olympia.id/pluginfile.php/70458/mod_resource/content/1/IF2110_PedomanTB_sem11718.pdf<br/>
-Spesifikasi Tugas Besar<br/>
-https://olympia.id/pluginfile.php/68313/mod_resource/content/1/IF2110_SpesifikasiTB_sem1_1718.pdf<br/>
-Forum Tanya Jawab Tugas Besar<br/>
-https://docs.google.com/spreadsheets/d/11jaW6ppxqdL87yGen9YjgA3Rt6bkSvPB5eC-ww4n6rs<br/>
