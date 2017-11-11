@@ -15,7 +15,7 @@ Semester 1 Tahun 2017/2018
 <code>func save()</code><br/>
 <code>func exit()</code><br/>
 
-LINK PENTING:
+LINK PENTING:<br/>
 Pedoman Tugas Besar<br/>
 https://olympia.id/pluginfile.php/70458/mod_resource/content/1/IF2110_PedomanTB_sem11718.pdf<br/>
 Spesifikasi Tugas Besar<br/>
