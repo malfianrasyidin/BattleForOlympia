@@ -24,3 +24,11 @@ Tugas Besar Algoritma dan Struktur Data
 <code>func save()</code>
 <br/>
 <code>func exit()</code>
+
+LINK PENTING:
+Pedoman Tugas Besar
+https://olympia.id/pluginfile.php/70458/mod_resource/content/1/IF2110_PedomanTB_sem11718.pdf
+Spesifikasi Tugas Besar
+https://olympia.id/pluginfile.php/68313/mod_resource/content/1/IF2110_SpesifikasiTB_sem1_1718.pdf
+Forum Tanya Jawab Tugas Besar
+https://docs.google.com/spreadsheets/d/11jaW6ppxqdL87yGen9YjgA3Rt6bkSvPB5eC-ww4n6rs/edit#gid=0
