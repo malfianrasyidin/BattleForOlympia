@@ -1,7 +1,6 @@
-/* ********** Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
-
-#ifndef MATRIKS_H
-#define MATRIKS_H
+ /* ********** Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
+#ifndef MATRIKSMAP_H
+#define MATRIKSMAP_H
 
 #include "boolean.h"
 #include "unit.h"
@@ -13,15 +12,34 @@
 #define KolMax 100
 
 typedef int indeks; /* indeks baris, kolom */
+
+typedef struct {
+	int Owner;
+	char* Tipe;
+} Build;
+
+typedef struct{
+	POINT Loc;
+	int POwner;
+	Build Building;
+	Unit Res;
+} Location;
+
 typedef Location ElType; 
+
 typedef struct { 
 	ElType Mem[BrsMax+1][KolMax+1];
-    int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
+  int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } MatriksMap;
 /* NBrsEff <= 1 dan NKolEff <= 1 */
 /* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
+
+/* *** Selektor *** */
+#define NBrsEff(M) (M).NBrsEff
+#define NKolEff(M) (M).NKolEff
+#define Elmt(M,i,j) (M).Mem[(i)][(j)]
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membentuk MATRIKS *** */
@@ -29,11 +47,6 @@ void MakeMATRIKS (int NB, int NK, MatriksMap * M);
 /* Membentuk sebuah MATRIKS "kosong" yang siap diisi berukuran NB x NK di "ujung kiri" memori */
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
-
-/* *** Selektor *** */
-#define NBrsEff(M) (M).NBrsEff
-#define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxInMap (int i, int j);
@@ -53,6 +66,12 @@ boolean IsIdxEff (MatriksMap M, indeks i, indeks j);
 ElType GetElmtDiagonal (MatriksMap M, indeks i);
 /* Mengirimkan elemen M(i,i) */
 
+//FUNGSI LOKASI
+boolean IsUnitIn (POINT P, MatriksMap M);
+//Mengembalikan true jika ada unit di L dan false jika tidak
+
+Unit getUnit(POINT P, MatriksMap M);
+//Mengembalikan unit yang berada di titik P.
 
 /* ********** Operasi lain ********** */
 void PrintMap(MatriksMap M);

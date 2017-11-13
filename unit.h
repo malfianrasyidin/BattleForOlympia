@@ -2,30 +2,21 @@
 #define _UNIT_H
 
 #include "point.h"
-//TIPE DATA LOCATION
-//		Menunjukkan 
 
-const int BaseMaxHPArcher = 70;
-const int BaseMaxHPWarrior = 90;
-const int BaseMaxHPMage = 120;
-const int BaseMaxHPKing = 200;
+// const int BaseMaxHPArcher = 70;
+// const int BaseMaxHPWarrior = 90;
+// const int BaseMaxHPMage = 120;
+// const int BaseMaxHPKing = 200;
 
-const int BaseMaxMPArcher = 100;
-const int BaseMaxMPWarrior = 80;
-const int BaseMaxMPMage = 150;
-const int BaseMaxMPKing = 210;
-
-typedef struct{
-	POINT Loc;
-	int POwner;
-	char Build;
-	char Res;
-} Location;
+// const int BaseMaxMPArcher = 100;
+// const int BaseMaxMPWarrior = 80;
+// const int BaseMaxMPMage = 150;
+// const int BaseMaxMPKing = 210;
 
 typedef struct{
 	char* Name;
 	int Dmg;
-	char Type;
+	char* Type;
 } Atk;
 
 typedef struct{
@@ -36,11 +27,9 @@ typedef struct{
 	int MaximumMP;
 	int CurrMP;
 	int POwner;
-	char KarType;
+	char* KarType;
 } Unit;
 
-#define UnitIn(U) (U).Res
-#define Building(U) (U).Build
 #define Locate(U) (U).Loc
 #define HP(U) (U).CurrHP
 #define Tipe(U) (U).KarType
@@ -54,14 +43,16 @@ typedef struct{
 //FUNGSI NULLITAS
 Unit NullUnit ();
 
-//FUNGSI LOCATION
-boolean IsNormal (Location L);
-//Mengembalikan true jika L merupakan Lokasi Normal, false jika tidak
-
-boolean IsUnitIn (Location L);
-//Mengembalikan true jika ada unit di L dan false jika tidak
-
 //FUNGSI FUNGSI UNIT
+int Distance(POINT U1, POINT U2);
+//Mengembalikan jarak antara karakter 1 dan 2.
+
+boolean IsUnitAdjacent (Unit U1, Unit U2);
+//Mengeluarkan True Jika U1 dan U2 Adjacent atau beda sepetak dengan U2.
+
+boolean IsTopPresent(Unit U);
+//Mengembalikan True jika terdapat unit di 
+
 boolean IsUnitAdjacent (Unit U1, Unit U2);
 //Mengeluarkan True Jika U1 dan U2 Adjacent atau beda sepetak dengan U2.
 
@@ -73,8 +64,5 @@ void AttackU (Unit U1, Unit U2, Atk A);
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
-
-
-
 
 #endif
