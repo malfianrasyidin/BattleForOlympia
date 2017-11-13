@@ -2,22 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "boolean.h"
-
-/* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
-/* *** Konstruktor membentuk MATRIKS *** */
-// void MakeMATRIKS (int NB, int NK, MatriksMap * M){
-// /* Membentuk sebuah MATRIKS "kosong" yang siap diisi berukuran NB x NK di "ujung kiri" memori */
-// /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
-// F.S. Matriks M sesuai dengan definisi di atas terbentuk 
-// 	NBrsEff(*M) = NB;
-// 	NKolEff(*M) = NK;
-// 	for (int i = 1; i <= NB; i++){
-// 		for (int j = 1; j <=NK ; j++){
-// 			Elmt(*M,i,j).Building = NullBuilding();
-// 			Elmt(*M,i,j).Res = NullUnit();
-// 		}
-// 	}
-// }
+#include "unit.h"
 
 //FUNGSI NULLITAS
 Build NullBuilding(){
@@ -26,6 +11,24 @@ Build NullBuilding(){
 	B.Tipe = " ";
 	return (B);
 }
+
+/* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
+
+/* *** Konstruktor membentuk MATRIKS *** */
+void MakeMATRIKS (int NB, int NK, MatriksMap * M){
+/* Membentuk sebuah MATRIKS "kosong" yang siap diisi berukuran NB x NK di "ujung kiri" memori */
+/* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
+/* F.S. Matriks M sesuai dengan definisi di atas terbentuk  */
+	NBrsEff(*M) = NB;
+	NKolEff(*M) = NK;
+	for (int i = 1; i <= NB; i++){
+		for (int j = 1; j <=NK ; j++){
+			Elmt(*M,i,j).Building = NullBuilding();
+			Elmt(*M,i,j).Res = NullUnit();
+		}
+	}
+}
+
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxValid (int i, int j){

@@ -19,8 +19,6 @@ typedef struct {
 } Build;
 
 typedef struct{
-	POINT Loc;
-	int POwner;
 	Build Building;
 	Unit Res;
 } Location;
