@@ -1,6 +1,8 @@
+#include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
 #include "unit.h"
+#include "stackt.h"
 
 boolean PointInMap (POINT P, MatriksMap M);
 /* I.S Sembarang
