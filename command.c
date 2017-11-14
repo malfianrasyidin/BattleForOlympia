@@ -15,25 +15,11 @@ boolean IsMoveValid(Unit U, POINT P, MatriksMap M){
 	else if (!PointInMap(P,M)){
 		return(false);
 	}
+	else if (IsUnitIn(P)){
+		return(false);
+	}
 	else{
-		int M = MP(U);
-		POINT PointU = Locate(U);
-		while (Absis(PointU) > Absis(P)){
-			Absis(PointU)++;
-			M--;
-		}
-		while (Absis(PointU) < Absis(P)){
-			Absis(PointU)--;
-			M--;
-		}
-		while (Ordinat(PointU) > Ordinat(P)){
-			Ordinat(PointU)++;
-			M--;
-		}
-		while (Ordinat(PointU) < Ordinat(P)){
-			Ordinat(PointU)--;
-			M--;
-		}
-		return(M != 0);
+		if ((MP(U)-Distance(Locate(U), P))>=0) return true;
+		else return false;
 	}
 }
