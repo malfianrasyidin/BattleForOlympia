@@ -52,7 +52,7 @@ void CreateEmpty (List *L);
 /* F.S. Terbentuk list kosong. Lihat definisi di atas. */
 
 /****************** Manajemen Memori ******************/
-address Alokasi (POINT X);
+address Alokasi (infotype X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil. */
 /* Misalnya: menghasilkan P, maka Info(P)=X, Next(P)=Nil, Prev(P)=Nil */
