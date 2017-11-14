@@ -15,7 +15,7 @@ boolean IsMoveValid(Unit U, POINT P, MatriksMap M){
 	else if (!PointInMap(P,M)){
 		return(false);
 	}
-	else if (IsUnitIn(P)){
+	else if (IsUnitIn(P, M)){
 		return(false);
 	}
 	else{
