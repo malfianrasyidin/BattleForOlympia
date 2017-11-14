@@ -89,5 +89,6 @@ MatriksMap MatGen(indeks NB, indeks NK);
 int NBElmt (MatriksMap M);
 /* Mengirimkan banyaknya elemen M */
 
+
 #endif
 
