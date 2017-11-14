@@ -15,8 +15,8 @@
 
 /* Definisi Type Data */
 typedef POINT infotype;
-typedef struct tElmtlistVillage *address;
-typedef struct tElmtlistVillage
+typedef struct tElmtlist *address;
+typedef struct tElmtlist
 {
 	infotype info;
 	address next;
