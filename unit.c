@@ -18,6 +18,44 @@ Unit NullUnit(){
 	return(U);
 }
 
+Unit InitArcher(POINT P,int Owner)
+//F.S : King dengan state awal
+{
+	Unit U;
+	return U;
+}
+
+Unit InitWarrior(POINT P,int Owner)
+//F.S : King dengan state awal
+{
+	Unit U;
+	return U;
+}
+
+Unit InitMage(POINT P,int Owner)
+//F.S : King dengan state awal
+{
+	Unit U;
+	return U;
+}
+
+Unit InitKing(POINT P,int Owner)
+//F.S : King dengan state awal
+{
+	Unit U;
+	Locate(U)=P;
+	MaxHP(U)=BaseMaxHPKing;
+	HP(U)=BaseMaxHPKing;
+	MaxMP(U)=BaseMaxMPKing;
+	MP(U)=BaseMaxMPKing;
+	Owner(U)=Owner;
+	Tipe(U)="King";
+	Attack(U,1).Name="Sword";
+	Attack(U,1).Dmg=50;
+	Attack(U,1).Type="Melee";
+	return U;
+}
+
 //FUNGSI FUNGSI UNIT
 int Distance(POINT P1, POINT P2){
 //Mengembalikan jarak antara titik P1 dan P2.
