@@ -4,7 +4,6 @@
 #include "boolean.h"
 #include "unit.h"
 #include "point.h"
-
 //FUNGSI NULLITAS
 Build NullBuilding(){
 	Build B;
