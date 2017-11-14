@@ -3,15 +3,16 @@
 
 #include "point.h"
 
-// const int BaseMaxHPArcher = 70;
-// const int BaseMaxHPWarrior = 90;
-// const int BaseMaxHPMage = 120;
-// const int BaseMaxHPKing = 200;
 
-// const int BaseMaxMPArcher = 100;
-// const int BaseMaxMPWarrior = 80;
-// const int BaseMaxMPMage = 150;
-// const int BaseMaxMPKing = 210;
+#define BaseMaxHPArcher 70
+#define BaseMaxHPWarrior 90
+#define BaseMaxHPMage 120
+#define BaseMaxHPKing 200
+
+#define BaseMaxMPArcher 100
+#define BaseMaxMPWarrior 80
+#define BaseMaxMPMage 150
+#define BaseMaxMPKing 210
 
 typedef struct{
 	char* Name;
@@ -42,6 +43,19 @@ typedef struct{
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
+
+///Initial Status of Unit///
+Unit InitArcher(POINT P, int Owner);
+//F.S : King dengan state awal
+
+Unit InitWarrior(POINT P, int Owner);
+//F.S : King dengan state awal
+
+Unit InitMage(POINT P, int Owner);
+//F.S : King dengan state awal
+
+Unit InitKing(POINT P, int Owner);
+//F.S : King dengan state awal
 
 //FUNGSI FUNGSI UNIT
 int Distance(POINT U1, POINT U2);
