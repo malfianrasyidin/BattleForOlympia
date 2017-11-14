@@ -1,9 +1,10 @@
- /* ********** Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
+ /* ***s******* Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
 #ifndef MATRIKSMAP_H
 #define MATRIKSMAP_H
 
 #include "boolean.h"
 #include "unit.h"
+#include "point.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
@@ -38,6 +39,10 @@ typedef struct {
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
 #define Elmt(M,i,j) (M).Mem[(i)][(j)]
+#define BuildIn(L) (L).Building
+#define UnitIn(L) (L).Res
+
+
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membentuk MATRIKS *** */
@@ -70,6 +75,9 @@ boolean IsUnitIn (POINT P, MatriksMap M);
 
 Unit getUnit(POINT P, MatriksMap M);
 //Mengembalikan unit yang berada di titik P.
+
+Build getBuild(POINT P, MatriksMap M);
+//Mengembalikan build yang berada di titik P.
 
 /* ********** Operasi lain ********** */
 void PrintMap(MatriksMap M);

@@ -2,25 +2,27 @@
 #define _UNIT_H
 
 #include "point.h"
+#include "boolean.h"
 
-// const int BaseMaxHPArcher = 70;
-// const int BaseMaxHPWarrior = 90;
-// const int BaseMaxHPMage = 120;
-// const int BaseMaxHPKing = 200;
 
-// const int BaseMaxMPArcher = 100;
-// const int BaseMaxMPWarrior = 80;
-// const int BaseMaxMPMage = 150;
-// const int BaseMaxMPKing = 210;
+#define BaseMaxHPArcher 70
+#define BaseMaxHPWarrior 90
+#define BaseMaxHPMage 120
+#define BaseMaxHPKing 200
+
+#define BaseMaxMPArcher 100
+#define BaseMaxMPWarrior 80
+#define BaseMaxMPMage 150
+#define BaseMaxMPKing 210
 
 typedef struct{
-	char* Name;
 	int Dmg;
 	char* Type;
 } Atk;
 
 typedef struct{
 	Atk TAttack[5];
+	boolean CanAtk;
 	POINT Loc;
 	int MaximumHP;
 	int CurrHP;
@@ -28,6 +30,7 @@ typedef struct{
 	int CurrMP;
 	int POwner;
 	char* KarType;
+	int price;
 } Unit;
 
 #define Locate(U) (U).Loc
@@ -39,30 +42,47 @@ typedef struct{
 #define MaxMP(U) (U).MaximumMP
 #define TabAttack (U).TAttack
 #define Attack(U,i) (U).TAttack[i-1]
+#define CanAtk(U)	(U).CanAtk
+#define Price(U)	(U).price
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
+
+///Initial Status of Unit///
+Unit InitArcher(POINT P, int Owner);
+//F.S : King dengan state awal
+
+Unit InitWarrior(POINT P, int Owner);
+//F.S : King dengan state awal
+
+Unit InitMage(POINT P, int Owner);
+//F.S : King dengan state awal
+
+Unit InitKing(POINT P, int Owner);
+//F.S : King dengan state awal
 
 //FUNGSI FUNGSI UNIT
 int Distance(POINT U1, POINT U2);
 //Mengembalikan jarak antara karakter 1 dan 2.
 
-boolean IsUnitAdjacent (Unit U1, Unit U2);
+boolean IsAdjacent (POINT P1, POINT P2);
 //Mengeluarkan True Jika U1 dan U2 Adjacent atau beda sepetak dengan U2.
 
-boolean IsTopPresent(Unit U);
-//Mengembalikan True jika terdapat unit di 
-
-boolean IsUnitAdjacent (Unit U1, Unit U2);
-//Mengeluarkan True Jika U1 dan U2 Adjacent atau beda sepetak dengan U2.
-
-Unit MakeUnit (int Owner, char Type, POINT Loc);
-//Membuat Unit Baru dengan Owner, Type, dan Location yang dispesifikkan
+boolean IsEnemy(Unit U1, Unit U2);
+//I.S:U1 && U2 tidak null
+//Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
 
 void AttackU (Unit U1, Unit U2, Atk A);
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
+
+void PrintInfoUnit (Unit U);
+/* mengeluarkan info unit standar seperti dibawah ini
+Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
+
+boolean CmpUnit (Unit U1, Unit U2);
+//True jika U1==U2
 
 #endif
