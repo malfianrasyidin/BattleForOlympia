@@ -1,4 +1,4 @@
- /* ***s******* Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
+ /* *********** Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
 #ifndef MATRIKSMAP_H
 #define MATRIKSMAP_H
 

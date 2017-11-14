@@ -9,21 +9,25 @@
 #include "boolean.h"
 #include "unit.h"
 #include "MatriksMap.h"
+#include "point.h"
 
 #define Nil NULL
 
 /* Definisi Type Data */
-typedef Unit infotype;
-typedef struct tElmtlist *address;
-typedef struct tElmtlist { 
+typedef POINT infotype;
+typedef struct tElmtlistVillage *address;
+typedef struct tElmtlistVillage
+{
 	infotype info;
 	address next;
 	address prev;
 } ElmtList;
-typedef struct {
+typedef struct
+{
 	address First;
 	address Last;
 } List;
+
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil dan Last(L) = Nil */
@@ -48,7 +52,7 @@ void CreateEmpty (List *L);
 /* F.S. Terbentuk list kosong. Lihat definisi di atas. */
 
 /****************** Manajemen Memori ******************/
-address Alokasi (infotype X);
+address Alokasi (POINT X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil. */
 /* Misalnya: menghasilkan P, maka Info(P)=X, Next(P)=Nil, Prev(P)=Nil */
