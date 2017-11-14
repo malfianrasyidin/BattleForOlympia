@@ -3,6 +3,7 @@
 #include "MatriksMap.h"
 #include "unit.h"
 #include <stdio.h>
+#include "stackt.h"
 
 /* ############################## */
 /* ########### MOVE ############# */
@@ -26,6 +27,7 @@ boolean IsMoveValid(Unit U, POINT P, MatriksMap M){
 		else return false;
 	}
 }
+
 MatriksMap PossibleMove (Unit U, MatriksMap M)
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 {
@@ -76,4 +78,22 @@ void MainMove(Stack *S, Unit *U, MatriksMap *M)
 	printf("You have successfully moved to (%d, %d)\n", Absis(P), Ordinat(P));
 	//push P
 	History(S,P);
+}
+
+void Undo (Stack *History, Unit *U) {
+//Mengembalikan current unit ke posisi sebelumya dan menambah movement points jika ada.
+	POINT P;
+
+	if (IsEmpty(*History)){
+		printf("You don't have any movement history");
+	} else {
+		Pop(History, &P);
+		Absis(Locate(*U)) = Absis(P);
+		Ordinat(Locate(*U)) =  Ordinat(P);
+	}
+}
+
+void History(Stack *S, POINT P){
+//Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
+	Push(S, P);
 }
