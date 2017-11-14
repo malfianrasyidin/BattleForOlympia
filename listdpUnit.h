@@ -9,21 +9,25 @@
 #include "boolean.h"
 #include "unit.h"
 #include "MatriksMap.h"
+#include "point.h"
 
 #define Nil NULL
 
 /* Definisi Type Data */
-typedef Unit infotype;
+typedef POINT infotype;
 typedef struct tElmtlist *address;
-typedef struct tElmtlist { 
+typedef struct tElmtlist
+{
 	infotype info;
 	address next;
 	address prev;
 } ElmtList;
-typedef struct {
+typedef struct
+{
 	address First;
 	address Last;
 } List;
+
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil dan Last(L) = Nil */

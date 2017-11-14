@@ -16,20 +16,17 @@
 #define BaseMaxMPKing 210
 
 typedef struct{
-	int Dmg;
-	char* Type;
-} Atk;
-
-typedef struct{
-	Atk TAttack[5];
+	int DamagePoints;
+	char AttackType;
+	int HealPoints;
 	boolean CanAtk;
 	POINT Loc;
 	int MaximumHP;
 	int CurrHP;
 	int MaximumMP;
 	int CurrMP;
-	int POwner;
-	char* KarType;
+	int UnitOwner;
+	char UnitType;
 	int price;
 } Unit;
 
