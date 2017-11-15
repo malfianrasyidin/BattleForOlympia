@@ -11,7 +11,7 @@ void Alokasi (address *P, infotype X){
 	*P = (address) malloc(sizeof(ElmtQueue));
 	if (*P != Nil){
 		Info(*P) = X;
-		Next(*P) = Nil;
+		Next(*P) = *P;
 	}
 	else {
 		*P = Nil;
@@ -22,19 +22,31 @@ void Dealokasi (address  P){
 /* F.S. Alamat P didealokasi, dikembalikan ke sistem */
 	free(P);
 }
-boolean IsEmpty (Queue Q){
+boolean IsEmptyQ (Queue Q){
 /* Mengirim true jika Q kosong: HEAD(Q)=Nil and TAIL(Q)=Nil */
 	return(Head(Q) == Nil);
 }
+
+boolean IsOneElmtQ(Queue Q){
+/* Mengirim True jika Q hanya memiliki 1 elemen*/
+	return(Head(Q) == Tail(Q));
+}
+
 int NbElmt(Queue Q){
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong */
 	address P = Head(Q);
-	int count = 0;
-	while(P){
-		count++;
-		P = Next(P);
+	if (!P){
+		return(0);
 	}
+	else{
+		int count = 1;
+		P = Next(P);
+		while(P != Head(Q)){
+			count++;
+			P = Next(P);
+		}
 	return(count);
+	}
 }
 /*** Kreator ***/
 void CreateEmpty(Queue * Q){
@@ -52,11 +64,12 @@ void Add (Queue * Q, infotype X){
 /* F.S. X menjadi TAIL, TAIL "maju" */
 	address P;
 	Alokasi(&P,X);
-	if(IsEmpty(*Q)){
+	if(IsEmptyQ(*Q)){
 		Head(*Q) = P;
 		Tail(*Q) = P;
 	}
 	else {
+		Next(P) = Head(*Q);
 		Next(Tail(*Q)) = P;
 		Tail(*Q) = P;
 	}
@@ -74,8 +87,15 @@ void Del(Queue * Q, infotype * X){
 	}
 	else {
 		Head(*Q) = Next(P);
-		Next(P) = Nil;
+		Next(Tail(*Q)) = Head(*Q);
+		Next(P) = P;
 	}
 	*X = Info(P);
 	Dealokasi(P);
+}
+void RoundP(Queue *Q){
+	/*Proses : Memindahkan Nilai Tail Queue ke Head Queue dan Head Queue ke 
+	  Elemen setelahnya. */
+	Tail(*Q) =  Head(*Q);
+	Head(*Q) =  Next(Head(*Q));
 }

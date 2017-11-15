@@ -15,6 +15,10 @@
 #define BaseMaxMPMage 150
 #define BaseMaxMPKing 210
 
+#define PriceWarrior 120
+#define PriceArcher  150
+#define PriceMage    200
+
 typedef struct{
 	int DamagePoints;
 	char AttackType;
@@ -27,20 +31,19 @@ typedef struct{
 	int CurrMP;
 	int UnitOwner;
 	char UnitType;
-	int price;
 } Unit;
 
 #define Locate(U) (U).Loc
 #define HP(U) (U).CurrHP
-#define Tipe(U) (U).KarType
+#define Tipe(U) (U).UnitType
 #define MP(U) (U).CurrMP
 #define Owner(U) (U).POwner
 #define MaxHP(U) (U).MaximumHP
 #define MaxMP(U) (U).MaximumMP
-#define TabAttack (U).TAttack
-#define Attack(U,i) (U).TAttack[i-1]
+#define AtkType (U).AttackType
 #define CanAtk(U)	(U).CanAtk
-#define Price(U)	(U).price
+#define Damage(U)   (U).DamagePoints
+#define Heal(U)		(U).HealPoints
 
 //FUNGSI NULLITAS
 Unit NullUnit ();

@@ -97,3 +97,148 @@ void History(Stack *S, POINT P){
 //Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
 	Push(S, P);
 }
+
+
+// CHANGE & RECRUIT UNIT
+Queue MakeUnitQueue (List L){
+/*Mengembaikan Queue yang berisi semua unit pada L */
+	Queue Q;
+	addressQ P = First(L);
+	while(P){
+		Add(&Q,Info(P));
+		P = Next(P);
+	}
+}
+
+void NextUnitQ (Queue *Q, Unit *U, MatriksMap M){
+//I.S Q terdefinisi
+//F.S Mengembalikan Unit yang akan digunakan setelahnya
+	RoundP(&*Q);
+	P = Info(Head(*Q));
+	*U = UnitIn(Elmt(M,Absis(P),Ordinat(P)));
+}
+
+Unit SearchUnit(Queue Q, int x){
+//I.S Q terdefinisi, tidak mungkin kosong
+//F.S Mengembalikan Unit yang berada di urutan X pada Queue
+	P = Head(Q);
+	for (i = 1 ; i < x ; i++){
+		P = Next(P);
+	}
+}
+
+void ChangeCurrUnit(Queue *Q, MatriksMap M, Player *P){
+//I.S Q terdefinisi, U sembarang.
+//F.S Mengganti Current Unit yang diapakai player dengan unit selanjutnya pada Queue,  
+	Unit U;
+	NextUnitQ(&*Q, &U, M);
+	CurrentUnit(*P) = U;
+}
+
+void AddUnit (List *L, Queue *Q, Unit U){
+//I.S L dan U terdefinisi
+//F.S Mengembalikan L dan Q yang sudah ditambah elemennya dengan unit U.
+	POINT Ul = Locate(U);
+	Add(&*Q,Ul);
+	InsVLast(&*L,P);
+}
+
+void InfoRecruit(int *N){
+	printf("1. Warrior\n2. Archer\n3. Mage \n");
+	printf("Unit yang diinginkan : ");
+	scanf("%d", &*N);
+}
+
+void MakeNewUnit(int N, int Play ){
+	Unit U;
+	Owner(U) = Play
+	if (N == 1){
+		Tipe(U) = 'W';
+		MaxHP(U) = BaseMaxHPWarrior;
+		HP(U) = MaxHP(*U);
+		MaxMP(U) = BaseMaxMPMage;
+		MP(U) = MaxMP(U);
+		AtkType(U) = 'M';
+		Damage(U) = BaseDmgPointWarrior;
+		Heal(U)  = 0;
+		CanAtk(U) = true;
+	}
+	else if (N == 2){
+		Tipe(U) = 'A';
+		MaxHP(U) = BaseMaxHPArcher;
+		HP(U) = MaxHP(*U);
+		MaxMP(U) = BaseMaxMPArcher;
+		MP(U) = MaxMP(*U);
+		AtkType(U) = 'R';
+		Damage(U) = BaseDmgPointArcher;
+		Heal(U)  = 0;
+		CanAtk(U) = true;
+	}
+	else{
+		Tipe(U) = 'M';
+		MaxHP(U) = BaseMaxHPMage;
+		HP(U) = MaxHP(*U);
+		MaxMP(U) = BaseMaxMPMage;
+		MP(U) = MaxMP(*U);
+		AtkType(U) = 'R';
+		Damage(U) = BaseDmgPointMage;
+		Heal(U)  = BaseHealMage;
+		CanAtk(U) = true;
+	}
+}
+
+int EmptyTower(Player P, MatriksMap M){
+	int i;
+	boolean found = false;
+	while(!found && i <= 4){
+		found = UnitIn(M,Absis(PlayerTower(P,i)),Ordinat(PlayerTower(P,i))) != NullUnit();
+		if (!found){
+			i++;
+		}
+	}
+	if(found){
+		return(i);
+	}
+	else{
+		return(0);
+	}
+}
+
+void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M){
+//I.S Unit UR unit yang merecruit, L dan Q terdefinisi
+//F.S Mengembalikan Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
+	if (Tipe(CurrentUnit(P)) != 'K'){
+		printf("Unit yang dipakai Bukan King, Recruit Gagal.\n");
+	}
+	else if (Locate(CurrentUnit(P)) != PlayerCastle(P)){
+		printf("King Tidak di Castle, Recruit Gagal\n");
+	}
+	else {
+		printf("Pilih Unit yang Ingin di recruit\n");
+		int N, UPrice;
+		InfoRecruit(&N);
+		if (N == 1){
+			UPrice = PriceWarrior;
+		}
+		else if (N == 2){
+			UPrice = PriceArcher;
+		}
+		else{
+			UPrice = PriceMage;
+		}
+		int i = EmptyTower(P,M)
+		if (UPrice > PGold(P)){
+			printf("Anda tidak memiliki Gold yang Cukup\n");
+		}
+		else if (!i){
+			printf("Tidak Ada Tower yang kosong\n");
+		}
+		else{
+			printf("Recruit berhasil\n");
+			Unit U = MakeNewUnit(N,PlayNumber(P));
+			Locate(U) = PlayerTower(P,i);
+			Unit(Elmt(M,Absis(PlayerTower(P,i)),Ordinat(PlayerTower(P,i)))) = U;
+			AddUnit(&*L,&*Q,U);
+		}
+	}
+}

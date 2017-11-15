@@ -3,25 +3,26 @@
 #ifndef _QUEUELIST_H
 #define _QUEUELIST_H
 #include "boolean.h"
+#include "point.h"
 #include <stdlib.h>
 
 /* Konstanta */
 #define Nil NULL
 
 /* Deklarasi infotype */
-typedef int infotype;
+typedef POINT infotype;
 
 /* Queue dengan representasi berkait dengan pointer */
-typedef struct tElmtQueue * address;
+typedef struct tElmtQueue * addressQ;
 typedef struct tElmtQueue { 
 	infotype Info;
-	address Next; 
+	addressQ Next; 
 } ElmtQueue; 
 
 /* Type queue dengan ciri HEAD dan TAIL : */
 typedef struct { 
-	address HEAD;  /* alamat penghapusan */
-	address TAIL;  /* alamat penambahan */
+	addressQ HEAD;  /* alamat penghapusan */
+	addressQ TAIL;  /* alamat penambahan */
 } Queue;
 
 /* Selektor */
@@ -33,16 +34,18 @@ typedef struct {
 #define Info(P) (P)->Info
 
 /* Prototype manajemen memori */
-void Alokasi (address *P, infotype X);
+void Alokasi (addressQ *P, infotype X);
 /* I.S. Sembarang */
 /* F.S. Alamat P dialokasi, jika berhasil maka Info(P)=X dan 
         Next(P)=Nil */
 /*      P=Nil jika alokasi gagal */
-void Dealokasi (address  P);
+void Dealokasi (addressQ  P);
 /* I.S. P adalah hasil alokasi, P != Nil */
 /* F.S. Alamat P didealokasi, dikembalikan ke sistem */
-boolean IsEmpty (Queue Q);
+boolean IsEmptyQ (Queue Q);
 /* Mengirim true jika Q kosong: HEAD(Q)=Nil and TAIL(Q)=Nil */
+boolean IsOneElmtQ(Queue Q);
+/* Mengirim True jika Q hanya memiliki 1 elemen*/
 int NbElmt(Queue Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong */
 /*** Kreator ***/
@@ -62,5 +65,8 @@ void Del(Queue * Q, infotype * X);
 /* Pada dasarnya operasi delete first */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "mundur" */
+void RoundP(Queue *Q);
+/*Proses : Memindahkan Nilai Tail Queue ke Head Queue dan Head Queue ke 
+  Elemen setelahnya. */
 
 #endif
