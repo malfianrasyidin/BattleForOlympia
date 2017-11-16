@@ -109,7 +109,7 @@ void PrintInfoUnit (Unit U)
 /* mengeluarkan info unit standar seperti dibawah ini
 Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 {
-	printf("Unit: %d (%d,%d) | ", Tipe(U), Absis(Locate(U)), Ordinat(Locate(U)));
+	printf("Unit: %s (%d,%d) | ", UnitTranslation(Tipe(U)), Absis(Locate(U)), Ordinat(Locate(U)));
 	printf("Health: %d/%d | ", HP(U), MaxHP(U));
 	printf("Movement Point: %d | ", MP(U));
 	if (CanAtk(U))	printf("Can Attack: Yes\n");
