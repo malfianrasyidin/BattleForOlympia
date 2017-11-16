@@ -5,6 +5,7 @@
 #include "boolean.h"
 #include "unit.h"
 #include "point.h"
+#include "pcolor.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
@@ -45,8 +46,6 @@ typedef struct {
 #define Elmt(M,i,j) (M).Mem[(i)][(j)]
 #define BuildIn(L) (L).Building
 #define UnitIn(L) (L).Res
-
-
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membentuk MATRIKS *** */
@@ -89,7 +88,7 @@ Unit getUnit(POINT P, MatriksMap M);
 Build getBuild(POINT P, MatriksMap M);
 //Mengembalikan build yang berada di titik P.
 
-char AbbrevUnit(char* Tipe);
+char* UnitTranslation(char Tipe);
 //Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
 
 /* ********** Operasi lain ********** */

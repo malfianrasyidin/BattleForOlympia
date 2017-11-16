@@ -4,6 +4,7 @@
 #include "boolean.h"
 #include "unit.h"
 #include "point.h"
+#include "pcolor.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 
@@ -88,11 +89,17 @@ Build getBuild(POINT P, MatriksMap M)
 	return BuildIn(Elmt(M,Absis(P),Ordinat(P)));	
 }
 
-char AbbrevUnit(char* Tipe){
+char* UnitTranslation(char Tipe){
 //Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
-	char X;
-	X = Tipe[0];
-	return X-32;
+	switch (Tipe) {
+		case 'K' : return "King"; break;
+		case 'A' : return "Archer"; break;
+		case 'S' : return "Swordsman"; break;
+		case 'W' : return "White Mage"; break;
+		case 'C' : return "Castle"; break;
+		case 'T' : return "Tower"; break;
+		case 'V' : return "Village"; break;
+	}
 }
 
 void PrintMap(MatriksMap M){
@@ -106,20 +113,20 @@ void PrintMap(MatriksMap M){
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
 			// printf("%s *", &(BuildIn(Elmt(M,i,j))).Tipe[0]);
 			printf(" ");
-			print_red(AbbrevUnit("tower"));
+			print_red('A');
 			printf(" *");
 		}
 		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
 			printf(" ");
-			print_green(AbbrevUnit("archer"));
+			print_green('T');
 			printf(" *");
 			// printf("%s *", &(UnitIn(Elmt(M,i,j))).KarType[0]);
 		}
 		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
 			printf(" ");
-			print_blue(AbbrevUnit("king"));
+			print_blue('D');
 			printf(" *");
 		}
 		printf("\n");
