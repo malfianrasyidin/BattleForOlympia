@@ -22,6 +22,7 @@
 #define BaseDmgPointWarrior 60
 #define BaseDmgPointArcher 50
 #define BaseDmgPointMage 10
+#define BaseDmgPointKing 100
 
 #define BaseHealMage 45
 
@@ -39,17 +40,17 @@ typedef struct{
 	char UnitType;
 } Unit;
 
-#define Locate(U) (U).Loc
-#define HP(U) (U).CurrHP
-#define Tipe(U) (U).UnitType
-#define MP(U) (U).CurrMP
-#define Owner(U) (U).POwner
-#define MaxHP(U) (U).MaximumHP
-#define MaxMP(U) (U).MaximumMP
-#define AtkType (U).AttackType
-#define CanAtk(U)	(U).CanAtk
+#define Locate(U) 	(U).Loc
+#define HP(U) 			(U).CurrHP
+#define Tipe(U) 		(U).UnitType
+#define MP(U) 			(U).CurrMP
+#define Owner(U) 		(U).UnitOwner
+#define MaxHP(U) 		(U).MaximumHP
+#define MaxMP(U) 		(U).MaximumMP
+#define AtkType(U) 	(U).AttackType
+#define CanAtk(U)		(U).CanAtk
 #define Damage(U)   (U).DamagePoints
-#define Heal(U)		(U).HealPoints
+#define Heal(U)			(U).HealPoints
 
 //FUNGSI NULLITAS
 Unit NullUnit ();

@@ -4,6 +4,7 @@
 #include "boolean.h"
 #include "unit.h"
 #include "point.h"
+#include "pcolor.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 
@@ -88,7 +89,7 @@ Build getBuild(POINT P, MatriksMap M)
 	return BuildIn(Elmt(M,Absis(P),Ordinat(P)));	
 }
 
-char* UnitTranslate(char Tipe){
+char* UnitTranslation(char Tipe){
 //Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
 	switch (Tipe) {
 		case 'K' : return "King"; break;
