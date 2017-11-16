@@ -33,8 +33,9 @@ Unit InitArcher(POINT P,int Owner)
 	Owner(U)=Owner;
 	Tipe(U)="Archer";
 	CanAtk(U)=true;
-	Attack(U,1).Dmg=45;
-	Attack(U,1).Type="Ranged";
+	DamagePoints(U)=45;
+	AttackType(U)="Ranged";
+	HealPoints(U) = 0;
 	Price(U)=5;
 	return U;
 }
@@ -51,8 +52,9 @@ Unit InitWarrior(POINT P,int Owner)
 	Owner(U)=Owner;
 	Tipe(U)="Warrior";
 	CanAtk(U)=true;
-	Attack(U,1).Dmg=40;
-	Attack(U,1).Type="Melee";
+	DamagePoints(U)=40;
+	AttackType(U)="Melee";
+	HealPoints(U) = 0;
 	Price(U)=4;
 	return U;
 }
@@ -69,8 +71,9 @@ Unit InitMage(POINT P,int Owner)
 	Owner(U)=Owner;
 	Tipe(U)="Mage";
 	CanAtk(U)=true;
-	Attack(U,1).Dmg=30;
-	Attack(U,1).Type="Melee";
+	DamagePoints(U)=30;
+	AttackType(U)="Melee";
+	HealPoints(U) = 10;
 	Price(U)=5;
 	return U;
 }
@@ -87,8 +90,9 @@ Unit InitKing(POINT P,int Owner)
 	Owner(U)=Owner;
 	Tipe(U)="King";
 	CanAtk(U)=true;
-	Attack(U,1).Dmg=50;
-	Attack(U,1).Type="Melee";
+	DamagePoints(U)=50;
+	AttackType(U)="Melee";
+	HealPoints(U) = 0;
 	return U;
 }
 
@@ -130,14 +134,14 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	else	printf("Can Attack: No\n");
 }
 
-void AttackU (Unit U1, Unit U2, Atk A);
+void AttackU (Unit U1, Unit U2);
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
-boolean CmpUnit (Unit U1, Unit U2)
+boolean CmpUnit (POINT U1, POINT U2)
 //True jika U1==U2
 {
-	return(EQ(Locate(U1),Locate(U2)));
+	return(EQ(U1,U2));
 }
