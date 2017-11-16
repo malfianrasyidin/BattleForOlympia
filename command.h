@@ -53,3 +53,14 @@ void RecruitUnit (Unit UR, Player P, Queue *Q);
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan Pesan kesalahan jika UR bukan King atau Gold Player Tidak Cukup
 //    atau L dan Q yang sudah terisi Unit Baru jika True
+
+/* ############################## */
+/* ########### INFO ############# */
+/* ############################## */
+void PrintInfoCell (POINT P, MatriksMap M){
+//F.S : Ngeprint info cell (building & unit)
+}
+
+void Info(MatriksMap M)	{
+//main info
+}

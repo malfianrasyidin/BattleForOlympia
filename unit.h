@@ -54,18 +54,8 @@ typedef struct{
 //FUNGSI NULLITAS
 Unit NullUnit ();
 
-///Initial Status of Unit///
-Unit InitArcher(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitWarrior(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitMage(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitKing(POINT P, int Owner);
-//F.S : King dengan state awal
+Unit MakeNewUnit(int N, int Play, POINT P);
+//mengembalikan unit baru dengan initial state
 
 //FUNGSI FUNGSI UNIT
 int Distance(POINT U1, POINT U2);
@@ -77,12 +67,6 @@ boolean IsAdjacent (POINT P1, POINT P2);
 boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
-
-void AttackU (Unit U1, Unit U2, Atk A);
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
-
-void PrintAtkType(Unit U);
-//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
 void PrintInfoUnit (Unit U);
 /* mengeluarkan info unit standar seperti dibawah ini

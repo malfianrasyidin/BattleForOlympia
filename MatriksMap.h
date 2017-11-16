@@ -16,8 +16,12 @@ typedef int indeks; /* indeks baris, kolom */
 
 typedef struct {
 	int Owner;
-	char* Tipe;
+	char Tipe;
 } Build;
+
+/* *** Selektor Build *** */
+#define OwnerB(B) (B).Owner
+#define TipeB(B) (B).Tipe
 
 typedef struct{
 	Build Building;
@@ -35,7 +39,7 @@ typedef struct {
 /* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
 
-/* *** Selektor *** */
+/* *** Selektor MatriksMap *** */
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
 #define Elmt(M,i,j) (M).Mem[(i)][(j)]
@@ -69,7 +73,13 @@ boolean IsIdxEff (MatriksMap M, indeks i, indeks j);
 ElType GetElmtDiagonal (MatriksMap M, indeks i);
 /* Mengirimkan elemen M(i,i) */
 
-//FUNGSI LOKASI
+
+Build NullBuilding();
+//mengembalikan definisi building kosong
+
+boolean IsBuildIn (POINT P, MatriksMap M);
+//Mengembalikan true jika ada build di titik P.
+
 boolean IsUnitIn (POINT P, MatriksMap M);
 //Mengembalikan true jika ada unit di L dan false jika tidak
 

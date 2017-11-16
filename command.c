@@ -149,43 +149,6 @@ void InfoRecruit(int *N){
 	scanf("%d", &*N);
 }
 
-void MakeNewUnit(int N, int Play ){
-	Unit U;
-	Owner(U) = Play
-	if (N == 1){
-		Tipe(U) = 'W';
-		MaxHP(U) = BaseMaxHPWarrior;
-		HP(U) = MaxHP(*U);
-		MaxMP(U) = BaseMaxMPMage;
-		MP(U) = MaxMP(U);
-		AtkType(U) = 'M';
-		Damage(U) = BaseDmgPointWarrior;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
-	}
-	else if (N == 2){
-		Tipe(U) = 'A';
-		MaxHP(U) = BaseMaxHPArcher;
-		HP(U) = MaxHP(*U);
-		MaxMP(U) = BaseMaxMPArcher;
-		MP(U) = MaxMP(*U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointArcher;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
-	}
-	else{
-		Tipe(U) = 'M';
-		MaxHP(U) = BaseMaxHPMage;
-		HP(U) = MaxHP(*U);
-		MaxMP(U) = BaseMaxMPMage;
-		MP(U) = MaxMP(*U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointMage;
-		Heal(U)  = BaseHealMage;
-		CanAtk(U) = true;
-	}
-}
 
 int EmptyTower(Player P, MatriksMap M){
 	int i;
@@ -235,10 +198,47 @@ void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M){
 		}
 		else{
 			printf("Recruit berhasil\n");
-			Unit U = MakeNewUnit(N,PlayNumber(P));
-			Locate(U) = PlayerTower(P,i);
+			Unit U = MakeNewUnit(N,PlayNumber(P),PlayerTower(P,i));
 			Unit(Elmt(M,Absis(PlayerTower(P,i)),Ordinat(PlayerTower(P,i)))) = U;
 			AddUnit(&*L,&*Q,U);
 		}
 	}
+}
+
+/* ############################## */
+/* ########### INFO ############# */
+/* ############################## */
+void PrintInfoCell (POINT P, MatriksMap M){
+//F.S : Ngeprint info cell (building & unit)
+	if (IsUnitIn(P,M))	{	
+		printf("== Cell Info ==\n");
+		printf("%s\n", Kepanjangan(TipeB(UnitIn(Elmt(Absis(P),Ordinat(P))))));
+		printf("Owned by Player %d\n", OwnerB(UnitIn(Elmt(Absis(P),Ordinat(P)))));
+	} else {
+		printf("There isn't building here\n");
+	}
+	if (IsBuildIn(P,M))	{
+		printf("== Unit Info ==\n");
+		printf("%s\n", Kepanjangan(Tipe(BuildIn(Elmt(Absis(P),Ordinat(P))))));
+		printf("Owned by Player %d\n", Owner(UnitIn(Elmt(Absis(P),Ordinat(P)))));
+		printf("Health: %d/%d | ", HP(U), MaxHP(U));
+		printf("ATK: %d | ", Damage(U));
+	} else {
+		printf("There isn't unit here\n");
+	}
+
+}
+void Info(MatriksMap M)	{
+//main info
+	int x,y;
+	POINT P;
+	printf("Enter the coordinate of the cell : ");
+	scanf("%d %d", &x, &y);
+	P = MakePOINT(x,y);
+	while (!PointInMap(P,M))	{
+		printf("Enter the coordinate of the cell : ");
+		scanf("%d %d", &x, &y);
+		P = MakePOINT(x,y);
+	}
+	PrintInfoCell(P,M);
 }
