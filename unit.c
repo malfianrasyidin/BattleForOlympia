@@ -7,88 +7,74 @@
 
 
 //FUNGSI NULLITAS
-Unit NullUnit(){
+Unit NullUnit(POINT P){
 	Unit U;
-	Absis(Locate(U)) = 0;
-	Ordinat(Locate(U)) = 0;
+	Absis(Locate(U)) = Absis(P);
+	Ordinat(Locate(U)) = Absis(P);
+	Damage(U) = 0;
+	Heal(U) = 0;
+	CanAtk(U) = false;
+	AtkType(U) = ' ';
 	MaxHP(U) = 0;
 	MaxMP(U) = 0;
 	HP(U) = 0;
 	MP(U) = 0;
 	Owner(U) = 0;
-	Tipe(U) = " ";
-
+	Tipe(U) = ' ';
 	return(U);
 }
 
-Unit InitArcher(POINT P,int Owner)
-//F.S : King dengan state awal
-{
+Unit MakeNewUnit(int N, int Play, POINT P){
+//mengembalikan unit baru dengan initial state
 	Unit U;
-	Locate(U)=P;
-	MaxHP(U)=BaseMaxHPArcher;
-	HP(U)=BaseMaxHPArcher;
-	MaxMP(U)=BaseMaxMPArcher;
-	MP(U)=BaseMaxMPArcher;
-	Owner(U)=Owner;
-	Tipe(U)="Archer";
-	CanAtk(U)=true;
-	Attack(U,1).Dmg=45;
-	Attack(U,1).Type="Ranged";
-	Price(U)=5;
-	return U;
-}
-
-Unit InitWarrior(POINT P,int Owner)
-//F.S : King dengan state awal
-{
-	Unit U;
-	Locate(U)=P;
-	MaxHP(U)=BaseMaxHPWarrior;
-	HP(U)=BaseMaxHPWarrior;
-	MaxMP(U)=BaseMaxMPWarrior;
-	MP(U)=BaseMaxMPWarrior;
-	Owner(U)=Owner;
-	Tipe(U)="Warrior";
-	CanAtk(U)=true;
-	Attack(U,1).Dmg=40;
-	Attack(U,1).Type="Melee";
-	Price(U)=4;
-	return U;
-}
-
-Unit InitMage(POINT P,int Owner)
-//F.S : King dengan state awal
-{
-	Unit U;
-	Locate(U)=P;
-	MaxHP(U)=BaseMaxHPMage;
-	HP(U)=BaseMaxHPMage;
-	MaxMP(U)=BaseMaxMPMage;
-	MP(U)=BaseMaxMPMage;
-	Owner(U)=Owner;
-	Tipe(U)="Mage";
-	CanAtk(U)=true;
-	Attack(U,1).Dmg=30;
-	Attack(U,1).Type="Melee";
-	Price(U)=5;
-	return U;
-}
-
-Unit InitKing(POINT P,int Owner)
-//F.S : King dengan state awal
-{
-	Unit U;
-	Locate(U)=P;
-	MaxHP(U)=BaseMaxHPKing;
-	HP(U)=BaseMaxHPKing;
-	MaxMP(U)=BaseMaxMPKing;
-	MP(U)=BaseMaxMPKing;
-	Owner(U)=Owner;
-	Tipe(U)="King";
-	CanAtk(U)=true;
-	Attack(U,1).Dmg=50;
-	Attack(U,1).Type="Melee";
+	Owner(U) = Play
+	if (N == 1){
+		Locate(U) = P;
+		Tipe(U) = 'W';
+		MaxHP(U) = BaseMaxHPWarrior;
+		HP(U) = MaxHP(U);
+		MaxMP(U) = BaseMaxMPMage;
+		MP(U) = MaxMP(U);
+		AtkType(U) = 'M';
+		Damage(U) = BaseDmgPointWarrior;
+		Heal(U)  = 0;
+		CanAtk(U) = true;
+	}
+	else if (N == 2){
+		Locate(U) = P;
+		Tipe(U) = 'A';
+		MaxHP(U) = BaseMaxHPArcher;
+		HP(U) = MaxHP(U);
+		MaxMP(U) = BaseMaxMPArcher;
+		MP(U) = MaxMP(U);
+		AtkType(U) = 'R';
+		Damage(U) = BaseDmgPointArcher;
+		Heal(U)  = 0;
+		CanAtk(U) = true;
+	}
+	else if (N==3) {
+		Locate(U) = P;
+		Tipe(U) = 'M';
+		MaxHP(U) = BaseMaxHPMage;
+		HP(U) = MaxHP(U);
+		MaxMP(U) = BaseMaxMPMage;
+		MP(U) = MaxMP(U);
+		AtkType(U) = 'R';
+		Damage(U) = BaseDmgPointMage;
+		Heal(U)  = BaseHealMage;
+		CanAtk(U) = true;
+	} else if (N==4)	{
+		Locate(U) = P;
+		Tipe(U) = 'K';
+		MaxHP(U) = BaseMaxHPKing;
+		HP(U) = MaxHP(U);
+		MaxMP(U) = BaseMaxMPKing;
+		MP(U) = MaxMP(U);
+		AtkType(U) = 'R';
+		Damage(U) = BaseDmgPointKing;
+		Heal(U)  = 0;
+		CanAtk(U) = true;
+	}
 	return U;
 }
 
@@ -129,12 +115,6 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	if (CanAtk(U))	printf("Can Attack: Yes\n");
 	else	printf("Can Attack: No\n");
 }
-
-void AttackU (Unit U1, Unit U2, Atk A);
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
-
-void PrintAtkType(Unit U);
-//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
 boolean CmpUnit (Unit U1, Unit U2)
 //True jika U1==U2
