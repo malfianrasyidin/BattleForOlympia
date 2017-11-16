@@ -88,31 +88,47 @@ Build getBuild(POINT P, MatriksMap M)
 	return BuildIn(Elmt(M,Absis(P),Ordinat(P)));	
 }
 
+char AbbrevUnit(char* Tipe){
+//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
+	char X;
+	X = Tipe[0];
+	return X-32;
+}
+
 void PrintMap(MatriksMap M){
 /*Memprint Peta M ke Layar*/
 	for (int i = 1 ; i <= NBrsEff(M) ; i++){
-		printf("#");
+		printf("*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("______");
+			printf("****");
 		}
-		printf("#\n#");
+		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("| %s |", &(BuildIn(Elmt(M,i,j))).Tipe[0]);
+			// printf("%s *", &(BuildIn(Elmt(M,i,j))).Tipe[0]);
+			printf(" ");
+			print_red(AbbrevUnit("tower"));
+			printf(" *");
 		}
-		printf("#\n#");
+		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("| %s |", &(UnitIn(Elmt(M,i,j))).KarType[0]);
+			printf(" ");
+			print_green(AbbrevUnit("archer"));
+			printf(" *");
+			// printf("%s *", &(UnitIn(Elmt(M,i,j))).KarType[0]);
 		}
-		printf("#\n#");
+		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("|    |");
+			printf(" ");
+			print_blue(AbbrevUnit("king"));
+			printf(" *");
 		}
-		printf("#\n#");
-		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("______");
-		}
-		printf("#\n");
+		printf("\n");
 	}
+	printf("*");
+	for (int j = 1 ; j <= NKolEff(M) ; j++){
+			printf("****");
+	}
+	printf("\n");
 }
 
 MatriksMap MatGen(indeks NB, indeks NK){

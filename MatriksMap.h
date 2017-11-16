@@ -89,6 +89,9 @@ Unit getUnit(POINT P, MatriksMap M);
 Build getBuild(POINT P, MatriksMap M);
 //Mengembalikan build yang berada di titik P.
 
+char AbbrevUnit(char* Tipe);
+//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
+
 /* ********** Operasi lain ********** */
 void PrintMap(MatriksMap M);
 /*Memprint Peta yang terdapat pada Matriks M*/
