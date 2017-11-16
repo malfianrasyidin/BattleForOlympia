@@ -19,6 +19,12 @@
 #define PriceArcher  150
 #define PriceMage    200
 
+#define BaseDmgPointWarrior 60
+#define BaseDmgPointArcher 50
+#define BaseDmgPointMage 10
+
+#define BaseHealMage 45
+
 typedef struct{
 	int DamagePoints;
 	char AttackType;
