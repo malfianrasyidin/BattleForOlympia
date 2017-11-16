@@ -15,51 +15,47 @@
 #define BaseMaxMPMage 150
 #define BaseMaxMPKing 210
 
-typedef struct{
-	int Dmg;
-	char* Type;
-} Atk;
+#define PriceWarrior 120
+#define PriceArcher  150
+#define PriceMage    200
+
+#define BaseDmgPointWarrior 60
+#define BaseDmgPointArcher 50
+#define BaseDmgPointMage 10
+
+#define BaseHealMage 45
 
 typedef struct{
-	Atk TAttack[5];
+	int DamagePoints;
+	char AttackType;
+	int HealPoints;
 	boolean CanAtk;
 	POINT Loc;
 	int MaximumHP;
 	int CurrHP;
 	int MaximumMP;
 	int CurrMP;
-	int POwner;
-	char* KarType;
-	int price;
+	int UnitOwner;
+	char UnitType;
 } Unit;
 
 #define Locate(U) (U).Loc
 #define HP(U) (U).CurrHP
-#define Tipe(U) (U).KarType
+#define Tipe(U) (U).UnitType
 #define MP(U) (U).CurrMP
 #define Owner(U) (U).POwner
 #define MaxHP(U) (U).MaximumHP
 #define MaxMP(U) (U).MaximumMP
-#define TabAttack (U).TAttack
-#define Attack(U,i) (U).TAttack[i-1]
+#define AtkType (U).AttackType
 #define CanAtk(U)	(U).CanAtk
-#define Price(U)	(U).price
+#define Damage(U)   (U).DamagePoints
+#define Heal(U)		(U).HealPoints
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
 
-///Initial Status of Unit///
-Unit InitArcher(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitWarrior(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitMage(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitKing(POINT P, int Owner);
-//F.S : King dengan state awal
+Unit MakeNewUnit(int N, int Play, POINT P);
+//mengembalikan unit baru dengan initial state
 
 //FUNGSI FUNGSI UNIT
 int Distance(POINT U1, POINT U2);
@@ -71,12 +67,6 @@ boolean IsAdjacent (POINT P1, POINT P2);
 boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
-
-void AttackU (Unit U1, Unit U2, Atk A);
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
-
-void PrintAtkType(Unit U);
-//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
 void PrintInfoUnit (Unit U);
 /* mengeluarkan info unit standar seperti dibawah ini
