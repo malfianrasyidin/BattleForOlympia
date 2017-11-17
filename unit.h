@@ -40,17 +40,18 @@ typedef struct{
 	char UnitType;
 } Unit;
 
-#define Locate(U) 	(U).Loc
-#define HP(U) 			(U).CurrHP
-#define Tipe(U) 		(U).UnitType
-#define MP(U) 			(U).CurrMP
-#define Owner(U) 		(U).UnitOwner
-#define MaxHP(U) 		(U).MaximumHP
-#define MaxMP(U) 		(U).MaximumMP
-#define AtkType(U) 	(U).AttackType
-#define CanAtk(U)		(U).CanAtk
-#define Damage(U)   (U).DamagePoints
-#define Heal(U)			(U).HealPoints
+#define DamagePoints(U) (U).DamagePoints
+#define AttackType(U) (U).AttackType
+#define HealPoints(U) (U).HealPoints
+#define Locate(U) (U).Loc
+#define HP(U) (U).CurrHP
+#define Tipe(U) (U).UnitType
+#define MP(U) (U).CurrMP
+#define Owner(U) (U).UnitOwner
+#define MaxHP(U) (U).MaximumHP
+#define MaxMP(U) (U).MaximumMP
+#define CanAttack(U)	(U).CanAtk
+#define Price(U)	(U).price
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
@@ -69,11 +70,18 @@ boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
 
+
+void AttackU (Unit U1, Unit U2);
+//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
+
+void PrintAtkType(Unit U);
+//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
+
 void PrintInfoUnit (Unit U);
 /* mengeluarkan info unit standar seperti dibawah ini
 Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 
-boolean CmpUnit (Unit U1, Unit U2);
+boolean CmpUnit (POINT PU1, POINT PU2);
 //True jika U1==U2
 
 #endif
