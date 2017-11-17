@@ -4,15 +4,7 @@
 #include "boolean.h"
 #include "unit.h"
 #include "point.h"
-//FUNGSI NULLITAS
-Build NullBuilding(){
-	Build B;
-	B.Owner = 0;
-	B.Tipe = " ";
-	return (B);
-}
-
-
+#include "pcolor.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 
@@ -64,10 +56,27 @@ ElType GetElmtDiagonal (MatriksMap M, indeks i){
 	return(Elmt(M,i,i));
 }
 
+////////////////////////////////////////////////////////////////
+
+//FUNGSI NULLITAS
+Build NullBuilding(){
+//mengembalikan definisi building kosong
+	Build B;
+	B.Owner = 0;
+	B.Tipe = ' ';
+	return (B);
+}
+
+boolean IsBuildIn (POINT P, MatriksMap M){
+//Mengembalikan true jika ada build di titik P.
+	return (TipeB(getBuild(P,M)) != ' ');
+}
+
 boolean IsUnitIn (POINT P, MatriksMap M){
 //Mengembalikan true jika ada unit di titik P.
-	return (getUnit(P,M).KarType != " ");
+	return (Tipe(getUnit(P,M)) != ' ');
 }
+
 
 Unit getUnit(POINT P, MatriksMap M){
 //Mengembalikan unit yang berada di titik
@@ -80,31 +89,53 @@ Build getBuild(POINT P, MatriksMap M)
 	return BuildIn(Elmt(M,Absis(P),Ordinat(P)));	
 }
 
+char* UnitTranslation(char Tipe){
+//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
+	switch (Tipe) {
+		case 'K' : return "King"; break;
+		case 'A' : return "Archer"; break;
+		case 'S' : return "Swordsman"; break;
+		case 'W' : return "White Mage"; break;
+		case 'C' : return "Castle"; break;
+		case 'T' : return "Tower"; break;
+		case 'V' : return "Village"; break;
+	}
+}
+
 void PrintMap(MatriksMap M){
 /*Memprint Peta M ke Layar*/
 	for (int i = 1 ; i <= NBrsEff(M) ; i++){
-		printf("#");
+		printf("*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("______");
+			printf("****");
 		}
-		printf("#\n#");
+		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("| %s |", &(BuildIn(Elmt(M,i,j))).Tipe[0]);
+			// printf("%s *", &(BuildIn(Elmt(M,i,j))).Tipe[0]);
+			printf(" ");
+			print_red('A');
+			printf(" *");
 		}
-		printf("#\n#");
+		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("| %s |", &(UnitIn(Elmt(M,i,j))).KarType[0]);
+			printf(" ");
+			print_green('T');
+			printf(" *");
+			// printf("%s *", &(UnitIn(Elmt(M,i,j))).KarType[0]);
 		}
-		printf("#\n#");
+		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("|    |");
+			printf(" ");
+			print_blue('D');
+			printf(" *");
 		}
-		printf("#\n#");
-		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf("______");
-		}
-		printf("#\n");
+		printf("\n");
 	}
+	printf("*");
+	for (int j = 1 ; j <= NKolEff(M) ; j++){
+			printf("****");
+	}
+	printf("\n");
 }
 
 MatriksMap MatGen(indeks NB, indeks NK){
@@ -113,41 +144,41 @@ MatriksMap MatGen(indeks NB, indeks NK){
 	MatriksMap M;
 	MakeMATRIKS(NB,NK, &M);
 	//player 1
-	BuildIn(Elmt(M,NB-1,KolMin+1)).Tipe = "Tower";
+	BuildIn(Elmt(M,NB-1,KolMin+1)).Tipe = 'T';
 	BuildIn(Elmt(M,NB-1,KolMin+1)).Owner = 1;
 	POINT K1 = MakePOINT(NB-1,KolMin+1);
-	UnitIn(Elmt(M,NB-1,KolMin+1)) = InitKing(K1,1);
-	BuildIn(Elmt(M,NB-2,KolMin+1)).Tipe = "Castle"; //atas
+	UnitIn(Elmt(M,NB-1,KolMin+1)) = MakeNewUnit(4,1,K1);
+	BuildIn(Elmt(M,NB-2,KolMin+1)).Tipe = 'C'; //atas
 	BuildIn(Elmt(M,NB-2,KolMin+1)).Owner = 1;
-	BuildIn(Elmt(M,NB-1,KolMin)).Tipe = "Castle"; //kiri
+	BuildIn(Elmt(M,NB-1,KolMin)).Tipe = 'C'; //kiri
 	BuildIn(Elmt(M,NB-1,KolMin)).Owner = 1;
-	BuildIn(Elmt(M,NB-1,KolMin+2)).Tipe = "Castle"; //kanan
+	BuildIn(Elmt(M,NB-1,KolMin+2)).Tipe = 'C'; //kanan
 	BuildIn(Elmt(M,NB-1,KolMin+2)).Owner = 1;
-	BuildIn(Elmt(M,NB,KolMin+1)).Tipe = "Castle"; //bawah
+	BuildIn(Elmt(M,NB,KolMin+1)).Tipe = 'C'; //bawah
 	BuildIn(Elmt(M,NB,KolMin+1)).Owner = 1;
 	//player 2
-	BuildIn(Elmt(M,BrsMin+1,NK-1)).Tipe = "Tower";
+	BuildIn(Elmt(M,BrsMin+1,NK-1)).Tipe = 'T';
 	BuildIn(Elmt(M,BrsMin+1,NK-1)).Owner = 2;
 	POINT K2 = MakePOINT(BrsMin+1,NK-1);
-	UnitIn(Elmt(M,BrsMin+1,NK-1)) = InitKing(K2,2);
-	BuildIn(Elmt(M,BrsMin,NK-1)).Tipe = "Castle"; //atas
+	UnitIn(Elmt(M,BrsMin+1,NK-1)) = MakeNewUnit(4,2,K2);
+	BuildIn(Elmt(M,BrsMin,NK-1)).Tipe = 'C'; //atas
 	BuildIn(Elmt(M,BrsMin,NK-1)).Owner = 2;
-	BuildIn(Elmt(M,BrsMin+1,NK-2)).Tipe = "Castle"; //kiri
+	BuildIn(Elmt(M,BrsMin+1,NK-2)).Tipe = 'C'; //kiri
 	BuildIn(Elmt(M,BrsMin+1,NK-2)).Owner = 2;
-	BuildIn(Elmt(M,BrsMin+1,NK)).Tipe = "Castle"; //kanan
+	BuildIn(Elmt(M,BrsMin+1,NK)).Tipe = 'C'; //kanan
 	BuildIn(Elmt(M,BrsMin+1,NK-2)).Owner = 2;
-	BuildIn(Elmt(M,BrsMin+2,NK-1)).Tipe = "Castle"; //bawah
+	BuildIn(Elmt(M,BrsMin+2,NK-1)).Tipe = 'C'; //bawah
 	BuildIn(Elmt(M,BrsMin+2,NK-1)).Owner = 2;
 	
 	int i,j,k;
 	for (k=1; k<=3; k++)	{
 		i = rand() % NB;
 		j = rand() % NK;
-		while (BuildIn(Elmt(M,i,j)).Tipe!=" ")	{
+		while (BuildIn(Elmt(M,i,j)).Tipe!=' ')	{
 			i = rand() % NB;
 			j = rand() % NK;
 		}
-		BuildIn(Elmt(M,i,j)).Tipe="Village";
+		BuildIn(Elmt(M,i,j)).Tipe='V';
 	}
 	return(M);
 }

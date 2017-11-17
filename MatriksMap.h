@@ -5,6 +5,7 @@
 #include "boolean.h"
 #include "unit.h"
 #include "point.h"
+#include "pcolor.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
@@ -16,8 +17,12 @@ typedef int indeks; /* indeks baris, kolom */
 
 typedef struct {
 	int Owner;
-	char* Tipe;
+	char Tipe;
 } Build;
+
+/* *** Selektor Build *** */
+#define OwnerB(B) (B).Owner
+#define TipeB(B) (B).Tipe
 
 typedef struct{
 	Build Building;
@@ -35,14 +40,12 @@ typedef struct {
 /* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
 
-/* *** Selektor *** */
+/* *** Selektor MatriksMap *** */
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
 #define Elmt(M,i,j) (M).Mem[(i)][(j)]
 #define BuildIn(L) (L).Building
 #define UnitIn(L) (L).Res
-
-
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membentuk MATRIKS *** */
@@ -69,7 +72,13 @@ boolean IsIdxEff (MatriksMap M, indeks i, indeks j);
 ElType GetElmtDiagonal (MatriksMap M, indeks i);
 /* Mengirimkan elemen M(i,i) */
 
-//FUNGSI LOKASI
+
+Build NullBuilding();
+//mengembalikan definisi building kosong
+
+boolean IsBuildIn (POINT P, MatriksMap M);
+//Mengembalikan true jika ada build di titik P.
+
 boolean IsUnitIn (POINT P, MatriksMap M);
 //Mengembalikan true jika ada unit di L dan false jika tidak
 
@@ -78,6 +87,9 @@ Unit getUnit(POINT P, MatriksMap M);
 
 Build getBuild(POINT P, MatriksMap M);
 //Mengembalikan build yang berada di titik P.
+
+char* UnitTranslation(char Tipe);
+//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
 
 /* ********** Operasi lain ********** */
 void PrintMap(MatriksMap M);
@@ -88,6 +100,7 @@ MatriksMap MatGen(indeks NB, indeks NK);
 
 int NBElmt (MatriksMap M);
 /* Mengirimkan banyaknya elemen M */
+
 
 #endif
 

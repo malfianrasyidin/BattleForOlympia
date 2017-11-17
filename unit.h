@@ -15,6 +15,17 @@
 #define BaseMaxMPMage 150
 #define BaseMaxMPKing 210
 
+#define PriceWarrior 120
+#define PriceArcher  150
+#define PriceMage    200
+
+#define BaseDmgPointWarrior 60
+#define BaseDmgPointArcher 50
+#define BaseDmgPointMage 10
+#define BaseDmgPointKing 100
+
+#define BaseHealMage 45
+
 typedef struct{
 	int DamagePoints;
 	char AttackType;
@@ -27,7 +38,6 @@ typedef struct{
 	int CurrMP;
 	int UnitOwner;
 	char UnitType;
-	int price;
 } Unit;
 
 #define DamagePoints(U) (U).DamagePoints
@@ -40,26 +50,14 @@ typedef struct{
 #define Owner(U) (U).UnitOwner
 #define MaxHP(U) (U).MaximumHP
 #define MaxMP(U) (U).MaximumMP
-#define TabAttack (U).TAttack
-#define Attack(U,i) (U).TAttack[i-1]
-#define CanAtk(U)	(U).CanAtk
+#define CanAttack(U)	(U).CanAtk
 #define Price(U)	(U).price
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
 
-///Initial Status of Unit///
-Unit InitArcher(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitWarrior(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitMage(POINT P, int Owner);
-//F.S : King dengan state awal
-
-Unit InitKing(POINT P, int Owner);
-//F.S : King dengan state awal
+Unit MakeNewUnit(int N, int Play, POINT P);
+//mengembalikan unit baru dengan initial state
 
 //FUNGSI FUNGSI UNIT
 int Distance(POINT U1, POINT U2);
@@ -71,6 +69,7 @@ boolean IsAdjacent (POINT P1, POINT P2);
 boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
+
 
 void AttackU (Unit U1, Unit U2);
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1

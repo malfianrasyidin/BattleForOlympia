@@ -6,13 +6,14 @@
 #define stackt_H
 
 #include "boolean.h"
+#include "point.h"
 
 #define Nil 0
-#define MaxEl 10
+#define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
-typedef int infotype;
+typedef POINT infotype;
 typedef int address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
