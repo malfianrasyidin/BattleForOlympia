@@ -134,8 +134,20 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	else	printf("Can Attack: No\n");
 }
 
-void AttackU (Unit U1, Unit U2);
+void AttackU (Unit U1, Unit U2)
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
+{
+	HP(U2) -= DamagePoints(U1);
+	if ((Type(U2) =="King" || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
+		HP(U1) -= DamagePoints(U2);
+	}
+
+	if (HP(U2) <= 0) {
+		U2 = NullUnit();
+	}
+
+	if
+}
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
