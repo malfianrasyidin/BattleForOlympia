@@ -121,3 +121,26 @@ boolean CmpUnit (Unit U1, Unit U2)
 {
 	return(EQ(Locate(U1),Locate(U2)));
 }
+void AttackU (Unit U1, Unit U2)
+//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
+{
+	HP(U2) -= DamagePoints(U1);
+	if ((Type(U2) =="King" || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
+		HP(U1) -= DamagePoints(U2);
+	}
+
+	if (HP(U2) <= 0) {
+		U2 = NullUnit();
+	}
+
+	if
+}
+
+void PrintAtkType(Unit U);
+//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
+
+boolean CmpUnit (POINT U1, POINT U2)
+//True jika U1==U2
+{
+	return(EQ(U1,U2));
+}
