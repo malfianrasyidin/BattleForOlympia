@@ -7,14 +7,14 @@
 
 
 //FUNGSI NULLITAS
-Unit NullUnit(POINT P){
+Unit NullUnit(){
 	Unit U;
-	Absis(Locate(U)) = Absis(P);
-	Ordinat(Locate(U)) = Absis(P);
-	Damage(U) = 0;
-	Heal(U) = 0;
-	CanAtk(U) = false;
-	AtkType(U) = ' ';
+	Absis(Locate(U)) = 0;
+	Ordinat(Locate(U)) = 0;
+	DamagePoints(U) = 0;
+	HealPoints(U) = 0;
+	CanAttack(U) = false;
+	AttackType(U) = ' ';
 	MaxHP(U) = 0;
 	MaxMP(U) = 0;
 	HP(U) = 0;
@@ -35,10 +35,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPMage;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'M';
-		Damage(U) = BaseDmgPointWarrior;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
+		AttackType(U) = 'M';
+		DamagePoints(U) = BaseDmgPointWarrior;
+		HealPoints(U)  = 0;
+		CanAttack(U) = true;
 	}
 	else if (N == 2){
 		Locate(U) = P;
@@ -47,10 +47,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPArcher;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointArcher;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointArcher;
+		HealPoints(U)  = 0;
+		CanAttack(U) = true;
 	}
 	else if (N==3) {
 		Locate(U) = P;
@@ -59,10 +59,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPMage;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointMage;
-		Heal(U)  = BaseHealMage;
-		CanAtk(U) = true;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointMage;
+		HealPoints(U)  = BaseHealMage;
+		CanAttack(U) = true;
 	} else if (N==4)	{
 		Locate(U) = P;
 		Tipe(U) = 'K';
@@ -70,10 +70,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPKing;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointKing;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointKing;
+		HealPoints(U)  = 0;
+		CanAttack(U) = true;
 	}
 	return U;
 }
@@ -125,15 +125,15 @@ void AttackU (Unit U1, Unit U2)
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 {
 	HP(U2) -= DamagePoints(U1);
-	if ((Type(U2) =="King" || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
-		HP(U1) -= DamagePoints(U2);
-	}
-
 	if (HP(U2) <= 0) {
 		U2 = NullUnit();
-	}
+	} else if ((Tipe(U2) == "K" || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
+		HP(U1) -= DamagePoints(U2);
 
-	if
+		if (HP(U1) <= 0) {
+			U1 = NullUnit();
+		}
+	}
 }
 
 void PrintAtkType(Unit U);
