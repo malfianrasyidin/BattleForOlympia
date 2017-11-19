@@ -1,64 +1,73 @@
+/* File: mesinkata.h */
+/* NIM				: 13516098
+   Nama				: Rifqi Rifaldi Utomo
+   Tanggal			: 23 September 2017
+   Topik praktikum	: Mesin Kata Versi 1
+   Deskripsi		: Mesin Kata Versi 1
+ */
+
 #include "mesinkata.h"
 #include "mesinkar.h"
 #include "boolean.h"
+#include <stdio.h>
 
+/* State Mesin Kata */
 boolean EndKata;
 Kata CKata;
 
-void IgnoreBlank(){
+void IgnoreBlank()
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = MARK */
-   while ((CC == BLANK ) && (CC != MARK)){
+{	/* ALGORITMA */
+	while (((CC == BLANK) || (CC == ENTER)) && (CC != MARK)) {
 		ADV();
 	}
 }
 
-void STARTKATA(){
+void STARTKATA()
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = MARK; 
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
-	START();
+{	START();
 	IgnoreBlank();
-	if (CC == MARK){
-		EndKata = true;
-	} else {
-		EndKata = false;
-		SalinKata();
+	EndKata = (CC == MARK);
+	if (!EndKata) {
+	SalinKata();
 	}
 }
 
-void ADVKATA(){
+void ADVKATA()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinKata */
-	IgnoreBlank();
-	if (CC == MARK){
-		EndKata = true;
-	} else {
-		SalinKata();
+{	IgnoreBlank();
+	EndKata = (CC == MARK);
+	if (!EndKata) {
+	SalinKata();
 	}
-	IgnoreBlank();
 }
 
-void SalinKata(){
+void SalinKata()
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi; 
           CC = BLANK atau CC = MARK; 
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-	int count = 1;
-	while ((CC != BLANK) && (CC != MARK)){
-		if (count <= NMax){
-			CKata.TabKata[count] = CC;
-			count++;
-		}
-		CKata.Length = count - 1;
+{	/* KAMUS LOKAL */
+	int i;
+	/*ALGORITMA */
+	i = 0;
+	while ((CC != MARK) && (CC != BLANK) && (CC != ENTER) && (i <= NMax)) {
+		CKata.TabKata[i] = CC;
+		i = i + 1;
 		ADV();
 	}
+	CKata.TabKata[i] = '\0';
+	CKata.Length = i;
+	IgnoreBlank();
 }
-
