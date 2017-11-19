@@ -116,10 +116,10 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	else	printf("Can Attack: No\n");
 }
 
-boolean CmpUnit (Unit U1, Unit U2)
+boolean CmpUnit (POINT PU1, POINT PU2)
 //True jika U1==U2
 {
-	return(EQ(Locate(U1),Locate(U2)));
+	return(EQ(PU1, PU2));
 }
 void AttackU (Unit U1, Unit U2)
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
@@ -138,9 +138,3 @@ void AttackU (Unit U1, Unit U2)
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
-
-boolean CmpUnit (POINT U1, POINT U2)
-//True jika U1==U2
-{
-	return(EQ(U1,U2));
-}
