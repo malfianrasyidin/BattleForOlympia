@@ -10,7 +10,7 @@ void AttackU (Unit U1, Unit U2)
 	HP(U2) -= DamagePoints(U1);
 	if (HP(U2) <= 0) {
 		U2 = NullUnit();
-	} else if ((Tipe(U2) == "K" || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
+	} else if ((Tipe(U2) == 'K' || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
 		HP(U1) -= DamagePoints(U2);
 
 		if (HP(U1) <= 0) {
