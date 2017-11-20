@@ -1,4 +1,3 @@
-
 #ifndef PLAYER__H
 #define PLAYER__H
 
@@ -30,5 +29,9 @@ typedef struct
 #define PlayerCastle(P)		(P).CastlePointer
 #define TabTower(P)			(P).TowersPointer
 #define PlayerTower(P,i) 	(P).TowersPointer[i-1]
+
+
+void AttackU (Unit U1, Unit U2);
+//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 
 #endif

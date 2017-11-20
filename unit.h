@@ -70,10 +70,6 @@ boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
 
-
-void AttackU (Unit U1, Unit U2);
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
-
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
