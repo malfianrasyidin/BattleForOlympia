@@ -17,8 +17,6 @@ typedef struct {
     POINT TowersPointer[4];
 } Player;
 
-typedef Player ArrPlayer[3];
-
 #define PlayNumber(P)       (P).PlayerNumber
 #define PGold(P) 			(P).Gold
 #define CurrentUnit(P)		(P).CurrUnit

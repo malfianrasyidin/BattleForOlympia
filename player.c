@@ -4,6 +4,8 @@
 #include "listdpUnit.h"
 #include "unit.h"
 
+Player ArrPlayer[3];
+
 void AttackU (Unit U1, Unit U2)
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 {
