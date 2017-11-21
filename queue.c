@@ -111,34 +111,23 @@ void Del (Queue * Q, infotype * X)
 	}
 }
 
-
-/* *** Fungsi Tambahan Untuk Battle for Olympia ** */
-
-void CreateTurn(Queue * Q)
-/* I.S. sembarang */
-/* F.S. Queue dengan alokasi 2 memory, dengan angka 1 yang merepresentasikan
-		P1 pada Head dan angka 2 yang merepresentasikan P2 pada Tail */
-{	/* ALGORTIMA */
-	CreateEmpty(Q,2);
-	Add(Q,1);
-	Add(Q,2);
+void CreateTurn (Queue * Q) {
+	/* Membuat turn dengan urutan 1 dan 2 */
+	/* ALGORITMA */
+	CreateEmpty(Q, 2);
+	Add(Q, 1);
+	Add(Q, 2);
 }
 
-void NextTurn(Queue * Q)
-/* I.S. Q terdefinisi 2 elemen dengan A sebagai head dan B sebagai Tail */
-/* F.S. A dihapus (selesai turn) sehingga B menjadi head (turn saat ini)
-		dan A sebagai tail (turn berikutnya) */
-{	/* KAMUS LOKAL */
+void NextTurn (Queue * Q) {
+	/* Mengubah head -> tail dan tail -> head */
 	infotype X;
-	/* ALGORTIMA */
+	/* ALGORITMA */
 	Del(Q, &X);
-	Add(Q, X);
+	Add(Q. &X);
 }
 
-infotype CurrentTurn (Queue Q)
-/* I.S. Q terdefinisi dengan elemen head A (turn saat ini) dan elemen tail B
-		(turn berikutnya) */
-/* F.S. mengembalikan A (turn saat ini)*/
-{	/* ALGORITMA */
-	return InfoHead(Q);
+int CurrentTurn (Queue Q) {
+	/* Mengambilkan turn saat ini */
+	return InfoTail(Q);
 }
