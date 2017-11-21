@@ -2,12 +2,10 @@
 #define PLAYER__H
 
 #include "boolean.h"
-#include "listdpunit.h"
+#include "listdpUnit.h"
 #include "unit.h"
 
-
-typedef struct
-{
+typedef struct {
     int PlayerNumber;
     Unit CurrUnit;
     int Gold;
@@ -19,7 +17,9 @@ typedef struct
     POINT TowersPointer[4];
 } Player;
 
-#define PlayNumber(P)     (P).PlayerNumber
+typedef Player ArrPlayer[3];
+
+#define PlayNumber(P)       (P).PlayerNumber
 #define PGold(P) 			(P).Gold
 #define CurrentUnit(P)		(P).CurrUnit
 #define PIncome(P)			(P).Income
