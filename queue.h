@@ -7,7 +7,7 @@
 
 #include "boolean.h"
 
-#define Nil 0
+#define Nol 0
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
 /* Definisi elemen dan address */
@@ -32,16 +32,16 @@ typedef struct { infotype * T;   /* tabel penyimpan elemen */
 #define MaxEl(Q) (Q).MaxEl
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q);
+boolean IsQEmpty (Queue Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFull (Queue Q);
+boolean IsQFull (Queue Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmt (Queue Q);
+int NBElmtQ (Queue Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */
-void CreateEmpty (Queue * Q, int Max);
+void CreateEmptyQ (Queue * Q, int Max);
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
@@ -49,20 +49,35 @@ void CreateEmpty (Queue * Q, int Max);
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
 /* *** Destruktor *** */
-void DeAlokasi(Queue * Q);
+void DeAlokasiQ(Queue * Q);
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
 
 /* *** Primitif Add/Delete *** */
-void Add (Queue * Q, infotype X);
+void AddQ (Queue * Q, infotype X);
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
-void Del (Queue * Q, infotype * X);
+void DelQ (Queue * Q, infotype * X);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
+
+/* *** Fungsi Tambahan Untuk Battle for Olympia ** */
+
+void CreateTurn(Queue * Q);
+/* I.S. sembarang */
+/* F.S. Queue dengan alokasi 2 memory, dengan angka 1 yang merepresentasikan
+		P1 pada Head dan angka 2 yang merepresentasikan P2 pada Tail */
+void NextTurn(Queue * Q);
+/* I.S. Q terdefinisi 2 elemen dengan A sebagai head dan B sebagai Tail */
+/* F.S. A dihapus (selesai turn) sehingga B menjadi head (turn saat ini)
+		dan A sebagai tail (turn berikutnya) */
+infotype CurrentTurn (Queue Q);
+/* I.S. Q terdefinisi dengan elemen head A (turn saat ini) dan elemen tail B
+		(turn berikutnya) */
+/* F.S. mengembalikan A (turn saat ini)*/
 
 #endif
