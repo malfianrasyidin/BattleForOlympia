@@ -1,0 +1,22 @@
+
+#include "player.h"
+#include "boolean.h"
+#include "listdpUnit.h"
+#include "unit.h"
+
+void AttackU (Unit U1, Unit U2)
+//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
+{
+	HP(U2) -= DamagePoints(U1);
+	if (HP(U2) <= 0) { // Jika HP dari U2 habis
+        DelP(&UnitList(ArrPlayer[Owner(U2)]), Locate(U2));
+		U2 = NullUnit();
+	} else if ((Tipe(U2) == 'K' || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
+		HP(U1) -= DamagePoints(U2);
+
+		if (HP(U1) <= 0) { // Jika HP dari U1 habis setelah counter attack
+        	DelP(&UnitList(ArrPlayer[Owner(U2)]), Locate(U1));
+			U1 = NullUnit();
+		}
+	}
+}

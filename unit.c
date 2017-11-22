@@ -7,14 +7,14 @@
 
 
 //FUNGSI NULLITAS
-Unit NullUnit(POINT P){
+Unit NullUnit(){
 	Unit U;
-	Absis(Locate(U)) = Absis(P);
-	Ordinat(Locate(U)) = Absis(P);
-	Damage(U) = 0;
-	Heal(U) = 0;
-	CanAtk(U) = false;
-	AtkType(U) = ' ';
+	Absis(Locate(U)) = 0;
+	Ordinat(Locate(U)) = 0;
+	DamagePoints(U) = 0;
+	HealPoints(U) = 0;
+	CanAttack(U) = false;
+	AttackType(U) = ' ';
 	MaxHP(U) = 0;
 	MaxMP(U) = 0;
 	HP(U) = 0;
@@ -35,10 +35,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPMage;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'M';
-		Damage(U) = BaseDmgPointWarrior;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
+		AttackType(U) = 'M';
+		DamagePoints(U) = BaseDmgPointWarrior;
+		HealPoints(U)  = 0;
+		CanAttack(U) = true;
 	}
 	else if (N == 2){
 		Locate(U) = P;
@@ -47,10 +47,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPArcher;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointArcher;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointArcher;
+		HealPoints(U)  = 0;
+		CanAttack(U) = true;
 	}
 	else if (N==3) {
 		Locate(U) = P;
@@ -59,10 +59,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPMage;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointMage;
-		Heal(U)  = BaseHealMage;
-		CanAtk(U) = true;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointMage;
+		HealPoints(U)  = BaseHealMage;
+		CanAttack(U) = true;
 	} else if (N==4)	{
 		Locate(U) = P;
 		Tipe(U) = 'K';
@@ -70,10 +70,10 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPKing;
 		MP(U) = MaxMP(U);
-		AtkType(U) = 'R';
-		Damage(U) = BaseDmgPointKing;
-		Heal(U)  = 0;
-		CanAtk(U) = true;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointKing;
+		HealPoints(U)  = 0;
+		CanAttack(U) = true;
 	}
 	return U;
 }
@@ -116,31 +116,11 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	else	printf("Can Attack: No\n");
 }
 
-boolean CmpUnit (Unit U1, Unit U2)
+boolean CmpUnit (POINT PU1, POINT PU2)
 //True jika U1==U2
 {
-	return(EQ(Locate(U1),Locate(U2)));
-}
-void AttackU (Unit U1, Unit U2)
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
-{
-	HP(U2) -= DamagePoints(U1);
-	if ((Type(U2) =="King" || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
-		HP(U1) -= DamagePoints(U2);
-	}
-
-	if (HP(U2) <= 0) {
-		U2 = NullUnit();
-	}
-
-	if
+	return(EQ(PU1, PU2));
 }
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
-
-boolean CmpUnit (POINT U1, POINT U2)
-//True jika U1==U2
-{
-	return(EQ(U1,U2));
-}

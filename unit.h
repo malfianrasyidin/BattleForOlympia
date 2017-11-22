@@ -4,7 +4,6 @@
 #include "point.h"
 #include "boolean.h"
 
-
 #define BaseMaxHPArcher 70
 #define BaseMaxHPWarrior 90
 #define BaseMaxHPMage 120
@@ -41,17 +40,17 @@ typedef struct{
 } Unit;
 
 #define DamagePoints(U) (U).DamagePoints
-#define AttackType(U) (U).AttackType
-#define HealPoints(U) (U).HealPoints
-#define Locate(U) (U).Loc
-#define HP(U) (U).CurrHP
-#define Tipe(U) (U).UnitType
-#define MP(U) (U).CurrMP
-#define Owner(U) (U).UnitOwner
-#define MaxHP(U) (U).MaximumHP
-#define MaxMP(U) (U).MaximumMP
+#define AttackType(U) 	(U).AttackType
+#define HealPoints(U) 	(U).HealPoints
+#define Locate(U) 		(U).Loc
+#define HP(U) 			(U).CurrHP
+#define Tipe(U) 		(U).UnitType
+#define MP(U) 			(U).CurrMP
+#define Owner(U) 		(U).UnitOwner
+#define MaxHP(U) 		(U).MaximumHP
+#define MaxMP(U) 		(U).MaximumMP
 #define CanAttack(U)	(U).CanAtk
-#define Price(U)	(U).price
+#define Price(U)		(U).price
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
@@ -69,10 +68,6 @@ boolean IsAdjacent (POINT P1, POINT P2);
 boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
-
-
-void AttackU (Unit U1, Unit U2);
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U

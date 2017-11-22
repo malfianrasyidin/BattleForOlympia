@@ -1,14 +1,11 @@
-
 #ifndef PLAYER__H
 #define PLAYER__H
 
 #include "boolean.h"
-#include "listdpunit.h"
+#include "listdpUnit.h"
 #include "unit.h"
 
-
-typedef struct
-{
+typedef struct {
     int PlayerNumber;
     Unit CurrUnit;
     int Gold;
@@ -20,7 +17,7 @@ typedef struct
     POINT TowersPointer[4];
 } Player;
 
-#define PlayNumber(P)     (P).PlayerNumber
+#define PlayNumber(P)       (P).PlayerNumber
 #define PGold(P) 			(P).Gold
 #define CurrentUnit(P)		(P).CurrUnit
 #define PIncome(P)			(P).Income
@@ -30,5 +27,9 @@ typedef struct
 #define PlayerCastle(P)		(P).CastlePointer
 #define TabTower(P)			(P).TowersPointer
 #define PlayerTower(P,i) 	(P).TowersPointer[i-1]
+
+
+void AttackU (Unit U1, Unit U2);
+//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
 
 #endif
