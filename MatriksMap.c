@@ -89,19 +89,6 @@ Build getBuild(POINT P, MatriksMap M)
 	return BuildIn(Elmt(M,Absis(P),Ordinat(P)));	
 }
 
-char* UnitTranslation(char Tipe){
-//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
-	switch (Tipe) {
-		case 'K' : return "King"; break;
-		case 'A' : return "Archer"; break;
-		case 'S' : return "Swordsman"; break;
-		case 'W' : return "White Mage"; break;
-		case 'C' : return "Castle"; break;
-		case 'T' : return "Tower"; break;
-		case 'V' : return "Village"; break;
-	}
-}
-
 void PrintMap(MatriksMap M){
 /*Memprint Peta M ke Layar*/
 	for (int i = 1 ; i <= NBrsEff(M) ; i++){

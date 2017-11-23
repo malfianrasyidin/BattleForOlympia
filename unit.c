@@ -105,14 +105,27 @@ boolean IsEnemy(Unit U1, Unit U2){
 	return(Owner(U1)!=Owner(U2));
 }
 
+char* UnitTranslation(char Tipe){
+//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
+	switch (Tipe) {
+		case 'K' : return "King"; break;
+		case 'A' : return "Archer"; break;
+		case 'S' : return "Swordsman"; break;
+		case 'W' : return "White Mage"; break;
+		case 'C' : return "Castle"; break;
+		case 'T' : return "Tower"; break;
+		case 'V' : return "Village"; break;
+	}
+}
+
 void PrintInfoUnit (Unit U)
 /* mengeluarkan info unit standar seperti dibawah ini
 Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 {
-	printf("Unit: %s (%d,%d) | ", UnitTranslation(Tipe(U)), Absis(Locate(U)), Ordinat(Locate(U)));
+	printf("Unit: %s (%d,%d) | " ,UnitTranslation(Tipe(U)), Absis(Locate(U)), Ordinat(Locate(U)));
 	printf("Health: %d/%d | ", HP(U), MaxHP(U));
 	printf("Movement Point: %d | ", MP(U));
-	if (CanAtk(U))	printf("Can Attack: Yes\n");
+	if (CanAttack(U))	printf("Can Attack: Yes\n");
 	else	printf("Can Attack: No\n");
 }
 

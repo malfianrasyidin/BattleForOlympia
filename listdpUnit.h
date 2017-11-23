@@ -132,15 +132,15 @@ void DelBefore (List *L, address *Pdel, address Succ);
 /*      Pdel adalah alamat elemen list yang dihapus  */
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void PrintListUnit (List L);
-/* I.S. List mungkin kosong */
-/* F.S. 
-== List of Units ==
-1. King (2,1) | Health 20
-2. Swordsman (3,5) | Health 20
-*/
+// void PrintListUnit (List L);
+// /* I.S. List mungkin kosong */
+//  F.S. 
+// == List of Units ==
+// 1. King (2,1) | Health 20
+// 2. Swordsman (3,5) | Health 20
 
-List EnemyCanBeAttacked(Unit U, MatriksMap M);
-//Mengembalikan List enemy yg bisa di attack.	
+
+// List EnemyCanBeAttacked(Unit U, MatriksMap M);
+// //Mengembalikan List enemy yg bisa di attack.	
 
 #endif

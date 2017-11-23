@@ -3,8 +3,34 @@
 #include "boolean.h"
 #include "listdpUnit.h"
 #include "unit.h"
+#include "point.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+void InitPlayer (Player *P1, Player *P2, int NB, int NK)
+//Membuat player pada kondisi awal
+{	/* ALGORITMA */
+	PlayNumber(*P1) = 1;
+	PGold(*P1) = StartingGold;
+	CurrentUnitPos(*P1) = MakePOINT(NB-1,KolMin+1); // Posisi King pada awal
+	PIncome(*P1) = 0;
+	PUpKeep(*P1) = 0;
+	
+	CreateEmpty(&UnitList(*P1));
+	InsVFirst(&UnitList(*P1), CurrentUnitPos(*P1));
+
+	CreateEmpty(&VillageList(*P1));
+
+}	
+
+#define PIncome(P)			(P).Income
+#define PUpKeep(P)			(P).UpKeep
+#define UnitList(P)			(P).ListOfUnits
+#define VillageList(P)		(P).ListOfVillages
+#define PlayerCastle(P)		(P).CastlePointer
+#define TabTower(P)			(P).TowersPointer
+#define PlayerTower(P,i) 	(P).TowersPointer[i-1]
+
 
 void AttackU (Unit U1, Unit U2)
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
@@ -131,15 +157,16 @@ void CreateTurn (Queue * Q, Player P1, Player P2) {
 	AddQ(Q, &P2);
 }
 
-void NextTurn (Queue * Q) {
+void NextTurn (Queue * Q, Player * CurrentPlayer) {
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
 	/* ALGORITMA */
 	DelQ(Q, &X);
 	AddQ(Q, X);
+	CurrentPlayer = InfoHead(* Q);
 }
 
 infotypeQ CurrentTurn (Queue Q) {
 	/* Mengambilkan turn saat ini */
-	return InfoTail(Q);
+	return InfoHead(Q);
 }
