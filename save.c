@@ -25,17 +25,20 @@ void WriteUnit(Unit U, FILE *f)
 {	/* KAMUS LOKAL */
 	
 	/* ALGORITMA */
+	fprintf(f, "%d %c %d ",
+				DamagePoints(U),
+				AttackType(U),
+				HealPoints(U));
 	WritePoint(Locate(U), f);
-	fprintf(f, "%c %d %d %d %d %c %d %d %d\n",
-				Tipe(U),
-				MaxHP(U),
+	fprintf(f, "%d %c %d %d %d %d %d %d\n",
 				HP(U),
-				MaxMP(U),
+				Tipe(U),
 				MP(U),
-				AtkType(U),
-				Damage(U),
-				Heal(U),
-				CanAtk(U));
+				Owner(U),
+				MaxHP(U),
+				MaxMP(U),
+				CanAttack(U),
+				Price(U));
 }
 
 void WriteBuild(Build B, FILE *f)

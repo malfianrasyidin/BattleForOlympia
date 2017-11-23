@@ -50,7 +50,6 @@ typedef struct{
 #define MaxHP(U) 				(U).MaximumHP
 #define MaxMP(U) 				(U).MaximumMP
 #define CanAttack(U)		(U).CanAtk
-#define Price(U)				(U).price
 
 //FUNGSI NULLITAS
 Unit NullUnit ();
