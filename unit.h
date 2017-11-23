@@ -81,4 +81,6 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 boolean CmpUnit (POINT PU1, POINT PU2);
 //True jika U1==U2
 
+boolean IsNullUnit(Unit U);
+
 #endif

@@ -4,6 +4,7 @@
 #include "unit.h"
 #include "player.h"
 #include "stackt.h"
+#include "queuelist.h"
 
 
 /* ############################## */
@@ -30,22 +31,22 @@ void Undo (Stack *History, Unit *U);
 //Mengembalikan current unit ke posisi sebelumya dan menambah movement points jika ada.
 
 // CHANGE & RECRUIT UNIT
-Queue MakeUnitQueue (List L);
+QueueU MakeUnitQueue (List L);
 /*Mengembaikan Queue yang berisi semua unit pada L */
 
-void NextUnitQ (Queue *Q, Unit *U, MatriksMap M);
+void NextUnitQ (QueueU *Q, POINT *U, MatriksMap M);
 //I.S Q terdefinisi
 //F.S Mengembalikan Unit yang akan digunakan setelahnya
 
-Unit SearchUnit(Queue Q, int x);
+POINT SearchUnit(QueueU Q, int x);
 //I.S Q terdefinisi, tidak mungkin kosong
 //F.S Mengembalikan Unit yang berada di urutan X pada Queue
 
-void ChangeUnit(Queue *Q, Unit *U);
+void ChangeUnit(QueueU *Q, Unit *U);
 //I.S Q terdefinisi, U sembarang.
 //F.S U adalah Unit selanjutnya pada Queue,  
 
-void AddUnitQ (Queue *Q, POINT P);
+void AddUnitQ (QueueU *Q, POINT P);
 //I.S Q dan U terdefinisi
 //F.S Mengembalikan Q yang sudah berisi Unit U
 
@@ -53,11 +54,11 @@ void AddUnitL (List *L, POINT P);
 //I.S L dan U terdefinisi
 //F.S Mengembalikan L yang sudah terisi Unit U
 
-void AddUnit (List *L, Queue *Q, Unit U);
+void AddUnit (List *L, QueueU *Q, Unit U);
 //I.S L dan U terdefinisi
 //F.S Mengembalikan L dan Q yang sudah ditambah elemennya dengan unit U.
 
-void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M);
+void RecruitUnit (Player P, List *L, QueueU *Q, MatriksMap M);
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan Pesan kesalahan jika UR bukan King atau Gold Player Tidak Cukup
 //    atau L dan Q yang sudah terisi Unit Baru jika True

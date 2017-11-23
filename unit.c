@@ -137,3 +137,20 @@ boolean CmpUnit (POINT PU1, POINT PU2)
 
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
+
+boolean IsNullUnit(Unit U){
+	boolean N;
+	N = (Absis(Locate(U)) == 0) &&
+	(Ordinat(Locate(U)) == 0) &&
+	(DamagePoints(U) == 0) &&
+	(HealPoints(U) == 0) &&
+	(CanAttack(U) == false) &&
+	(AttackType(U) == ' ') &&
+	(MaxHP(U) == 0) &&
+	(MaxMP(U) == 0) &&
+	(HP(U) == 0) &&
+	(MP(U) == 0) &&
+	(Owner(U) == 0) &&
+	(Tipe(U) == ' ');
+	return(N);
+}
