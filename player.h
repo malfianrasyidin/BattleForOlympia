@@ -4,15 +4,17 @@
 #include "boolean.h"
 #include "listdpUnit.h"
 #include "unit.h"
+#include "point.h"
 
 
 #define Nol 0
+#define StartingGold 100
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
 typedef struct tPlayer *addrQ;
 typedef struct tPlayer {
     int PlayerNumber;
-    Unit CurrUnit;
+    POINT CurrUnitPos;
     int Gold;
     int Income;
     int UpKeep;
@@ -26,7 +28,7 @@ typedef addrQ infotypeQ;
 
 #define PlayNumber(P)       (P).PlayerNumber
 #define PGold(P) 			(P).Gold
-#define CurrentUnit(P)		(P).CurrUnit
+#define CurrentUnitPos(P)	(P).CurrUnitPos
 #define PIncome(P)			(P).Income
 #define PUpKeep(P)			(P).UpKeep
 #define UnitList(P)			(P).ListOfUnits
@@ -56,6 +58,8 @@ typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
 #define InfoTail(Q) (Q).T[(Q).TAIL]
 #define MaxEl(Q) (Q).MaxEl
 
+void InitPlayer (Player *P1, Player *P2, int NB, int NK);
+//Membuat player pada kondisi awal
 
 void AttackU (Unit U1, Unit U2);
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
@@ -104,7 +108,7 @@ void CreateTurn(Queue * Q, Player P1, Player P2);
 /* I.S. sembarang */
 /* F.S. Queue dengan alokasi 2 memory, dengan angka 1 yang merepresentasikan
 		P1 pada Head dan angka 2 yang merepresentasikan P2 pada Tail */
-void NextTurn(Queue * Q);
+void NextTurn(Queue * Q, Player * CurrentPlayer);
 /* I.S. Q terdefinisi 2 elemen dengan A sebagai head dan B sebagai Tail */
 /* F.S. A dihapus (selesai turn) sehingga B menjadi head (turn saat ini)
 		dan A sebagai tail (turn berikutnya) */

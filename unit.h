@@ -72,6 +72,9 @@ boolean IsEnemy(Unit U1, Unit U2);
 void PrintAtkType(Unit U);
 //Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
+char* UnitTranslation(char Tipe);
+//Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
+
 void PrintInfoUnit (Unit U);
 /* mengeluarkan info unit standar seperti dibawah ini
 Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
