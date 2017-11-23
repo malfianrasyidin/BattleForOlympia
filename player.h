@@ -20,8 +20,8 @@ typedef struct tPlayer {
     int UpKeep;
     List ListOfUnits;
     List ListOfVillages;
-    POINT CastlePointer;
-    POINT TowersPointer[4];
+    POINT CastlePointer[4];
+    POINT TowersPointer;
 } Player;
 
 typedef addrQ infotypeQ;
@@ -33,9 +33,9 @@ typedef addrQ infotypeQ;
 #define PUpKeep(P)			(P).UpKeep
 #define UnitList(P)			(P).ListOfUnits
 #define VillageList(P)		(P).ListOfVillages
-#define PlayerCastle(P)		(P).CastlePointer
+#define PlayerCastle(P,i)	(P).CastlePointer[i-1]
 #define TabTower(P)			(P).TowersPointer
-#define PlayerTower(P,i) 	(P).TowersPointer[i-1]
+#define PlayerTower(P)   	(P).TowersPointer
 
 /* Definisi elemen dan address */
 
@@ -45,7 +45,7 @@ typedef int addressQ;   /* indeks tabel */
 typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
                  addressQ HEAD;  /* alamat penghapusan */
                  addressQ TAIL;  /* alamat penambahan */
-                 int MaxEl;     /* Max elemen queue */
+                 int MaxElmt;     /* Max elemen queue */
                } Queue;
 /* Definisi Queue kosong: HEAD=Nil; TAIL=Nil. */
 /* Catatan implementasi: T[0] tidak pernah dipakai */
@@ -56,7 +56,7 @@ typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
 #define Tail(Q) (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxEl(Q) (Q).MaxEl
+#define MaxElmt(Q) (Q).MaxElmt
 
 void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 //Membuat player pada kondisi awal

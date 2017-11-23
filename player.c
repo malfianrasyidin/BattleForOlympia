@@ -16,21 +16,12 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK)
 	PIncome(*P1) = 0;
 	PUpKeep(*P1) = 0;
 	
-	CreateEmpty(&UnitList(*P1));
+	CreateEmptyList(&UnitList(*P1));
 	InsVFirst(&UnitList(*P1), CurrentUnitPos(*P1));
 
-	CreateEmpty(&VillageList(*P1));
+	CreateEmptyList(&VillageList(*P1));
 
 }	
-
-#define PIncome(P)			(P).Income
-#define PUpKeep(P)			(P).UpKeep
-#define UnitList(P)			(P).ListOfUnits
-#define VillageList(P)		(P).ListOfVillages
-#define PlayerCastle(P)		(P).CastlePointer
-#define TabTower(P)			(P).TowersPointer
-#define PlayerTower(P,i) 	(P).TowersPointer[i-1]
-
 
 void AttackU (Unit U1, Unit U2)
 //Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
@@ -60,9 +51,9 @@ boolean IsQEmpty (Queue Q)
 
 boolean IsQFull (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
+/* yaitu mengandung elemen sebanyak MaxElmt */
 {	/* ALGORTIMA */
-	return ((Head(Q) == (Tail(Q) + 1)) || ((Head(Q) == 1) && (Tail(Q) == MaxEl(Q))));
+	return ((Head(Q) == (Tail(Q) + 1)) || ((Head(Q) == 1) && (Tail(Q) == MaxElmt(Q))));
 }
 
 int NBElmtQ (Queue Q)
@@ -75,7 +66,7 @@ int NBElmtQ (Queue Q)
 		return (Tail(Q) - Head(Q) + 1);
 	}
 	else {
-		return (MaxEl(Q) - Head (Q) + 1 + Tail(Q));
+		return (MaxElmt(Q) - Head (Q) + 1 + Tail(Q));
 	}
 }
 
@@ -85,17 +76,17 @@ void CreateEmptyQ (Queue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
+/* atau : jika alokasi gagal, Q kosong dg MaxElmt=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {	/* ALGORTIMA */
 	(* Q).T = (infotypeQ *) malloc ((Max + 1) * sizeof(infotypeQ));
 	if ((*Q).T != NULL) {
-		MaxEl(*Q) = Max;
+		MaxElmt(*Q) = Max;
 		Head(*Q) = Nol;
 		Tail(*Q) = Nol;
 	}
 	else {
-	MaxEl(*Q) = 0;
+	MaxElmt(*Q) = 0;
 	}
 }
 
@@ -104,9 +95,9 @@ void CreateEmptyQ (Queue * Q, int Max)
 void DeAlokasiQ(Queue * Q)
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
-/* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
+/* F.S. Q menjadi tidak terdefinisi lagi, MaxElmt(Q) diset 0 */
 {	/* ALGORTIMA */
-    MaxEl(* Q) = 0;
+    MaxElmt(* Q) = 0;
     free((* Q).T);
 }
 
@@ -121,7 +112,7 @@ void AddQ (Queue * Q, infotypeQ X)
 		Head(* Q) = 1;
 		Tail(* Q) = 1;
 	}
-	else if (Tail(* Q) == MaxEl(* Q)) {
+	else if (Tail(* Q) == MaxElmt(* Q)) {
 		Tail(* Q) = 1;
 	}
 	else {
@@ -141,7 +132,7 @@ void DelQ (Queue * Q, infotypeQ * X)
 		Head(* Q) = 0;
 		Tail(* Q) = 0;
 	}
-	else if (Head(* Q) == MaxEl(* Q)) {
+	else if (Head(* Q) == MaxElmt(* Q)) {
 		Head(* Q) = 1;
 	}
 	else {

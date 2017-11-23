@@ -1,8 +1,9 @@
+#include <stdio.h>
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
 #include "unit.h"
-#include <stdio.h>
+#include "player.h"
 #include "stackt.h"
 
 /* ############################## */
@@ -42,7 +43,7 @@ MatriksMap PossibleMove (Unit U, MatriksMap M)
 	for (i=GetFirstIdxBrs(M); i<=GetLastIdxBrs(M); i++)	{
 		Absis(P)=i;
 		if (IsMoveValid(U,P,M))	{
-			UnitIn(Elmt(MOut,i,j)).KarType = "$";
+			UnitIn(Elmt(MOut,i,j)).UnitType = '$';
 		}
 	}
 	i=Absis(Locate(U));
@@ -50,11 +51,17 @@ MatriksMap PossibleMove (Unit U, MatriksMap M)
 	for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++)	{
 		Ordinat(P)=j;
 		if (IsMoveValid(U,P,M))	{
-			UnitIn(Elmt(MOut,i,j)).KarType = "$";
+			UnitIn(Elmt(MOut,i,j)).UnitType = '$';
 		}
 	}
 	return MOut;
 }
+
+void History(Stack *S, POINT P){
+//Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
+	Push(S, P);
+}
+
 void MainMove(Stack *S, Unit *U, MatriksMap *M)
 //MainMove
 {
@@ -94,38 +101,34 @@ void Undo (Stack *History, Unit *U) {
 	}
 }
 
-void History(Stack *S, POINT P){
-//Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
-	Push(S, P);
-}
-
-
 // CHANGE & RECRUIT UNIT
 Queue MakeUnitQueue (List L){
 /*Mengembaikan Queue yang berisi semua unit pada L */
-	Queue Q;
-	addressQ P = First(L);
-	while(P){
-		Add(&Q,Info(P));
-		P = Next(P);
-	}
+	// Queue Q;
+	// addressQ P = First(L);
+	// while(P){
+	// 	AddQ(&Q,Info(P));
+	// 	P = Next(P);
+	// }
 }
 
 void NextUnitQ (Queue *Q, Unit *U, MatriksMap M){
 //I.S Q terdefinisi
 //F.S Mengembalikan Unit yang akan digunakan setelahnya
-	RoundP(&*Q);
-	P = Info(Head(*Q));
-	*U = UnitIn(Elmt(M,Absis(P),Ordinat(P)));
+	// Unit P;
+	// RoundP(&*Q);
+	// P = Info(Head(*Q));
+	// *U = UnitIn(Elmt(M,Absis(),Ordinat()));
 }
 
 Unit SearchUnit(Queue Q, int x){
 //I.S Q terdefinisi, tidak mungkin kosong
 //F.S Mengembalikan Unit yang berada di urutan X pada Queue
-	P = Head(Q);
-	for (i = 1 ; i < x ; i++){
-		P = Next(P);
-	}
+	// Player P;
+	// P = Head(Q);
+	// for (int i = 1 ; i < x ; i++){
+	// 	P = Next(P);
+	// }
 }
 
 void ChangeCurrUnit(Queue *Q, MatriksMap M, Player *P){
@@ -133,15 +136,15 @@ void ChangeCurrUnit(Queue *Q, MatriksMap M, Player *P){
 //F.S Mengganti Current Unit yang diapakai player dengan unit selanjutnya pada Queue,  
 	Unit U;
 	NextUnitQ(&*Q, &U, M);
-	CurrentUnit(*P) = U;
+	CurrentUnitPos(*P) = Locate(U);
 }
 
 void AddUnit (List *L, Queue *Q, Unit U){
 //I.S L dan U terdefinisi
 //F.S Mengembalikan L dan Q yang sudah ditambah elemennya dengan unit U.
-	POINT Ul = Locate(U);
-	Add(&*Q,Ul);
-	InsVLast(&*L,P);
+	// POINT Ul = Locate(U);
+	// Add(Q,Ul);
+	// InsVLast(L,P);
 }
 
 void InfoRecruit(int *N){
@@ -150,32 +153,32 @@ void InfoRecruit(int *N){
 	scanf("%d", &*N);
 }
 
-
 int EmptyTower(Player P, MatriksMap M){
-	int i;
-	boolean found = false;
-	while(!found && i <= 4){
-		found = UnitIn(M,Absis(PlayerTower(P,i)),Ordinat(PlayerTower(P,i))) != NullUnit();
-		if (!found){
-			i++;
-		}
-	}
-	if(found){
-		return(i);
-	}
-	else{
-		return(0);
-	}
+	// int i;
+	// boolean found = false;
+	// while(!found && i <= 4){
+	// 	// found = UnitIn(M,Absis(PlayerTower(P,i)),Ordinat(PlayerTower(P,i))) != NullUnit();
+	// 	if (!found){
+	// 		i++;
+	// 	}
+	// }
+	// if(found){
+	// 	return(i);
+	// }
+	// else{
+	// 	return(0);
+	// }
+	return 0;
 }
 
 void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M){
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
-	if (Tipe(CurrentUnit(P)) != 'K'){
+	if (Tipe(getUnit(CurrentUnitPos(P), M)) != 'K'){
 		printf("Unit yang dipakai Bukan King, Recruit Gagal.\n");
 	}
-	else if (Locate(CurrentUnit(P)) != PlayerCastle(P)){
-		printf("King Tidak di Castle, Recruit Gagal\n");
+	else if (!EQ(CurrentUnitPos(P),PlayerTower(P))){
+		printf("King Tidak di Tower, Recruit Gagal\n");
 	}
 	else {
 		printf("Pilih Unit yang Ingin di recruit\n");
@@ -190,7 +193,8 @@ void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M){
 		else{
 			UPrice = PriceMage;
 		}
-		int i = EmptyTower(P,M)
+
+		int i = EmptyTower(P,M);
 		if (UPrice > PGold(P)){
 			printf("Anda tidak memiliki Gold yang Cukup\n");
 		}
@@ -199,8 +203,8 @@ void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M){
 		}
 		else{
 			printf("Recruit berhasil\n");
-			Unit U = MakeNewUnit(N,PlayNumber(P),PlayerTower(P,i));
-			Unit(Elmt(M,Absis(PlayerTower(P,i)),Ordinat(PlayerTower(P,i)))) = U;
+			Unit U = MakeNewUnit(N,PlayNumber(P),PlayerCastle(P,i));
+			UnitIn(Elmt(M,Absis(PlayerCastle(P,i)),Ordinat(PlayerCastle(P,i)))) = U;
 			AddUnit(&*L,&*Q,U);
 		}
 	}
@@ -211,25 +215,27 @@ void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M){
 /* ############################## */
 void PrintInfoCell (POINT P, MatriksMap M){
 //F.S : Ngeprint info cell (building & unit)
-	if (IsUnitIn(P,M))	{	
+	Unit U = UnitIn(Elmt(M,Absis(P),Ordinat(P)));
+	Build B = BuildIn(Elmt(M,Absis(P),Ordinat(P)));
+	if (IsBuildIn(P,M))	{	
 		printf("== Cell Info ==\n");
-		printf("%s\n", Kepanjangan(TipeB(UnitIn(Elmt(Absis(P),Ordinat(P))))));
-		printf("Owned by Player %d\n", OwnerB(UnitIn(Elmt(Absis(P),Ordinat(P)))));
+		printf("%s\n", UnitTranslation(TipeB(B)));
+		printf("Owned by Player %d\n", OwnerB(B));
 	} else {
 		printf("There isn't building here\n");
 	}
-	if (IsBuildIn(P,M))	{
+	if (IsUnitIn(P,M))	{
 		printf("== Unit Info ==\n");
-		printf("%s\n", Kepanjangan(Tipe(BuildIn(Elmt(Absis(P),Ordinat(P))))));
-		printf("Owned by Player %d\n", Owner(UnitIn(Elmt(Absis(P),Ordinat(P)))));
+		printf("%s\n", UnitTranslation(Tipe(U)));
+		printf("Owned by Player %d\n", Owner(U));
 		printf("Health: %d/%d | ", HP(U), MaxHP(U));
-		printf("ATK: %d | ", Damage(U));
+		printf("ATK: %d | ", DamagePoints(U));
 	} else {
 		printf("There isn't unit here\n");
 	}
-
 }
-void Info(MatriksMap M)	{
+
+void MainInfo(MatriksMap M)	{
 //main info
 	int x,y;
 	POINT P;

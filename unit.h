@@ -42,15 +42,15 @@ typedef struct{
 #define DamagePoints(U) (U).DamagePoints
 #define AttackType(U) 	(U).AttackType
 #define HealPoints(U) 	(U).HealPoints
-#define Locate(U) 		(U).Loc
-#define HP(U) 			(U).CurrHP
-#define Tipe(U) 		(U).UnitType
-#define MP(U) 			(U).CurrMP
-#define Owner(U) 		(U).UnitOwner
-#define MaxHP(U) 		(U).MaximumHP
-#define MaxMP(U) 		(U).MaximumMP
-#define CanAttack(U)	(U).CanAtk
-#define Price(U)		(U).price
+#define Locate(U) 			(U).Loc
+#define HP(U) 					(U).CurrHP
+#define Tipe(U) 				(U).UnitType
+#define MP(U) 					(U).CurrMP
+#define Owner(U) 				(U).UnitOwner
+#define MaxHP(U) 				(U).MaximumHP
+#define MaxMP(U) 				(U).MaximumMP
+#define CanAttack(U)		(U).CanAtk
+#define Price(U)				(U).price
 
 //FUNGSI NULLITAS
 Unit NullUnit ();

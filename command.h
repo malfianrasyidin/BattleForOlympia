@@ -1,7 +1,8 @@
-#include "command.h"
+#include <stdio.h>
 #include "point.h"
 #include "MatriksMap.h"
 #include "unit.h"
+#include "player.h"
 #include "stackt.h"
 
 
@@ -25,7 +26,7 @@ void MainMove(Stack *S,Unit *U, MatriksMap *M);
 Queue MakeUnitQueue (List L);
 /*Mengembaikan Queue yang berisi semua unit pada L */
 
-void NextUnitQ (Queue *Q, Unit *U);
+void NextUnitQ (Queue *Q, Unit *U, MatriksMap M);
 //I.S Q terdefinisi
 //F.S Mengembalikan Unit yang akan digunakan setelahnya
 
@@ -49,7 +50,7 @@ void AddUnit (List *L, Queue *Q, Unit U);
 //I.S L dan U terdefinisi
 //F.S Mengembalikan L dan Q yang sudah ditambah elemennya dengan unit U.
 
-void RecruitUnit (Unit UR, Player P, Queue *Q);
+void RecruitUnit (Player P, List *L, Queue *Q, MatriksMap M);
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan Pesan kesalahan jika UR bukan King atau Gold Player Tidak Cukup
 //    atau L dan Q yang sudah terisi Unit Baru jika True
@@ -57,10 +58,8 @@ void RecruitUnit (Unit UR, Player P, Queue *Q);
 /* ############################## */
 /* ########### INFO ############# */
 /* ############################## */
-void PrintInfoCell (POINT P, MatriksMap M){
+void PrintInfoCell (POINT P, MatriksMap M);
 //F.S : Ngeprint info cell (building & unit)
-}
 
-void Info(MatriksMap M)	{
+void MainInfo(MatriksMap M);
 //main info
-}
