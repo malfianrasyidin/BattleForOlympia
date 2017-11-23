@@ -17,10 +17,17 @@ boolean PointInMap (POINT P, MatriksMap M);
 boolean IsMoveValid(Unit U, POINT P, MatriksMap M);
 /* I.S Unit bukan unit Null, M Terdefinisi
  * F.S True jika Movement ke P Valid, False jika tidak */
+
+void History(Stack *S, POINT P);
+//Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
+
 MatriksMap PossibleMove (Unit U, MatriksMap M);
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 void MainMove(Stack *S,Unit *U, MatriksMap *M);
 //MainMove
+
+void Undo (Stack *History, Unit *U);
+//Mengembalikan current unit ke posisi sebelumya dan menambah movement points jika ada.
 
 // CHANGE & RECRUIT UNIT
 Queue MakeUnitQueue (List L);
