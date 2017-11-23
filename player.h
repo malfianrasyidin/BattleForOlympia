@@ -5,6 +5,7 @@
 #include "listdpUnit.h"
 #include "unit.h"
 #include "point.h"
+#include "queuelist.h"
 
 
 #define Nol 0

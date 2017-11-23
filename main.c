@@ -1,11 +1,12 @@
+#include <stdio.h>
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
 #include "unit.h"
-#include <stdio.h>
 #include "stackt.h"
 #include "string.h"
 #include "player.h"
+#include "queuelist.h"
 
 
 
@@ -15,7 +16,7 @@ int main()	{
 	MatriksMap M;
 	Player CurrPlayer;
 	Stack SUndo;
-	Queue Q;
+	QueueU Q;
 	Queue QP;
 	Unit CurrUnit;
 	printf("=====================================\n");
