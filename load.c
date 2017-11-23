@@ -1,9 +1,10 @@
 #include <stdio.h>
-#include "mesinkata.h"
+#include <string.h>
 #include <stdlib.h>
 #include "mesinkar.h"
+#include "mesinkata.h"
 #include "boolean.h"
-#include <string.h>
+#include "load.h"
 
 void kataToString (Kata CKata, char *str) 
 /* I.S. CKata terdefinisi, str sembarang */
