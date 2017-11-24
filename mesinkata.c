@@ -1,11 +1,3 @@
-/* File: mesinkata.h */
-/* NIM				: 13516098
-   Nama				: Rifqi Rifaldi Utomo
-   Tanggal			: 23 September 2017
-   Topik praktikum	: Mesin Kata Versi 1
-   Deskripsi		: Mesin Kata Versi 1
- */
-
 #include "mesinkata.h"
 #include "mesinkar.h"
 #include "boolean.h"

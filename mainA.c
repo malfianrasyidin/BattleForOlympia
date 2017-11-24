@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "stringt.h"
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
