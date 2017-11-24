@@ -1,10 +1,10 @@
 #include <stdio.h>
+#include "stringt.h"
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
 #include "unit.h"
 #include "stackt.h"
-#include "string.h"
 #include "player.h"
 #include "queuelist.h"
 
@@ -45,40 +45,41 @@ int main()	{
 		cmd=" ";
 		CurrPlayer = P1;
 		while (strcmp(cmd,"EXIT")!=0)	{
+			PrintMap(M);
 			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
 			// PrintInfoPlayer(CurrPlayer);
 			PrintInfoUnit(CurrUnit);
 			printf("Your Input : "); scanf("%s", cmd);
-			if (strcmp(cmd,"MOVE"))	{
+			if (!strcmp(cmd,"MOVE"))	{
 				MainMove(&SUndo, &CurrUnit, &M);
 			}
-			if (strcmp(cmd,"UNDO"))	{
+			if (!strcmp(cmd,"UNDO"))	{
 				Undo(&SUndo,&CurrUnit);
 			}
-			if (strcmp(cmd,"CHANGE_UNIT"))	{
+			if (!strcmp(cmd,"CHANGE_UNIT"))	{
 				ChangeCurrUnit(&Q,M,&CurrPlayer);
 			}
-			if (strcmp(cmd,"RECRUIT"))	{
+			if (!strcmp(cmd,"RECRUIT"))	{
 				RecruitUnit (CurrPlayer, &UnitList(CurrPlayer), &Q, M);
 			}
-			if (strcmp(cmd,"ATTACK"))	{
+			if (!strcmp(cmd,"ATTACK"))	{
 				//Attack
 			}
-			if (strcmp(cmd,"MAP"))	{
+			if (!strcmp(cmd,"MAP"))	{
 				PrintMap(M);
 			}
-			if (strcmp(cmd,"INFO"))	{
+			if (!strcmp(cmd,"INFO"))	{
 				MainInfo(M);
 			}
-			if (strcmp(cmd,"END_TURN"))	{
+			if (!strcmp(cmd,"END_TURN"))	{
 				NextTurn(&QP,&CurrPlayer);
 			}
-			if (strcmp(cmd,"SAVE"))	{
+			if (!strcmp(cmd,"SAVE"))	{
 
 			}
-			if (strcmp(cmd,"EXIT"))	{
+			if (!strcmp(cmd,"EXIT"))	{
 
 			}
 		}

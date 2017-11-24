@@ -104,9 +104,11 @@ void PrintMap(MatriksMap M){
 			X = TipeB(BuildIn(Elmt(M,i,j)));
 			printf(" ");
 			if (owner==1){
-				print_red("%c", X);
+				print_red(X);
+			} else if (owner==2){
+				print_yellow(X);
 			} else {
-				print_blue("%c", X);
+				print_green(X);
 			}
 			printf(" *");
 		}
@@ -116,16 +118,17 @@ void PrintMap(MatriksMap M){
 			X = Tipe(UnitIn(Elmt(M,i,j)));
 			printf(" ");
 			if (owner==1){
-				print_red("%c", X);
+				print_red(X);
+			} else if (owner==2){
+				print_yellow(X);
 			} else {
-				print_blue("%c", X);
+				print_green(X);
 			}
 			printf(" *");;
 		}
 		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			printf(" ");
-			print_blue(' ');
+			printf("  ");
 			printf(" *");
 		}
 		printf("\n");
@@ -165,7 +168,7 @@ MatriksMap MatGen(indeks NB, indeks NK){
 	BuildIn(Elmt(M,BrsMin+1,NK-2)).Tipe = 'C'; //kiri
 	BuildIn(Elmt(M,BrsMin+1,NK-2)).Owner = 2;
 	BuildIn(Elmt(M,BrsMin+1,NK)).Tipe = 'C'; //kanan
-	BuildIn(Elmt(M,BrsMin+1,NK-2)).Owner = 2;
+	BuildIn(Elmt(M,BrsMin+1,NK)).Owner = 2;
 	BuildIn(Elmt(M,BrsMin+2,NK-1)).Tipe = 'C'; //bawah
 	BuildIn(Elmt(M,BrsMin+2,NK-1)).Owner = 2;
 	
