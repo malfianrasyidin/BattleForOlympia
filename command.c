@@ -15,18 +15,24 @@ boolean PointInMap (POINT P, MatriksMap M){
 }
 boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 //Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
-	if (MP(getUnit(PU,M)) == 0){
+	if (MP(UnitIn(Elmt(M,Absis(PU),Ordinat(PU)))) == 0){
+		//printf("%d tes1 (%d,%d)\n", MP(UnitIn(Elmt(M,Absis(PU),Ordinat(PU)))), Absis(PU) ,Ordinat(PU));
 		return(false);
 	}
 	else if (!PointInMap(P,M)) {
+		//printf("tes2\n");
 		return(false);
 	}
 	else if (IsUnitIn(P, M)){
+		//printf("tes3\n");
 		return(false);
 	}
 	else{
 		if ((MP(getUnit(PU,M))-Distance(PU, P))>=0) return true;
-		else return false;
+		else {
+			//printf("tes4\n");
+			return false;
+		}
 	}
 }
 
