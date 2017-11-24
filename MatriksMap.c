@@ -91,6 +91,8 @@ Build getBuild(POINT P, MatriksMap M)
 
 void PrintMap(MatriksMap M){
 /*Memprint Peta M ke Layar*/
+	int owner;
+	char X;
 	for (int i = 1 ; i <= NBrsEff(M) ; i++){
 		printf("*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
@@ -98,22 +100,32 @@ void PrintMap(MatriksMap M){
 		}
 		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
-			// printf("%s *", &(BuildIn(Elmt(M,i,j))).Tipe[0]);
+			owner = OwnerB(BuildIn(Elmt(M,i,j)));
+			X = TipeB(BuildIn(Elmt(M,i,j)));
 			printf(" ");
-			print_red('A');
+			if (owner==1){
+				print_red("%c", X);
+			} else {
+				print_blue("%c", X);
+			}
 			printf(" *");
 		}
 		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
+			owner = Owner(UnitIn(Elmt(M,i,j)));
+			X = Tipe(UnitIn(Elmt(M,i,j)));
 			printf(" ");
-			print_green('T');
-			printf(" *");
-			// printf("%s *", &(UnitIn(Elmt(M,i,j))).KarType[0]);
+			if (owner==1){
+				print_red("%c", X);
+			} else {
+				print_blue("%c", X);
+			}
+			printf(" *");;
 		}
 		printf("\n*");
 		for (int j = 1 ; j <= NKolEff(M) ; j++){
 			printf(" ");
-			print_blue('D');
+			print_blue(' ');
 			printf(" *");
 		}
 		printf("\n");

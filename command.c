@@ -106,10 +106,13 @@ void Undo (Stack *History, Unit *U) {
 QueueU MakeUnitQueue (List L){
 /*Mengembaikan Queue yang berisi semua unit pada L */
 	QueueU Q;
+	CreateEmptyUQ(&Q);
 	addressList P = First(L);
 	while(P){
 		AddQU(&Q,Info(P));
-		P = Next(P);
+		if(P){
+			P = Next(P);
+		}
 	}
 	return(Q);
 }
