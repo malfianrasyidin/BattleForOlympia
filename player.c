@@ -176,7 +176,7 @@ void CreateTurn (Queue * Q, Player P1, Player P2) {
 	AddQ(Q, &P2);
 }
 
-void NextTurn (Queue * Q, Player * CurrentPlayer) {
+void NextTurn (Queue * Q) {
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
 	/* ALGORITMA */

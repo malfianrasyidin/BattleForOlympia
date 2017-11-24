@@ -5,6 +5,13 @@
 #include "mesinkata.h"
 #include "boolean.h"
 #include "load.h"
+#include "command.h"
+#include "MatriksMap.h"
+#include "unit.h"
+#include "point.h"
+#include "listdpUnit.h"
+#include "player.h"
+#include "jam.h"
 
 void kataToString (Kata CKata, char *str) 
 /* I.S. CKata terdefinisi, str sembarang */
@@ -19,7 +26,11 @@ void kataToChar (Kata CKata, char *chr)
 /* I.S. CKata terdefinisi, str sembarang */
 /* F.S. str terdefinisi dengan isi dari CKata.TabKata */
 {	/* ALGORITMA */
-	*chr = CKata.TabKata[0];
+	if (CKata.TabKata[0] == '_') {
+		*chr = ' ';
+	} else {
+		*chr = CKata.TabKata[0];
+	}
 }
 
 void kataToInt (Kata CKata, int *bil) 
@@ -35,6 +46,26 @@ void kataToInt (Kata CKata, int *bil)
 }
 
 /*** MEMBACA FILE EKSTERNAL ***/
+
+void ReadTime(TANGGAL *T, JAM *J)
+/* I.S. T dan J sembarang, CKata ada di kata pertama*/
+/* F.S. Tanggal T dan Jam J terdefinisi */
+{	/* KAMUS LOKAL */
+	
+	/* ALGORITMA */
+	kataToInt(CKata, &Day(*T));
+	ADVKATA();
+	kataToInt(CKata, &Month(*T));
+	ADVKATA();
+	kataToInt(CKata, &Year(*T));
+	ADVKATA();
+	kataToInt(CKata, &Hour(*J));
+	ADVKATA();
+	kataToInt(CKata, &Minute(*J));
+	ADVKATA();
+	kataToInt(CKata, &Second(*J));
+	ADVKATA();
+}
 
 void ReadPoint (POINT *P)
 /* I.S. P sembarang, CKata ada di kata pertama*/
@@ -52,26 +83,29 @@ void ReadUnit (Unit *U)
 /* I.S. U sembarang, CKata ada di kata pertama*/
 /* F.S. Unit U terdefinisi */
 {	/* KAMUS LOKAL */
-	
+	int CanAtk;
 	/* ALGORITMA */
+	kataToInt(CKata, &DamagePoints(*U));
+	ADVKATA();
+	kataToChar(CKata, &AttackType(*U));
+	ADVKATA();
+	kataToInt(CKata, &HealPoints(*U));
+	ADVKATA();
 	ReadPoint(&Locate(*U));
-	kataToChar(CKata, &Tipe(*U));
-	ADVKATA();
-	kataToInt(CKata, &MaxHP(*U));
-	ADVKATA();
 	kataToInt(CKata, &HP(*U));
 	ADVKATA();
-	kataToInt(CKata, &MaxMP(*U));
+	kataToChar(CKata, &Tipe(*U));
 	ADVKATA();
 	kataToInt(CKata, &MP(*U));
 	ADVKATA();
-	kataToChar(CKata, &AtkType(*U));
+	kataToInt(CKata, &Owner(*U));
 	ADVKATA();
-	kataToInt(CKata, &Damage(*U));
+	kataToInt(CKata, &MaxMP(*U));
 	ADVKATA();
-	kataToInt(CKata, &Heal(*U));
+	kataToInt(CKata, &MaxMP(*U));
 	ADVKATA();
-	kataToInt(CKata, &CanAtk(*U));
+	kataToInt(CKata, &CanAtk);
+	CanAttack(*U) = (char) CanAtk;
 	ADVKATA();
 }
 
@@ -91,8 +125,26 @@ void ReadLocation(Location *L)
 /* I.S. L sembarang, CKata ada di kata pertama*/
 /* F.S. Location L terdefinisi */
 {	/* ALGORITMA */
-	ReadBuild(L.Build);
-	ReadUnit(L.Unit);
+	ReadBuild(&BuildIn(*L));
+	ReadUnit(&UnitIn(*L));
+}
+
+void ReadMatriksMap(MatriksMap *M)
+	/* I.S.  file f sudah dibuka, MatriksMap M terdefinisi */
+	/* F.S. file f diisi dengan MatriksMap M */
+{	/* KAMUS LOKAL */
+	int NBrs, NKol, i, j;
+	/* ALGORITMA */
+	kataToInt(CKata, &NBrs);
+	ADVKATA();
+	kataToInt(CKata, &NKol);
+	ADVKATA();
+	MakeMATRIKS(NBrs, NKol, M);
+	for (i = 1; i <= NBrsEff(*M); ++i) {
+		for (j = 1; j <= NKolEff(*M); ++j) {
+			ReadLocation(&Elmt(*M, i, j));
+		}
+	}
 }
 
 void ReadListOfPoint(List *L)
@@ -101,7 +153,7 @@ void ReadListOfPoint(List *L)
 {	/* KAMUS LOKAL */
 	POINT PTemp;
 	/* ALGORITMA */
-	CreateEmpty(L);
+	CreateEmptyList(L);
 	while(strcmp(CKata.TabKata, "EndOfList")) {
 		ReadPoint(&PTemp);
 		InsVLast(L, PTemp);
@@ -119,31 +171,17 @@ void ReadPlayer(Player *P)
 	ADVKATA();
 	kataToInt(CKata, &PGold(*P));
 	ADVKATA();
+	ReadPoint(&CurrentUnitPos(*P));
 	kataToInt(CKata, &PIncome(*P));
 	ADVKATA();
 	kataToInt(CKata, &PUpKeep(*P));
 	ADVKATA();
-	ReadUnit(&CurrentUnit(*P));
 	ReadListOfPoint(&UnitList(*P));
 	ReadListOfPoint(&VillageList(*P));
-	ReadPoint(&TabTower(*P));
 	for (int i = 1; i <= 4; ++i){
-		ReadPoint(&PlayerTower(*P,i));
+		ReadPoint(&PlayerCastle(*P,i));
 	}
-}
-
-void ReadUndo(Stack *S)
-/* I.S. S sembarang, CKata ada di kata pertama*/
-/* F.S. Stack S terdefinisi */
-{	/* KAMUS LOKAL */
-	POINT PTemp;
-	/* ALGORITMA */
-	CreateEmpty(S);
-	while(strcmp(CKata.TabKata, "EndOfStack")) {
-		ReadPoint(&PTemp);
-		Push(S, PTemp);
-	}
-	ADVKATA();
+	ReadPoint(&PlayerTower(*P));
 }
 
 void ReadTurn(Queue *Q)
@@ -152,28 +190,37 @@ void ReadTurn(Queue *Q)
 {	/* KAMUS LOKAL */
 	int playertemp;
 	/* ALGORITMA */
-	CreateEmpty(Q);
+	CreateEmptyQ(Q,2);
 	while(strcmp(CKata.TabKata, "EndOfQueue")) {
 		kataToInt(CKata, &playertemp);
-		Add(Q, playertemp);
+		AddQ(Q, playertemp);
 		ADVKATA();
 	}
 	ADVKATA();
 }
 
-void Load(Location *Loc, Player *Player1, Player *Player2, Queue *Turn, Stack *Undo)
+void Load(MatriksMap *MatMap, Player *Player1, Player *Player2, Queue *Turn, char filename[])
 /* Melakukan load file */
 /* I.S. file pitakar.txt berisi hasil save, semua parameter tidak terdefinisi*/
 /* F.S. mendefinisikan semua parameter */
 {	/* KAMUS LOKAL */
+	TANGGAL T;
+	JAM J;
 	/* ALGORITMA */
-	STARTKATA();
-	ReadLocation(Loc);
+	printf("Loading file '%s' ...\n", filename);
+	STARTKATA(filename);
+	ReadTime(&T, &J);
+	ReadMatriksMap(MatMap);
 	ReadPlayer(Player1);
 	ReadPlayer(Player2);
-	WriteTurn(Turn);
-	WriteUndo(Undo);
+	ReadTurn(Turn);
 	while (!EndKata) {
 		ADVKATA();
 	}
+	printf("File from ");
+	TulisTANGGAL(T);
+	printf(" ");
+	TulisJAM(J);
+	printf(" successfully loaded.\n");
+
 }

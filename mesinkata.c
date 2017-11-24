@@ -25,12 +25,12 @@ void IgnoreBlank()
 	}
 }
 
-void STARTKATA()
+void STARTKATA(char filename[])
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = MARK; 
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
-{	START();
+{	START(filename);
 	IgnoreBlank();
 	EndKata = (CC == MARK);
 	if (!EndKata) {

@@ -25,7 +25,7 @@ typedef struct tPlayer {
     POINT TowersPointer;
 } Player;
 
-typedef addrQ infotypeQ;
+typedef int infotypeQ;
 
 #define PlayNumber(P)       (P).PlayerNumber
 #define PGold(P) 			(P).Gold
