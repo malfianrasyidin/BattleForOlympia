@@ -10,6 +10,7 @@
 #include "unit.h"
 #include "MatriksMap.h"
 #include "point.h"
+#include "point.h"
 
 #define Nil NULL
 
@@ -67,6 +68,8 @@ addressList Search (List L, infotype X);
 /* Mencari apakah ada elemen list dengan Info(P)=X */
 /* Jika ada, mengirimkan addressList elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
+
+int NbElmtList (List L);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
@@ -130,17 +133,5 @@ void DelBefore (List *L, addressList *Pdel, addressList Succ);
 /* I.S. List tidak kosong. Succ adalah anggota list. */
 /* F.S. Menghapus Prev(Succ): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
-
-/****************** PROSES SEMUA ELEMEN LIST ******************/
-// void PrintListUnit (List L);
-// /* I.S. List mungkin kosong */
-//  F.S. 
-// == List of Units ==
-// 1. King (2,1) | Health 20
-// 2. Swordsman (3,5) | Health 20
-
-
-// List EnemyCanBeAttacked(Unit U, MatriksMap M);
-// //Mengembalikan List enemy yg bisa di attack.	
 
 #endif

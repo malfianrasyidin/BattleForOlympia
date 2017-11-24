@@ -15,18 +15,24 @@ boolean PointInMap (POINT P, MatriksMap M){
 }
 boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 //Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
-	if (MP(getUnit(PU,M)) == 0){
+	if (MP(UnitIn(Elmt(M,Absis(PU),Ordinat(PU)))) == 0){
+		//printf("%d tes1 (%d,%d)\n", MP(UnitIn(Elmt(M,Absis(PU),Ordinat(PU)))), Absis(PU) ,Ordinat(PU));
 		return(false);
 	}
 	else if (!PointInMap(P,M)) {
+		//printf("tes2\n");
 		return(false);
 	}
 	else if (IsUnitIn(P, M)){
+		//printf("tes3\n");
 		return(false);
 	}
 	else{
 		if ((MP(getUnit(PU,M))-Distance(PU, P))>=0) return true;
-		else return false;
+		else {
+			//printf("tes4\n");
+			return false;
+		}
 	}
 }
 
@@ -77,7 +83,7 @@ void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 		printf("You can’t move there\n");
 		printf("Please enter cell’s coordinate x y: ");
 		scanf("%d %d", &x, &y);
-		POINT P = MakePOINT(x,y);
+		P = MakePOINT(x,y);
 	}
 	//update
 	UnitIn(Elmt(*M,x,y))=U;
@@ -151,6 +157,9 @@ void ChangeCurrUnit(QueueU *Q, MatriksMap M, Player *P){
 	POINT U;
 	NextUnit(&*Q, &U, M);
 	CurrentUnitPos(*P) = U;
+	printf("%s\n",UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(InfoTailQU(*Q)),Ordinat(InfoTailQU(*Q)))))) );
+	printf("%s\n",UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(InfoHeadQU(*Q)),Ordinat(InfoHeadQU(*Q)))))) );
+	printf("You have changed your Unit to %s\n", UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(U),Ordinat(U))))));
 }
 
 void AddUnit (List *L, QueueU *Q, Unit U){
@@ -162,13 +171,13 @@ void AddUnit (List *L, QueueU *Q, Unit U){
 }
 
 void InfoRecruit(int *N){
-	printf("1. Warrior\n2. Archer\n3. Mage \n");
+	printf("1. Mage\n2. Archer\n3. Swordsman \n");
 	printf("Unit yang diinginkan : ");
 	scanf("%d", &*N);
 }
 
-int EmptyTower(Player P, MatriksMap M){
-	 int i;
+int EmptyCastle(Player P, MatriksMap M){
+	 int i = 1;
 	 boolean found = false;
 	 while(!found && i <= 4){
 	 	 found = IsNullUnit(UnitIn(Elmt(M,Absis(PlayerCastle(P,i)),Ordinat(PlayerCastle(P,i)))));
@@ -184,13 +193,13 @@ int EmptyTower(Player P, MatriksMap M){
 	}
 }
 
-void RecruitUnit (Player P, List *L, QueueU *Q, MatriksMap M){
+void RecruitUnit (Player *P, List *L, QueueU *Q, MatriksMap *M){
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
-//F.S Mengembalikan Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
-	if (Tipe(getUnit(CurrentUnitPos(P), M)) != 'K'){
+//F.S Mengembalikan **Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
+	if (Tipe(getUnit(CurrentUnitPos(*P), *M)) != 'K'){
 		printf("Unit yang dipakai Bukan King, Recruit Gagal.\n");
 	}
-	else if (!EQ(CurrentUnitPos(P),PlayerTower(P))){
+	else if (!EQ(CurrentUnitPos(*P),PlayerTower(*P))){
 		printf("King Tidak di Tower, Recruit Gagal\n");
 	}
 	else {
@@ -207,17 +216,17 @@ void RecruitUnit (Player P, List *L, QueueU *Q, MatriksMap M){
 			UPrice = PriceMage;
 		}
 
-		int i = EmptyTower(P,M);
-		if (UPrice > PGold(P)){
+		int i = EmptyCastle(*P,*M);
+		if (UPrice > PGold(*P)){
 			printf("Anda tidak memiliki Gold yang Cukup\n");
 		}
 		else if (!i){
-			printf("Tidak Ada Tower yang kosong\n");
+			printf("Tidak Ada Castle yang kosong\n");
 		}
 		else{
 			printf("Recruit berhasil\n");
-			Unit U = MakeNewUnit(N,PlayNumber(P),PlayerCastle(P,i));
-			UnitIn(Elmt(M,Absis(PlayerCastle(P,i)),Ordinat(PlayerCastle(P,i)))) = U;
+			Unit U = MakeNewUnit(N,PlayNumber(*P),PlayerCastle(*P,i));
+			UnitIn(Elmt(*M,Absis(PlayerCastle(*P,i)),Ordinat(PlayerCastle(*P,i)))) = U;
 			AddUnit(&*L,&*Q,U);
 		}
 	}

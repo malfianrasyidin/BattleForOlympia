@@ -62,8 +62,8 @@ typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
 void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 //Membuat player pada kondisi awal
 
-void AttackU (Unit U1, Unit U2);
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
+void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
+//Membuat Unit 1 Menyerang Unit 2
 
 
 
