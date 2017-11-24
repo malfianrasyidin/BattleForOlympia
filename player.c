@@ -5,6 +5,7 @@
 #include "point.h"
 #include "queuelist.h"
 #include "MatriksMap.h"
+#include "stackt.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -286,21 +287,50 @@ void DelQ (Queue * Q, infotypeQ * X)
 	}
 }
 
-void CreateTurn (Queue * Q, Player P1, Player P2) {
+void CreateTurn (Queue * Q) {
 	/* Membuat turn dengan urutan 1 dan 2 */
 	/* ALGORITMA */
 	CreateEmptyQ(Q, 2);
-	AddQ(Q, &P1);
-	AddQ(Q, &P2);
+	AddQ(Q, 1);
+	AddQ(Q, 2);
 }
 
-void NextTurn (Queue * Q, Player * CurrentPlayer) {
+void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Stack *S) {
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
+	POINT stacktemp;
 	/* ALGORITMA */
 	DelQ(Q, &X);
 	AddQ(Q, X);
-	CurrentPlayer = InfoHead(* Q);
+	
+	if (InfoHead(*Q) == PlayNumber(P1)) {
+		*CurrentPlayer = P1;
+	} else {
+		*CurrentPlayer = P2;
+	}
+
+	// Updating gold...
+	PGold(*CurrentPlayer) += (PIncome(*CurrentPlayer) - PUpKeep(*CurrentPlayer));
+	
+	// Healing units in villages and restoring units' Movement Points
+	addressList P = First(UnitList(*CurrentPlayer));
+	while (P != Nil) {
+		if (Search(VillageList(*CurrentPlayer), Info(P)) != Nil) {
+			HP(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = (HP(getUnit(Info(P), *M)) + BaseHealVillage) % ((Tipe(getUnit(Info(P), *M)) == 'W')? BaseMaxHPMage : (Tipe(getUnit(Info(P), *M)) == 'A')? BaseMaxHPArcher : (Tipe(getUnit(Info(P), *M)) == 'S')? BaseMaxHPSwordsman : BaseMaxHPKing);
+		}
+		MP(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = MaxMP(getUnit(Info(P), *M));
+		CanAttack(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = true;
+		// Heal every unit adjacent to white mage
+		// if Tipe(Res(Elmt(*M,)))
+
+		P = Next(P);
+	}
+
+	//Delete Stack Undo
+	while(!IsEmpty(*S)) {
+		Pop(S,&stacktemp);
+	}
+
 }
 
 infotypeQ CurrentTurn (Queue Q) {

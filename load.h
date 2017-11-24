@@ -7,6 +7,15 @@
 #include "mesinkar.h"
 #include "mesinkata.h"
 #include "boolean.h"
+#include "load.h"
+#include "command.h"
+#include "MatriksMap.h"
+#include "unit.h"
+#include "point.h"
+#include"listdpUnit.h"
+#include "player.h"
+#include "jam.h"
+
 
 void kataToString (Kata CKata, char *str);
 /* I.S. CKata terdefinisi, str sembarang */
@@ -21,6 +30,10 @@ void kataToInt (Kata CKata, int *bil);
 /* F.S. str terdefinisi dengan isi dari CKata.TabKata */
 
 /*** MEMBACA FILE EKSTERNAL ***/
+void ReadTime(TANGGAL *T, JAM *J);
+/* I.S. T dan J sembarang, CKata ada di kata pertama*/
+/* F.S. Tanggal T dan Jam J terdefinisi */
+
 void ReadPoint (POINT *P);
 /* I.S. P sembarang, CKata ada di kata pertama*/
 /* F.S. Point P terdefinisi */
@@ -53,7 +66,7 @@ void ReadTurn(Queue *Q);
 /* I.S. Q sembarang, CKata ada di kata pertama*/
 /* F.S. Queue Q terdefinisi */
 
-void Load(Location *Loc, Player *Player1, Player *Player2, Queue *Turn, Stack *Undo);
+void Load(MatriksMap *MatMap, Player *Player1, Player *Player2, Queue *Turn, char filename[]);
 /* Melakukan load file */
 /* I.S. file pitakar.txt berisi hasil save, semua parameter tidak terdefinisi*/
 /* F.S. mendefinisikan semua parameter */

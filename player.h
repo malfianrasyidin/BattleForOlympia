@@ -25,7 +25,7 @@ typedef struct tPlayer {
     POINT TowersPointer;
 } Player;
 
-typedef addrQ infotypeQ;
+typedef int infotypeQ;
 
 #define PlayNumber(P)       (P).PlayerNumber
 #define PGold(P) 			(P).Gold
@@ -106,11 +106,11 @@ void DelQ (Queue * Q, infotypeQ * X);
 
 /* *** Fungsi Tambahan Untuk Battle for Olympia ** */
 
-void CreateTurn(Queue * Q, Player P1, Player P2);
+void CreateTurn(Queue * Q);
 /* I.S. sembarang */
 /* F.S. Queue dengan alokasi 2 memory, dengan angka 1 yang merepresentasikan
 		P1 pada Head dan angka 2 yang merepresentasikan P2 pada Tail */
-void NextTurn(Queue * Q, Player * CurrentPlayer);
+void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Stack *S);
 /* I.S. Q terdefinisi 2 elemen dengan A sebagai head dan B sebagai Tail */
 /* F.S. A dihapus (selesai turn) sehingga B menjadi head (turn saat ini)
 		dan A sebagai tail (turn berikutnya) */

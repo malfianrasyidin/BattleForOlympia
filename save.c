@@ -5,8 +5,30 @@
 #include"listdpUnit.h"
 #include "player.h"
 #include "boolean.h"
+#include "jam.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+char SpaceToUnderscore(char X) {
+	if (X == ' ') {
+		return '_';
+	} else {
+		return X;
+	}
+}
+
+void WriteCurrentTime(TANGGAL *T, JAM *J, FILE *f)
+/* Menuliskan tanggal dan jam saat ini dengan format DD/MM/YYYY HH:MM:SS */
+{	/* ALGORITMA */
+	GetCurrentTime(J,T);
+	fprintf(f, "%d %d %d %d %d %d\n",
+				Day(*T),
+				Month(*T),
+				Year(*T),
+				Hour(*J),
+				Minute(*J),
+				Second(*J));
+}
 
 void WritePoint(POINT P, FILE *f)
 /* I.S. file f sudah dibuka, point P terdefinisi */
@@ -14,7 +36,7 @@ void WritePoint(POINT P, FILE *f)
 {	/* KAMUS LOKAL */
 	
 	/* ALGORITMA */
-	fprintf(f, "%d %d ",
+	fprintf(f, "%d %d\n",
 				Absis(P),
 				Ordinat(P));
 }
@@ -23,48 +45,66 @@ void WriteUnit(Unit U, FILE *f)
 /* I.S. file f sudah dibuka, unit U terdefinisi */
 /* F.S. file f diisi dengan unit U */
 {	/* KAMUS LOKAL */
-	
+	char temp;
 	/* ALGORITMA */
-	fprintf(f, "%d %c %d ",
+	temp = SpaceToUnderscore(AttackType(U));
+	fprintf(f, "%d %c %d\n",
 				DamagePoints(U),
-				AttackType(U),
+				temp,
 				HealPoints(U));
 	WritePoint(Locate(U), f);
-	fprintf(f, "%d %c %d %d %d %d %d %d\n",
+	temp = SpaceToUnderscore(Tipe(U));
+	fprintf(f, "%d %c %d %d %d %d %d\n",
 				HP(U),
-				Tipe(U),
+				temp,
 				MP(U),
 				Owner(U),
 				MaxHP(U),
 				MaxMP(U),
-				CanAttack(U),
-				Price(U));
+				CanAttack(U));
 }
 
 void WriteBuild(Build B, FILE *f)
 /* I.S. file f sudah dibuka, build B terdefinisi */
 /* F.S. file f diisi dengan build B */
 {	/* KAMUS LOKAL */
-
+	char temp;
 	/* ALGORITMA */
+	temp = SpaceToUnderscore(TipeB(B));
 	fprintf(f, "%d %c\n",
 				OwnerB(B),
-				TipeB(B));
+				temp);
 }
 
 void WriteLocation(Location L, FILE *f)
 	/* I.S.  file f sudah dibuka, location L terdefinisi */
 	/* F.S. file f diisi dengan location L */
 {	/* ALGORITMA */
-	WriteBuild(L.Build, f);
-	WriteUnit(L.Unit, f);
+	WriteBuild(BuildIn(L), f);
+	WriteUnit(UnitIn(L), f);
+}
+
+void WriteMatriksMap(MatriksMap M, FILE *f)
+	/* I.S.  file f sudah dibuka, MatriksMap M terdefinisi */
+	/* F.S. file f diisi dengan MatriksMap M */
+{	/* KAMUS LOKAL */
+	int i, j;
+	/* ALGORITMA */
+	fprintf(f, "%d %d\n",
+				NBrsEff(M),
+				NKolEff(M));
+	for (i = 1; i <= NBrsEff(M); ++i) {
+		for (j = 1; j <= NKolEff(M); ++j) {
+			WriteLocation(Elmt(M, i, j), f);
+		}
+	}
 }
 
 void WriteListOfPoint(List L, FILE *f)
 	/* I.S.  file f sudah dibuka, List of Point L terdefinisi */
 	/* F.S. file f diisi dengan List of Point L */
 {	/* KAMUS LOKAL */
-	address P = Nil;
+	addressList P = Nil;
 	/* ALGORITMA */
 	P = First(L);
 	while (P != Nil) {
@@ -79,43 +119,20 @@ void WritePlayer(Player P, FILE *f)
 	/* F.S. file f diisi dengan player P */
 {	/* KAMUS LOKAL */
 	/* ALGORITMA */
-	fprintf(f, "%d %d %d %d\n",
+	fprintf(f, "%d %d\n",
 				PlayNumber(P),
-				PGold(P),
+				PGold(P));
+	WritePoint(CurrentUnitPos(P), f);
+	fprintf(f, "%d %d\n",
 				PIncome(P),
-				PUpKeep(P),
-				);
-	WriteUnit(CurrentUnit(P), f);
+				PUpKeep(P));
 	WriteListOfPoint(UnitList(P), f);
 	WriteListOfPoint(VillageList(P), f);
-	WritePoint(TabTower(P), f);
 	for (int i = 1; i <= 4; ++i){
-		WritePoint(PlayerTower(P,i),f);
+		WritePoint(PlayerCastle(P,i),f);
 	}
-	fprintf(f,"\n");
+	WritePoint(PlayerTower(P), f);
 }
-
-void WriteUndo(Stack *S, FILE *f)
-	/* I.S.  file f sudah dibuka, stack P terdefinisi */
-	/* F.S. file f diisi dengan stack P */
-{	/* KAMUS LOKAL */
-	infotype X;
-	Stack STemp;
-	/* ALGORITMA */
-	while(!IsEmpty(*S)) {
-		Pop(S,&X);
-		Push(&STemp,X);
-	}
-	while(!IsEmpty(STemp)) {
-		Pop(STemp,&X);
-		WritePoint(X, f);
-		Push(S,X);
-	}
-	fprintf(f, "EndOfStack\n");
-}
-
-
-/*** Belum Nulis Write Turn Karena Turn nya Hilang :((( ***/
 
 void WriteTurn(Queue Q, FILE *f)
 	/* I.S.  file f sudah dibuka, queue Q terdefinisi */
@@ -123,22 +140,31 @@ void WriteTurn(Queue Q, FILE *f)
 {	/* KAMUS LOKAL */
 
 	/* ALGORITMA */
-	fprintf(f,"%d %d EndOfQueue\n", InfoTail(Q), InfoHead(Q));
+	fprintf(f,"%d %d EndOfQueue\n", InfoHead(Q), InfoTail(Q));
 }
 
-void Save(Location Loc, Player Player1, Player Player2, Queue Turn, Stack *Undo)
+void Save(MatriksMap MatMap, Player Player1, Player Player2, Queue Turn, char filename[])
 /* Melakukan save file */
-/* I.S. */
+/* I.S. MatMap, Player1, Player2, dan Queue terdefinisi*/
 /* F.S. menulis file pitakar.txt yang berisi rekaman dari game saat ini */
 {	/* KAMUS LOKAL */
 	FILE *f;
+	TANGGAL T;
+	JAM J;
 	/* ALGORITMA */
-	f = fopen("pitakar.txt", "w");
-	WriteLocation(Loc, f);
+	printf("Saving file '%s' ...\n", filename);
+	f = fopen(filename, "w");
+	WriteCurrentTime(&T,&J,f);
+	WriteMatriksMap(MatMap, f);
 	WritePlayer(Player1, f);
 	WritePlayer(Player2, f);
 	WriteTurn(Turn, f);
-	WriteUndo(Undo, f);
 	fprintf(f, ".");
 	fclose(f);
+	printf("Game successfully saved on ");
+	TulisTANGGAL(T);
+	printf(" ");
+	TulisJAM(J);
+	printf(".\n");
+
 }

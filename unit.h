@@ -27,6 +27,8 @@
 #define BaseDmgPointKing 1000
 
 #define BaseHealMage 45
+#define BaseHealVillage 60
+
 
 typedef struct{
 	int DamagePoints;
