@@ -46,7 +46,7 @@ void WriteTurn(Queue Q, FILE *f);
 	/* I.S.  file f sudah dibuka, queue Q terdefinisi */
 	/* F.S. file f diisi dengan queue Q */
 
-void Save(MatriksMap MatMap, Player Player1, Player Player2, Queue Turn, char filename[]);
+void Save(MatriksMap MatMap, Player Player1, Player Player2, Queue Turn);
 /* Melakukan save file */
 /* I.S. */
 /* F.S. menulis file pitakar.txt yang berisi rekaman dari game saat ini */

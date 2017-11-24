@@ -323,18 +323,21 @@ void CreateTurn (Queue * Q) {
 	AddQ(Q, 2);
 }
 
-void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Stack *S) {
+void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S) {
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
 	POINT stacktemp;
 	/* ALGORITMA */
+	/* PENERAPAN QUEUE PADA TURN */
 	DelQ(Q, &X);
 	AddQ(Q, X);
 	
 	if (InfoHead(*Q) == PlayNumber(P1)) {
 		*CurrentPlayer = P1;
+		*CurrentEnemy = P2;
 	} else {
 		*CurrentPlayer = P2;
+		*CurrentEnemy = P1;
 	}
 
 	// Updating gold...

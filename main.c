@@ -8,13 +8,16 @@
 #include "queuelist.h"
 #include <string.h>
 #include "save.h"
+#include "load.h"
 
 int main()	{
 	//Initialize
 	int n, NB, NK;
 	char command[100];
 	MatriksMap M;
-	Player CurrPlayer, P1, P2;
+	Player P1, P2;
+	Player* CurrPlayer;
+	Player* CurrEnemy;
 	Stack SUndo;
 	QueueU Q;
 	Queue QP;
@@ -41,40 +44,40 @@ int main()	{
 		printf("\n== Create Map ==\n");	
 		printf("Row : "); scanf("%d", &NB);
 		printf("Column : "); scanf("%d", &NK);
-		printf("\n");
 		//Generate Map
 		M = MatGen(NB,NK);
 		//Create Queue of Player
 		CreateTurn(&QP);
 		//Initialize player
 		InitPlayer(&P1, &P2, NB,NK);
-		CurrPlayer = P1;
+		CurrPlayer = &P1;
+		CurrEnemy = &P2;
 		//Initialize command
 		command[0]='\0';
 		while (strcmp(command,"EXIT")!=0)	{
 			//Initialize Current Unit
-			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
+			CurrUnit = getUnit(CurrentUnitPos(*CurrPlayer),M);
 			//Make Queue of Unit of Player
-			Q = MakeUnitQueue(UnitList(CurrPlayer));
-			printf("\nPlayer %d's Turn\n", PlayNumber(CurrPlayer));
-			PrintInfoPlayer(CurrPlayer);
+			Q = MakeUnitQueue(UnitList(*CurrPlayer));
+			printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
+			PrintInfoPlayer(*CurrPlayer);
 			PrintInfoUnit(CurrUnit);
 			//Input Command
 			printf("Your Input : "); scanf("%s", command);
 			if (strcmp(command,"MOVE")==0)	{
-				MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
+				MainMove(&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer);
 			}
 			if (strcmp(command,"UNDO")==0)	{
-				Undo (&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
+				Undo (&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer);
 			}
 			if (strcmp(command,"CHANGE_UNIT")==0)	{
-				ChangeCurrUnit(&Q,M,&CurrPlayer);
+				ChangeCurrUnit(&Q,M,CurrPlayer);
 			}
 			if (strcmp(command,"RECRUIT")==0)	{
-				RecruitUnit (&CurrPlayer, &UnitList(CurrPlayer), &Q, &M);
+				RecruitUnit (CurrPlayer, &UnitList(*CurrPlayer), &Q, &M);
 			}
 			if (strcmp(command,"ATTACK")==0)	{
-				Attack (&M, &CurrPlayer, &P2);
+				Attack (&M, CurrPlayer, CurrEnemy);
 			}
 			if (strcmp(command,"MAP")==0)	{
 				PrintMap(M);
@@ -83,7 +86,7 @@ int main()	{
 				MainInfo(M);
 			}
 			if (strcmp(command,"END_TURN")==0)	{
-				NextTurn (&M, &QP, P1, P2, &CurrPlayer, &SUndo);
+				NextTurn (&M, &QP, P1, P2, CurrPlayer, CurrEnemy, &SUndo);
 			}
 			if (strcmp(command,"SAVE")==0)	{
 				//Save(MatMap, P1, P2, Turn, file);
@@ -91,12 +94,15 @@ int main()	{
 			if (strcmp(command,"LOAD")==0)	{
 				MainInfo(M);
 			}
+			if (strcmp(command,"EXIT")==0)	{
+				break;
+			}
 			command[0]='\0';
 		}
 	} else if (n==2)	{
 
 	}
-	printf("======================================\n");
+	printf("\n======================================\n");
 	printf("=========== GOOD BYE COOPS ===========\n");
 	printf("======================================\n");
 }

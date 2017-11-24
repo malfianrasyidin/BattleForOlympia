@@ -143,7 +143,7 @@ void WriteTurn(Queue Q, FILE *f)
 	fprintf(f,"%d %d EndOfQueue\n", InfoHead(Q), InfoTail(Q));
 }
 
-void Save(MatriksMap MatMap, Player Player1, Player Player2, Queue Turn, char filename[])
+void Save(MatriksMap MatMap, Player Player1, Player Player2, Queue Turn)
 /* Melakukan save file */
 /* I.S. MatMap, Player1, Player2, dan Queue terdefinisi*/
 /* F.S. menulis file pitakar.txt yang berisi rekaman dari game saat ini */
@@ -151,7 +151,10 @@ void Save(MatriksMap MatMap, Player Player1, Player Player2, Queue Turn, char fi
 	FILE *f;
 	TANGGAL T;
 	JAM J;
+	char filename[256];
 	/* ALGORITMA */
+	printf("Enter your filename (<filename.txt>)\n");
+	scanf("%s", filename);
 	printf("Saving file '%s' ...\n", filename);
 	f = fopen(filename, "w");
 	WriteCurrentTime(&T,&J,f);
