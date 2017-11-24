@@ -67,6 +67,8 @@ typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
 void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 //Membuat player pada kondisi awal
 
+void PrintInfoPlayer (Player P);
+
 void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 //Membuat Unit 1 Menyerang Unit 2
 
@@ -115,7 +117,7 @@ void CreateTurn(Queue * Q);
 /* I.S. sembarang */
 /* F.S. Queue dengan alokasi 2 memory, dengan angka 1 yang merepresentasikan
 		P1 pada Head dan angka 2 yang merepresentasikan P2 pada Tail */
-void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Stack *S);
+void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S);
 /* I.S. Q terdefinisi 2 elemen dengan A sebagai head dan B sebagai Tail */
 /* F.S. A dihapus (selesai turn) sehingga B menjadi head (turn saat ini)
 		dan A sebagai tail (turn berikutnya) */
