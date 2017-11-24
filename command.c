@@ -83,7 +83,7 @@ void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 		printf("You can’t move there\n");
 		printf("Please enter cell’s coordinate x y: ");
 		scanf("%d %d", &x, &y);
-		POINT P = MakePOINT(x,y);
+		P = MakePOINT(x,y);
 	}
 	//update
 	UnitIn(Elmt(*M,x,y))=U;
