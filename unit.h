@@ -8,25 +8,27 @@
 #include <stdlib.h>
 
 #define BaseMaxHPArcher 70
-#define BaseMaxHPWarrior 90
+#define BaseMaxHPSwordsman 90
 #define BaseMaxHPMage 120
 #define BaseMaxHPKing 200
 
 #define BaseMaxMPArcher 100
-#define BaseMaxMPWarrior 80
+#define BaseMaxMPSwordsman 80
 #define BaseMaxMPMage 150
 #define BaseMaxMPKing 210
 
-#define PriceWarrior 10
+#define PriceSwordsman 10
 #define PriceArcher  20
 #define PriceMage    30
 
-#define BaseDmgPointWarrior 60
+#define BaseDmgPointSwordsman 60
 #define BaseDmgPointArcher 50
 #define BaseDmgPointMage 10
 #define BaseDmgPointKing 100
 
 #define BaseHealMage 45
+#define BaseHealVillage 60
+
 
 typedef struct{
 	int DamagePoints;
