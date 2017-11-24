@@ -7,6 +7,7 @@
 #include "stackt.h"
 #include "player.h"
 #include "queuelist.h"
+#include "mesininput.h"
 
 int main()	{
 	int n, NB, NK;
@@ -50,36 +51,37 @@ int main()	{
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
 			// PrintInfoPlayer(CurrPlayer);
-			printf("Your Input : "); scanf("%s", cmd);
+			printf("Your Input : ");
+			BACAINPUT();
 			PrintMap(M);
-			if (!strcmp(cmd,"MOVE"))	{
+			if (CmpInpStr("MOVE",CInput))	{
 				MainMove(&SUndo, Locate(CurrUnit), &M, &CurrPlayer);
 			}
-			if (!strcmp(cmd,"UNDO"))	{
+			if (CmpInpStr("UNDO",CInput))	{
 				Undo(&SUndo,&CurrUnit);
 			}
-			if (!strcmp(cmd,"CHANGE_UNIT"))	{
+			if (CmpInpStr("CHANGE UNIT",CInput))	{
 				ChangeCurrUnit(&Q,M,&CurrPlayer);
 			}
-			if (!strcmp(cmd,"RECRUIT"))	{
+			if (CmpInpStr("RECRUIT",CInput))	{
 				RecruitUnit (CurrPlayer, &UnitList(CurrPlayer), &Q, M);
 			}
-			if (!strcmp(cmd,"ATTACK"))	{
+			if (CmpInpStr("ATTACK",CInput))	{
 				//Attack
 			}
-			if (!strcmp(cmd,"MAP"))	{
+			if (CmpInpStr("MAP",CInput))	{
 				PrintMap(M);
 			}
-			if (!strcmp(cmd,"INFO"))	{
+			if (CmpInpStr("INFO",CInput))	{
 				MainInfo(M);
 			}
-			if (!strcmp(cmd,"END_TURN"))	{
+			if (CmpInpStr("END TURN",CInput))	{
 				NextTurn(&QP,&CurrPlayer);
 			}
-			if (!strcmp(cmd,"SAVE"))	{
+			if (CmpInpStr("SAVE",CInput))	{
 
 			}
-			if (!strcmp(cmd,"EXIT"))	{
+			if (CmpInpStr("EXIT",CInput))	{
 
 			}
 		}
