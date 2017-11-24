@@ -13,25 +13,24 @@
 boolean PointInMap (POINT P, MatriksMap M){
 	return((Ordinat(P) <= NBrsEff(M)) && (Absis(P) <= NKolEff(M)));
 }
-boolean IsMoveValid(Unit U, POINT P, MatriksMap M){
+boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 //Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
-	if (MP(U) == 0){
+	if (MP(getUnit(PU,M)) == 0){
 		return(false);
 	}
 	else if (!PointInMap(P,M)) {
 		return(false);
 	}
-
 	else if (IsUnitIn(P, M)){
 		return(false);
 	}
 	else{
-		if ((MP(U)-Distance(Locate(U), P))>=0) return true;
+		if ((MP(getUnit(PU,M))-Distance(PU, P))>=0) return true;
 		else return false;
 	}
 }
 
-MatriksMap PossibleMove (Unit U, MatriksMap M)
+MatriksMap PossibleMove (POINT PIn, MatriksMap M)
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 {
 	MatriksMap MOut;
@@ -39,19 +38,19 @@ MatriksMap PossibleMove (Unit U, MatriksMap M)
 	POINT P;
 	int i;
 	int j;
-	j=Ordinat(Locate(U));
+	j=Ordinat(PIn);
 	Ordinat(P)=j;
 	for (i=GetFirstIdxBrs(M); i<=GetLastIdxBrs(M); i++)	{
 		Absis(P)=i;
-		if (IsMoveValid(U,P,M))	{
+		if (IsMoveValid(PIn,P,M))	{
 			UnitIn(Elmt(MOut,i,j)).UnitType = '$';
 		}
 	}
-	i=Absis(Locate(U));
+	i=Absis(PIn);
 	Absis(P)=i;
 	for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++)	{
 		Ordinat(P)=j;
-		if (IsMoveValid(U,P,M))	{
+		if (IsMoveValid(PIn,P,M))	{
 			UnitIn(Elmt(MOut,i,j)).UnitType = '$';
 		}
 	}
@@ -63,27 +62,30 @@ void History(Stack *S, POINT P){
 	Push(S, P);
 }
 
-void MainMove(Stack *S, Unit *U, MatriksMap *M)
+void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 //MainMove
 {
 	MatriksMap MPrint;
-	MPrint = PossibleMove(*U,*M);
+	MPrint = PossibleMove(PIn,*M);
 	PrintMap(MPrint);
 	int x,y;
 	printf("Please enter cell’s coordinate x y: ");
 	scanf("%d %d", &x, &y);
-	POINT P=MakePOINT(x,y);
-	while (!IsMoveValid(*U,P,*M))	{
+	POINT P = MakePOINT(x,y);
+	Unit U = getUnit(PIn,*M);
+	while (!IsMoveValid(PIn,P,*M))	{
 		printf("You can’t move there\n");
 		printf("Please enter cell’s coordinate x y: ");
 		scanf("%d %d", &x, &y);
 		POINT P = MakePOINT(x,y);
 	}
 	//update
-	MP(*U)-=Distance(Locate(*U),P);
-	Locate(*U)=P;
-	UnitIn(Elmt(*M,x,y))=*U;
-	*U=NullUnit();
+	UnitIn(Elmt(*M,x,y))=U;
+	InsVFirst(&UnitList(*Play),P);
+	MP(UnitIn(Elmt(*M,x,y)))-=Distance(PIn,P);
+	Locate(UnitIn(Elmt(*M,x,y)))=P;
+	UnitIn(Elmt(*M,Absis(PIn),Ordinat(PIn)))=NullUnit();
+	DelP(&UnitList(*Play),PIn);
 	printf("You have successfully moved to (%d, %d)\n", Absis(P), Ordinat(P));
 	//push P
 	History(S,P);
