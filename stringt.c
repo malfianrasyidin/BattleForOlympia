@@ -31,7 +31,13 @@ void AppendChar(char S[25], char c){
 }
 
 void delAllStr(char Sin[25]){
-	for (int i = 1; i <= strlen(Sin); i++){
+	for (int i = 0; i < strlen(Sin); i++){
 		DelFirstChar(Sin);
+	}
+}
+
+void AppendStr(char Sin[25], char SS[25]){
+	for (int i = 0 ; i < strlen(SS); i++){
+		AppendChar(Sin,SS[i])
 	}
 }
