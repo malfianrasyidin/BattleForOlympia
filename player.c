@@ -101,7 +101,7 @@ void PrintListUnit (List L, MatriksMap M, Unit U)
 2. Swordsman (3,5) | Health 20
 */
 {
-	printf("== List Of Unit ==");
+	printf("== List Of Unit ==\n");
 	addressList p = First(L);
 	int i=1;
 	while (p!=Nil) {
@@ -113,9 +113,7 @@ void PrintListUnit (List L, MatriksMap M, Unit U)
 		if (AttackType(U) == AttackType(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))))) {
 			printf(" (Retaliates)");
 		}
-		if (Next(p)!=Nil) {
-			printf("\n");
-		}
+		printf("\n");
 		p = Next(p);
 	}
 }
@@ -145,7 +143,7 @@ void Attack (MatriksMap *M, Player *P1, Player *P2)
 			do {
 				scanf("%d", &AttackChoice);
 				if (AttackChoice <= 0 || AttackChoice > NbElmtList(L)) {
-					printf("Your input was wrong. Try again.");
+					printf("Your input was wrong. Try again.\n");
 				}
 			} while (AttackChoice <= 0 || AttackChoice > NbElmtList(L));
 			
@@ -155,7 +153,7 @@ void Attack (MatriksMap *M, Player *P1, Player *P2)
 			printf("There are no enemy units nearby\n");
 		}
 	} else {
-		printf("This unit currently cannot attack anyone\n");
+		printf("This unit has attacked someone and need to have some rest\n");
 	}
 }
 

@@ -244,7 +244,7 @@ void PrintInfoCell (POINT P, MatriksMap M){
 		printf("%s\n", UnitTranslation(TipeB(B)));
 		printf("Owned by Player %d\n", OwnerB(B));
 	} else {
-		printf("There isn't building here\n");
+		printf("There is no building here\n");
 	}
 	if (IsUnitIn(P,M))	{
 		printf("== Unit Info ==\n");
@@ -253,7 +253,7 @@ void PrintInfoCell (POINT P, MatriksMap M){
 		printf("Health: %d/%d | ", HP(U), MaxHP(U));
 		printf("ATK: %d | ", DamagePoints(U));
 	} else {
-		printf("There isn't unit here\n");
+		printf("There is no unit here\n");
 	}
 }
 
@@ -270,4 +270,5 @@ void MainInfo(MatriksMap M)	{
 		P = MakePOINT(x,y);
 	}
 	PrintInfoCell(P,M);
+	printf("\n");
 }

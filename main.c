@@ -70,7 +70,7 @@ int main()	{
 				RecruitUnit (&CurrPlayer, &UnitList(CurrPlayer), &Q, &M);
 			}
 			if (strcmp(command,"ATTACK")==0)	{
-				//Attack
+				Attack (&M, &CurrPlayer, &P2);
 			}
 			if (strcmp(command,"MAP")==0)	{
 				PrintMap(M);
