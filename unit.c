@@ -54,12 +54,12 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 	else if (N==3) {
 		Locate(U) = P;
 		Tipe(U) = 'S';
-		MaxHP(U) = BaseMaxHPWarrior;
+		MaxHP(U) = BaseMaxHPSwordsman;
 		HP(U) = MaxHP(U);
-		MaxMP(U) = BaseMaxMPWarrior;
+		MaxMP(U) = BaseMaxMPSwordsman;
 		MP(U) = MaxMP(U);
 		AttackType(U) = 'M';
-		DamagePoints(U) = BaseDmgPointWarrior;
+		DamagePoints(U) = BaseDmgPointSwordsman;
 		HealPoints(U)  = 0;
 		CanAttack(U) = true;
 	} else if (N==4)	{
