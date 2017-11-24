@@ -8,16 +8,21 @@
 
 
 boolean PointInMap (POINT P, MatriksMap M);
-
-boolean IsMoveValid(Unit U, POINT P, MatriksMap M);
-
-MatriksMap PossibleMove (Unit U, MatriksMap M);
-//Mengembalikan matriks disertakan tempat2 yang mungkin di move
+/* I.S Sembarang
+ * F.S Return true jika P terdefinisi di M dan 
+ * 	   false jika P tidak terdefinisi di M
+ */
+boolean IsMoveValid(POINT PU, POINT P, MatriksMap M);
+/* I.S Unit bukan unit Null, M Terdefinisi
+ * F.S True jika Movement ke P Valid, False jika tidak */
 
 void History(Stack *S, POINT P);
 //Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
 
-void MainMove(Stack *S, Unit *U, MatriksMap *M);
+MatriksMap PossibleMove (POINT PIn, MatriksMap M);
+//Mengembalikan matriks disertakan tempat2 yang mungkin di move
+
+void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play);
 //MainMove
 
 void Undo (Stack *History, Unit *U);

@@ -50,13 +50,10 @@ int main()	{
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
 			// PrintInfoPlayer(CurrPlayer);
-			PrintInfoUnit(CurrUnit);
-			MainMove(&SUndo, &CurrUnit, &M);
-			PrintMap(M);
 			printf("Your Input : "); scanf("%s", cmd);
 			PrintMap(M);
 			if (!strcmp(cmd,"MOVE"))	{
-				MainMove(&SUndo, &CurrUnit, &M);
+				MainMove(&SUndo, Locate(CurrUnit), &M, &CurrPlayer);
 			}
 			if (!strcmp(cmd,"UNDO"))	{
 				Undo(&SUndo,&CurrUnit);
