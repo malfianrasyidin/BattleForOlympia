@@ -1,20 +1,19 @@
 #include <stdio.h>
+#include "stringt.h"
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
 #include "unit.h"
 #include "stackt.h"
-#include "string.h"
 #include "player.h"
 #include "queuelist.h"
-
-
 
 int main()	{
 	int n, NB, NK;
 	char* cmd;
+	POINT P;
 	MatriksMap M;
-	Player CurrPlayer;
+	Player CurrPlayer, P1, P2;
 	Stack SUndo;
 	QueueU Q;
 	Queue QP;
@@ -41,44 +40,47 @@ int main()	{
 		printf("Row : "); scanf("%d", &NB);
 		printf("Column : "); scanf("%d", &NK);
 		M = MatGen(NB,NK);
-		//InitPlayer(&InfoHead(QP), &InfoTail(QP), NB,NK);
+		CreateTurn(&QP, P1, P2);
+		InitPlayer(&P1, &P2, NB,NK);
 		cmd=" ";
+		CurrPlayer = P1;
 		while (strcmp(cmd,"EXIT")!=0)	{
+			PrintMap(M);
 			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
-			//PrintInfoPlayer(CurrPlayer);
+			// PrintInfoPlayer(CurrPlayer);
 			PrintInfoUnit(CurrUnit);
+			PrintMap(M);
 			printf("Your Input : "); scanf("%s", cmd);
-			if (strcmp(cmd,"MOVE"))	{
-				MainMove(&SUndo, &CurrUnit, &M);
+			if (!strcmp(cmd,"MOVE"))	{
+				MainMove(&SUndo, Locate(CurrUnit), &M, &CurrPlayer);
 			}
-			if (strcmp(cmd,"UNDO"))	{
+			if (!strcmp(cmd,"UNDO"))	{
 				Undo(&SUndo,&CurrUnit);
 			}
-			if (strcmp(cmd,"CHANGE_UNIT"))	{
-				//Q = MakeUnitQueue(UnitList(P));
-				//ChangeCurrUnit(&Q,M,&P);
+			if (!strcmp(cmd,"CHANGE_UNIT"))	{
+				ChangeCurrUnit(&Q,M,&CurrPlayer);
 			}
-			if (strcmp(cmd,"RECRUIT"))	{
-				//RecruitUnit (P, UnitList(P), &Q, M);
+			if (!strcmp(cmd,"RECRUIT"))	{
+				RecruitUnit (CurrPlayer, &UnitList(CurrPlayer), &Q, M);
 			}
-			if (strcmp(cmd,"ATTACK"))	{
+			if (!strcmp(cmd,"ATTACK"))	{
 				//Attack
 			}
-			if (strcmp(cmd,"MAP"))	{
+			if (!strcmp(cmd,"MAP"))	{
 				PrintMap(M);
 			}
-			if (strcmp(cmd,"INFO"))	{
+			if (!strcmp(cmd,"INFO"))	{
 				MainInfo(M);
 			}
-			if (strcmp(cmd,"END_TURN"))	{
+			if (!strcmp(cmd,"END_TURN"))	{
 				NextTurn(&QP,&CurrPlayer);
 			}
-			if (strcmp(cmd,"SAVE"))	{
+			if (!strcmp(cmd,"SAVE"))	{
 
 			}
-			if (strcmp(cmd,"EXIT"))	{
+			if (!strcmp(cmd,"EXIT"))	{
 
 			}
 		}
