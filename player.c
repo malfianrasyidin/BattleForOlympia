@@ -295,7 +295,11 @@ void CreateTurn (Queue * Q) {
 	AddQ(Q, 2);
 }
 
+<<<<<<< HEAD
 void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Stack *S) {
+=======
+void NextTurn (Queue * Q) {
+>>>>>>> 448a016ea2663c39d1d0d2c7f4a423a0dce1ff7a
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
 	POINT stacktemp;
