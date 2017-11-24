@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "mesininput.h"
+#include "string.h"
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
@@ -10,7 +10,7 @@
 
 int main()	{
 	int n, NB, NK;
-	char* cmd;
+	char cmd[100];
 	POINT P;
 	MatriksMap M;
 	Player CurrPlayer, P1, P2;
@@ -18,6 +18,9 @@ int main()	{
 	QueueU Q;
 	Queue QP;
 	Unit CurrUnit;
+
+	char* exit = "EXIT";
+	char* move = "MOVE";
 	printf("=====================================\n");
 	printf("=== WELCOME TO BATTLE FOR OLYMPIA ===\n");
 	printf("=====================================\n");
@@ -34,7 +37,7 @@ int main()	{
 	printf("1. START\n");
 	printf("2. LOAD\n");
 	printf("3. EXIT\n");
-	printf("Choose Menu : \n");	scanf("%d", &n);
+	printf("Choose Menu : ");	scanf("%d", &n);
 	if (n==1)	{
 		printf("Create Map : \n");	
 		printf("Row : "); scanf("%d", &NB);
@@ -42,48 +45,46 @@ int main()	{
 		M = MatGen(NB,NK);
 		CreateTurn(&QP, P1, P2);
 		InitPlayer(&P1, &P2, NB,NK);
-		printf("Your Input : \n");
-		BACAINPUT();
-		CurrPlayer = P1;
-		while (CmpInpStr("EXIT",CInput))	{
-			PrintMap(M);
+		printf("Your Input : ");
+		scanf("%s", cmd);
+		printf("%s\n", cmd);
+		while (strcmp("EXIT",cmd)==0)	{
 			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
 			// PrintInfoPlayer(CurrPlayer);
-
-			if (CmpInpStr("MOVE",CInput))	{
+			if (strcmp(move,cmd)==0)	{
 				MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
-			if (CmpInpStr("UNDO",CInput))	{
+			if (strcmp("UNDO",cmd)==0)	{
 				Undo (&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
-			if (CmpInpStr("CHANGE UNIT",CInput))	{
+			if (strcmp("CHANGE_UNIT",cmd)==0)	{
 				ChangeCurrUnit(&Q,M,&CurrPlayer);
 			}
-			if (CmpInpStr("RECRUIT",CInput))	{
-				RecruitUnit (CurrPlayer, &UnitList(CurrPlayer), &Q, M);
+			if (strcmp("RECRUIT",cmd)==0){
+				RecruitUnit (&CurrPlayer, &UnitList(CurrPlayer), &Q, &M);
 			}
-			if (CmpInpStr("ATTACK",CInput))	{
+			if (strcmp("ATTACK",cmd)==0){
 				//Attack
 			}
-			if (CmpInpStr("MAP",CInput))	{
+			if (strcmp("MAP",cmd)==0){
 				PrintMap(M);
 			}
-			if (CmpInpStr("INFO",CInput))	{
+			if (strcmp("INFO",cmd)==0){
 				MainInfo(M);
 			}
-			if (CmpInpStr("END TURN",CInput))	{
+			if (strcmp("END_TURN",cmd)==0)	{
 				NextTurn(&QP,&CurrPlayer);
 			}
-			if (CmpInpStr("SAVE",CInput))	{
+			if (strcmp("SAVE",cmd)==0)	{
 
 			}
-			if (CmpInpStr("EXIT",CInput))	{
+			if (strcmp("EXIT",cmd)==0)	{
 
 			}
 			printf("Your Input : ");
-			BACAINPUT();
+			scanf("%s", cmd);
 		}
 
 	} else if (n==2)	{
