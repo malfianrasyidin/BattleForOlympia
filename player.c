@@ -10,6 +10,8 @@
 void InitPlayer (Player *P1, Player *P2, int NB, int NK)
 //Membuat player pada kondisi awal
 {	/* ALGORITMA */
+	
+	//Player 1 Initial data
 	PlayNumber(*P1) = 1;
 	PGold(*P1) = StartingGold;
 	CurrentUnitPos(*P1) = MakePOINT(NB-1,KolMin+1); // Posisi King pada awal
@@ -20,6 +22,32 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK)
 	InsVFirst(&UnitList(*P1), CurrentUnitPos(*P1));
 
 	CreateEmptyList(&VillageList(*P1));
+
+	PlayerCastle(*P1, 1) = MakePOINT(NB-2,KolMin+1);
+	PlayerCastle(*P1, 2) = MakePOINT(NB-1,KolMin+2);
+	PlayerCastle(*P1, 3) = MakePOINT(NB,KolMin+1);
+	PlayerCastle(*P1, 4) = MakePOINT(NB-1,KolMin);
+
+	TabTower(*P1) = MakePOINT(NB-1,KolMin+1);
+
+	//Player 2 Initial data
+	PlayNumber(*P2) = 2;
+	PGold(*P2) = StartingGold;
+	CurrentUnitPos(*P2) = MakePOINT(BrsMin+1,NK-1); // Posisi King pada awal
+	PIncome(*P2) = 0;
+	PUpKeep(*P2) = 0;
+	
+	CreateEmptyList(&UnitList(*P2));
+	InsVFirst(&UnitList(*P2), CurrentUnitPos(*P2));
+
+	CreateEmptyList(&VillageList(*P2));
+
+	PlayerCastle(*P2, 1) = MakePOINT(BrsMin+2,NK-1);
+	PlayerCastle(*P2, 2) = MakePOINT(BrsMin+1,NK-2);
+	PlayerCastle(*P2, 3) = MakePOINT(BrsMin,NK-1);
+	PlayerCastle(*P2, 4) = MakePOINT(BrsMin+1,NK);
+
+	TabTower(*P2) = MakePOINT(BrsMin+1,NK-1);
 
 }	
 
