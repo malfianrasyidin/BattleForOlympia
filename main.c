@@ -35,9 +35,9 @@ int main()	{
 	printf("2. LOAD\n");
 	printf("3. EXIT\n");
 	//Input menu
-	printf("Choose Menu : \n");	scanf("%d", &n);
+	printf("Choose Menu : ");	scanf("%d", &n);
 	if (n==1)	{
-		printf("Create Map : \n");	
+		printf("== Create Map ==\n");	
 		printf("Row : "); scanf("%d", &NB);
 		printf("Column : "); scanf("%d", &NK);
 		//Generate Map
