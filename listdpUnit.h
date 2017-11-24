@@ -10,7 +10,6 @@
 #include "unit.h"
 #include "MatriksMap.h"
 #include "point.h"
-#include "point.h"
 
 #define Nil NULL
 
