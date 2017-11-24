@@ -11,7 +11,7 @@
 /* ########### MOVE ############# */
 /* ############################## */
 boolean PointInMap (POINT P, MatriksMap M){
-	return((Ordinat(P) <= NBrsEff(M)) && (Absis(P) <= NKolEff(M)));
+	return((Ordinat(P) <= NKolEff(M)) && (Absis(P) <= NBrsEff(M)));
 }
 boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 //Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
@@ -44,22 +44,15 @@ MatriksMap PossibleMove (POINT PIn, MatriksMap M)
 	POINT P;
 	int i;
 	int j;
-	j=Ordinat(PIn);
-	Ordinat(P)=j;
 	for (i=GetFirstIdxBrs(M); i<=GetLastIdxBrs(M); i++)	{
-		Absis(P)=i;
-		if (IsMoveValid(PIn,P,M))	{
-			UnitIn(Elmt(MOut,i,j)).UnitType = '$';
+		for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++)	{
+			Absis(P)=i;
+			Ordinat(P)=j;
+			if (IsMoveValid(PIn,P,M))	{
+				UnitIn(Elmt(MOut,i,j)).UnitType = '$';
+			}
 		}
-	}
-	i=Absis(PIn);
-	Absis(P)=i;
-	for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++)	{
-		Ordinat(P)=j;
-		if (IsMoveValid(PIn,P,M))	{
-			UnitIn(Elmt(MOut,i,j)).UnitType = '$';
-		}
-	}
+	}	
 	return MOut;
 }
 
@@ -207,7 +200,7 @@ void RecruitUnit (Player *P, List *L, QueueU *Q, MatriksMap *M){
 		int N, UPrice;
 		InfoRecruit(&N);
 		if (N == 1){
-			UPrice = PriceWarrior;
+			UPrice = PriceSwordsman;
 		}
 		else if (N == 2){
 			UPrice = PriceArcher;
@@ -244,7 +237,7 @@ void PrintInfoCell (POINT P, MatriksMap M){
 		printf("%s\n", UnitTranslation(TipeB(B)));
 		printf("Owned by Player %d\n", OwnerB(B));
 	} else {
-		printf("There isn't building here\n");
+		printf("There is no building here\n");
 	}
 	if (IsUnitIn(P,M))	{
 		printf("== Unit Info ==\n");
@@ -253,7 +246,7 @@ void PrintInfoCell (POINT P, MatriksMap M){
 		printf("Health: %d/%d | ", HP(U), MaxHP(U));
 		printf("ATK: %d | ", DamagePoints(U));
 	} else {
-		printf("There isn't unit here\n");
+		printf("There is no unit here\n");
 	}
 }
 
@@ -270,4 +263,5 @@ void MainInfo(MatriksMap M)	{
 		P = MakePOINT(x,y);
 	}
 	PrintInfoCell(P,M);
+	printf("\n");
 }

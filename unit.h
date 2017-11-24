@@ -15,7 +15,7 @@
 #define BaseMaxMPArcher 100
 #define BaseMaxMPSwordsman 80
 #define BaseMaxMPMage 150
-#define BaseMaxMPKing 210
+#define BaseMaxMPKing 15
 
 #define PriceSwordsman 10
 #define PriceArcher  20
@@ -24,7 +24,7 @@
 #define BaseDmgPointSwordsman 60
 #define BaseDmgPointArcher 50
 #define BaseDmgPointMage 10
-#define BaseDmgPointKing 100
+#define BaseDmgPointKing 1000
 
 #define BaseHealMage 45
 #define BaseHealVillage 60

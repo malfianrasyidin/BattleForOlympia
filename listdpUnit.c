@@ -71,15 +71,15 @@ addressList Search (List L, infotype X)
 
 int NbElmtList (List L)
 {
-	int count;	
+	int count = 0;	
 	if (IsEmptyList(L)) {
-		count = 0;
+		
 	} else {
 		addressList P = First(L);
 		while (P != Nil) {
 			count++;
+			P = Next(P);
 		}
-		P = Next(P);
 	}
 	return count;
 }

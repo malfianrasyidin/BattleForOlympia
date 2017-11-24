@@ -102,7 +102,7 @@ void PrintListUnit (List L, MatriksMap M, Unit U)
 2. Swordsman (3,5) | Health 20
 */
 {
-	printf("== List Of Unit ==");
+	printf("== List Of Unit ==\n");
 	addressList p = First(L);
 	int i=1;
 	while (p!=Nil) {
@@ -114,9 +114,7 @@ void PrintListUnit (List L, MatriksMap M, Unit U)
 		if (AttackType(U) == AttackType(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))))) {
 			printf(" (Retaliates)");
 		}
-		if (Next(p)!=Nil) {
-			printf("\n");
-		}
+		printf("\n");
 		p = Next(p);
 	}
 }
@@ -130,7 +128,9 @@ POINT ChooseAttack (List L, int Choice)
 		if (i == Choice) {
 			return Info(P);
 		}
-	} while (P != Nil && i <= Choice);
+	} while ((P != Nil) && (i <= Choice));
+	POINT Po = MakePOINT(0,0);
+	return Po;
 }
 
 void Attack (MatriksMap *M, Player *P1, Player *P2)
@@ -146,7 +146,7 @@ void Attack (MatriksMap *M, Player *P1, Player *P2)
 			do {
 				scanf("%d", &AttackChoice);
 				if (AttackChoice <= 0 || AttackChoice > NbElmtList(L)) {
-					printf("Your input was wrong. Try again.");
+					printf("Your input was wrong. Try again.\n");
 				}
 			} while (AttackChoice <= 0 || AttackChoice > NbElmtList(L));
 			
@@ -156,7 +156,7 @@ void Attack (MatriksMap *M, Player *P1, Player *P2)
 			printf("There are no enemy units nearby\n");
 		}
 	} else {
-		printf("This unit currently cannot attack anyone\n");
+		printf("This unit has attacked someone and need to have some rest\n");
 	}
 }
 
@@ -172,7 +172,7 @@ void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2)
 		}
         DelP(&UnitList(*P2), PU2);
 		UnitIn(Elmt(*M, Absis(PU2), Ordinat(PU2))) = NullUnit();
-	} else if (Tipe(getUnit(PU2, *M)) == 'K' || AttackType(getUnit(CurrentUnitPos(*P1), *M)) == AttackType(getUnit(PU2, *M)) && HP(getUnit(PU2, *M)) > 0 ) {
+	} else if ( (Tipe(getUnit(PU2, *M)) == 'K') || (AttackType(getUnit(CurrentUnitPos(*P1), *M)) == AttackType(getUnit(PU2, *M)) && (HP(getUnit(PU2, *M)) > 0) ) ) {
 		printf("Enemy's %s retaliates.\n", UnitTranslation(Tipe(getUnit(PU2, *M))));
 		HP(UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1))))) -= DamagePoints(getUnit(PU2, *M));
 		printf("Your %s is damaged by %d.\n", UnitTranslation(Tipe(getUnit(CurrentUnitPos(*P1), *M))), DamagePoints(getUnit(PU2, *M)));

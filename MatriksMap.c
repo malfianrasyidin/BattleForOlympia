@@ -142,7 +142,6 @@ void PrintMap(MatriksMap M){
 
 MatriksMap MatGen(indeks NB, indeks NK){
 /*MengGenerate Peta yang baru dengan Random Number */
-	int R;
 	MatriksMap M;
 	MakeMATRIKS(NB,NK, &M);
 	//player 1
