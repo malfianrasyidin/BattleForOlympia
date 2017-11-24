@@ -1,8 +1,11 @@
 #ifndef _UNIT_H
 #define _UNIT_H
 
+#include "unit.h"
 #include "point.h"
 #include "boolean.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define BaseMaxHPArcher 70
 #define BaseMaxHPWarrior 90
@@ -61,15 +64,9 @@ Unit MakeNewUnit(int N, int Play, POINT P);
 int Distance(POINT U1, POINT U2);
 //Mengembalikan jarak antara karakter 1 dan 2.
 
-boolean IsAdjacent (POINT P1, POINT P2);
-//Mengeluarkan True Jika U1 dan U2 Adjacent atau beda sepetak dengan U2.
-
 boolean IsEnemy(Unit U1, Unit U2);
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
-
-void PrintAtkType(Unit U);
-//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
 char* UnitTranslation(char Tipe);
 //Mengembalikan singkatan dari unit yang akan ditampilkan di peta.
@@ -77,9 +74,6 @@ char* UnitTranslation(char Tipe);
 void PrintInfoUnit (Unit U);
 /* mengeluarkan info unit standar seperti dibawah ini
 Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
-
-boolean CmpUnit (POINT PU1, POINT PU2);
-//True jika U1==U2
 
 boolean IsNullUnit(Unit U);
 

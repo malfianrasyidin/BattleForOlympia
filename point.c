@@ -56,3 +56,22 @@ boolean NEQ (POINT P1, POINT P2){
 		return(false);
 	}
 }
+
+/* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */                           
+POINT NextX (POINT P)
+/* Mengirim salinan P dengan absis ditambah satu */              
+{
+    return MakePOINT(Absis(P) + 1, Ordinat(P));
+}
+
+POINT NextY (POINT P)
+/* Mengirim salinan P dengan ordinat ditambah satu */
+{
+    return MakePOINT(Absis(P), Ordinat(P) + 1);
+}
+
+POINT PlusDelta (POINT P, int deltaX, int deltaY)
+/* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
+{
+    return MakePOINT(Absis(P) + deltaX, Ordinat(P) + deltaY);
+}

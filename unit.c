@@ -1,7 +1,6 @@
 #include "unit.h"
 #include "point.h"
 #include "boolean.h"
-#include "math.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -94,11 +93,6 @@ int Distance(POINT P1, POINT P2){
 	return (X+Y);
 }
 
-boolean IsAdjacent (POINT P1, POINT P2){
-//Mengeluarkan true Jika P1 dan P2 Adjacent atau beda sepetak dengan U2.
-	return (Distance(P1,P2)==1);
-}
-
 boolean IsEnemy(Unit U1, Unit U2){
 //I.S:U1 && U2 tidak null
 //Mengembalikan true jika U2 adalah musuh dari U1 (U1 ialah player yang sedang bermain)
@@ -128,15 +122,6 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	if (CanAttack(U))	printf("Can Attack: Yes\n");
 	else	printf("Can Attack: No\n");
 }
-
-boolean CmpUnit (POINT PU1, POINT PU2)
-//True jika U1==U2
-{
-	return(EQ(PU1, PU2));
-}
-
-void PrintAtkType(Unit U);
-//Memprint ke layar Tipe Attack yang dapat dilakukan oleh Unit U
 
 boolean IsNullUnit(Unit U){
 	boolean N;

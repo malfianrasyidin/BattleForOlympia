@@ -45,4 +45,14 @@ boolean EQ (POINT P1, POINT P2);
 boolean NEQ (POINT P1, POINT P2);
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
 
+/* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */                           
+POINT NextX (POINT P);
+/* Mengirim salinan P dengan absis ditambah satu */              
+
+POINT NextY (POINT P);
+/* Mengirim salinan P dengan ordinat ditambah satu */
+
+POINT PlusDelta (POINT P, int deltaX, int deltaY);
+/* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
+
 #endif

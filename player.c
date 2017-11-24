@@ -4,6 +4,7 @@
 #include "unit.h"
 #include "point.h"
 #include "queuelist.h"
+#include "MatriksMap.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,21 +50,138 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK)
 
 	TabTower(*P2) = MakePOINT(BrsMin+1,NK-1);
 
-}	
+}
 
-void AttackU (Unit U1, Unit U2)
-//Membuat Unit 1 Menyerang Unit 2 dengan tipe Attack 1
+void WinningPlayer(Player P)
+// Menyerahkan kemenangan permainan kepada Player P
 {
-	HP(U2) -= DamagePoints(U1);
-	if (HP(U2) <= 0) { // Jika HP dari U2 habis
-        // DelP(&UnitList(ArrPlayer[Owner(U2)]), Locate(U2));
-		U2 = NullUnit();
-	} else if ((Tipe(U2) == 'K' || AttackType(U1) == AttackType(U2)) && HP(U2) > 0 ) {
-		HP(U1) -= DamagePoints(U2);
+	printf("Congratulations to Player %d who valiantly defeated the forces of Player %d\n", PlayNumber(P), (PlayNumber(P) == 1)? 2 : 1);
+	printf("\n");
+	printf("Press any key to exit the game...\n");
+	getchar();
+	exit(EXIT_SUCCESS);
+}
 
-		if (HP(U1) <= 0) { // Jika HP dari U1 habis setelah counter attack
-        	// DelP(&UnitList(ArrPlayer[Owner(U2)]), Locate(U1));
-			U1 = NullUnit();
+List EnemyCanBeAttacked(Unit U, MatriksMap M) {
+//Mengembalikan List enemy yg bisa di attack.	
+	boolean Top, Bottom, Right, Left;
+	POINT PTop,PBottom, PRight, PLeft;
+	List L;
+	CreateEmptyList(&L);
+	
+	PTop = NextY(Locate(U));
+	PRight = NextX(Locate(U));
+	PLeft = PlusDelta(Locate(U), -1, 0);
+	PBottom = PlusDelta(Locate(U), 0, -1);
+	
+	Top = IsUnitIn(PTop,M) && IsEnemy(U,getUnit(PTop,M));
+	if (Top){
+		InsVFirst(&L,PTop);
+	}
+	Bottom = IsUnitIn(PBottom,M) && IsEnemy(U,getUnit(PBottom,M));
+	if (Bottom) {
+		InsVFirst(&L,PBottom);
+	}
+	Right = IsUnitIn(PRight,M) && IsEnemy(U,getUnit(PRight,M));
+	if (Right) {
+		InsVFirst(&L,PRight);
+	}
+	Left = IsUnitIn(PLeft,M) && IsEnemy(U,getUnit(PLeft,M));
+	if (Left) {
+		InsVFirst(&L,PLeft);
+	}
+	return (L);
+}
+
+void PrintListUnit (List L, MatriksMap M, Unit U)
+/* I.S. List mungkin kosong */
+/* F.S. 
+== List of Units ==
+1. King (2,1) | Health 20
+2. Swordsman (3,5) | Health 20
+*/
+{
+	printf("== List Of Unit ==");
+	addressList p = First(L);
+	int i=1;
+	while (p!=Nil) {
+		printf("%d. ",i);
+		printf("Unit: %s (%d,%d) | ", UnitTranslation(Tipe(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))))), 
+			Absis(Info(p)), Ordinat(Info(p)));
+		printf("Health: %d/%d ", HP(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p))))), 
+			MaxHP(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p))))));
+		if (AttackType(U) == AttackType(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))))) {
+			printf(" (Retaliates)");
+		}
+		if (Next(p)!=Nil) {
+			printf("\n");
+		}
+		p = Next(p);
+	}
+}
+
+POINT ChooseAttack (List L, int Choice)
+{
+	addressList P = First(L);
+	int i = 1;
+
+	do {
+		if (i == Choice) {
+			return Info(P);
+		}
+	} while (P != Nil && i <= Choice);
+}
+
+void Attack (MatriksMap *M, Player *P1, Player *P2)
+/* Menyerang  */
+{
+	if (CanAttack(getUnit(CurrentUnitPos(*P1), *M))) {
+		List L;
+		L = EnemyCanBeAttacked(getUnit(CurrentUnitPos(*P1), *M), *M);
+		if (NbElmtList(L) > 0 ) {
+			PrintListUnit(L, *M, getUnit(CurrentUnitPos(*P1), *M));
+			printf("Select enemy you want to attack: ");
+			int AttackChoice;
+			do {
+				scanf("%d", &AttackChoice);
+				if (AttackChoice <= 0 || AttackChoice > NbElmtList(L)) {
+					printf("Your input was wrong. Try again.");
+				}
+			} while (AttackChoice <= 0 || AttackChoice > NbElmtList(L));
+			
+			AttackU(M, P1, P2, ChooseAttack(L, AttackChoice));
+			CanAttack(UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1))))) = false;
+		} else {
+			printf("There are no enemy units nearby\n");
+		}
+	} else {
+		printf("This unit currently cannot attack anyone\n");
+	}
+}
+
+void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2)
+//Membuat Unit 1 Menyerang Unit 2
+{
+	HP(UnitIn(Elmt(*M, Absis(PU2), Ordinat(PU2)))) -= DamagePoints(getUnit(CurrentUnitPos(*P1), *M));
+	printf("Enemy's %s is damaged by %d.\n", UnitTranslation(Tipe(getUnit(PU2, *M))), DamagePoints(getUnit(CurrentUnitPos(*P1), *M)));
+	if (HP(getUnit(PU2, *M)) <= 0) { // Jika HP dari U2 habis
+		printf("Enemy's %s is dead.\n", UnitTranslation(Tipe(getUnit(PU2, *M))));
+		if (Tipe(getUnit(PU2, *M)) == 'K') {
+			WinningPlayer(*P1); // Jika karakter yang diserang dan HPnya habis adalah king maka player yang menyerang memenangkan permainan
+		}
+        DelP(&UnitList(*P2), PU2);
+		UnitIn(Elmt(*M, Absis(PU2), Ordinat(PU2))) = NullUnit();
+	} else if (Tipe(getUnit(PU2, *M)) == 'K' || AttackType(getUnit(CurrentUnitPos(*P1), *M)) == AttackType(getUnit(PU2, *M)) && HP(getUnit(PU2, *M)) > 0 ) {
+		printf("Enemy's %s retaliates.\n", UnitTranslation(Tipe(getUnit(PU2, *M))));
+		HP(UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1))))) -= DamagePoints(getUnit(PU2, *M));
+		printf("Your %s is damaged by %d.\n", UnitTranslation(Tipe(getUnit(CurrentUnitPos(*P1), *M))), DamagePoints(getUnit(PU2, *M)));
+		if (HP(getUnit(CurrentUnitPos(*P1), *M)) <= 0) { // Jika HP dari U1 habis setelah counter attack
+        	printf("Your %s is dead.\n", UnitTranslation(Tipe(getUnit(CurrentUnitPos(*P1), *M))));
+			if (Tipe(getUnit(CurrentUnitPos(*P1), *M)) == 'K') {
+				WinningPlayer(*P2); // Jika karakter yang menyerang dan terkena counter attack lalu HPnya habis adalah king maka player yang diserang memenangkan permainan
+			}
+			DelP(&UnitList(*P1), CurrentUnitPos(*P1));
+			UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1)))) = NullUnit();
 		}
 	}
 }
