@@ -68,6 +68,21 @@ addressList Search (List L, infotype X)
 	}
 }
 
+int NbElmtList (List L)
+{
+	int count;	
+	if (IsEmptyList(L)) {
+		count = 0;
+	} else {
+		addressList P = First(L);
+		while (P != Nil) {
+			count++;
+		}
+		P = Next(P);
+	}
+	return count;
+}
+
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void InsVFirst (List *L, infotype X)
@@ -277,45 +292,3 @@ void DelBefore (List *L, addressList *Pdel, addressList Succ)
 		Prev(*Pdel)=Nil;
 	}	
 }
-
-/****************** PROSES SEMUA ELEMEN LIST ******************/
-// void PrintListUnit (List L)
-// /* I.S. List mungkin kosong */
-// /* F.S. 
-// == List of Units ==
-// 1. King (2,1) | Health 20
-// 2. Swordsman (3,5) | Health 20
-// */
-// {
-// 	printf("== List Of Unit ==");
-// 	addressList p = First(L);
-// 	int i=1;
-// 	while (p!=Nil) {
-// 		printf("%d. ",i);
-// 		printf("Unit: %c (%d,%d) | ", Tipe(Info(p)), Absis(Locate(Info(p))), Ordinat(Locate(Info(p))));
-// 		printf("Health: %d | ", HP(Info(p)));
-// 		if (Next(p)!=Nil) {printf("\n");}
-// 		p = Next(p);
-// 	}
-// }
-
-// List EnemyCanBeAttacked(Unit U, MatriksMap M){
-// //Mengembalikan List enemy yg bisa di attack.	
-// 	boolean Top, Bottom, Right, Left;
-// 	POINT PTop,PBottom, PRight, PLeft;
-// 	List L;
-// 	CreateEmptyList(&L);
-// 	PTop = NextY(Locate(U));
-// 	PRight = NextX(Locate(U));
-// 	PLeft = PlusDelta(Locate(U), -1, 0);
-// 	PBottom = PlusDelta(Locate(U), 0, -1);
-// 	Top = IsUnitIn(PTop,M) && IsEnemy(U,getUnit(PTop,M));
-// 	if (Top)	InsVFirst(&L,getUnit(PTop,M));	
-// 	Bottom = IsUnitIn(PBottom,M) && IsEnemy(U,getUnit(PBottom,M));
-// 	if (Bottom)	InsVFirst(&L,getUnit(PBottom,M));
-// 	Right = IsUnitIn(PRight,M) && IsEnemy(U,getUnit(PRight,M));
-// 	if (Right)	InsVFirst(&L,getUnit(PRight,M));
-// 	Left = IsUnitIn(PLeft,M) && IsEnemy(U,getUnit(PLeft,M));
-// 	if (Left)	InsVFirst(&L,getUnit(PLeft,M));
-// 	return (L);
-// }
