@@ -86,21 +86,29 @@ void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 	Locate(UnitIn(Elmt(*M,x,y)))=P;
 	UnitIn(Elmt(*M,Absis(PIn),Ordinat(PIn)))=NullUnit();
 	DelP(&UnitList(*Play),PIn);
+	CurrentUnitPos(*Play) = P;
 	printf("You have successfully moved to (%d, %d)\n", Absis(P), Ordinat(P));
 	//push P
-	History(S,P);
+	History(S,PIn);
 }
 
-void Undo (Stack *History, Unit *U) {
+void Undo (Stack *S, POINT P1, MatriksMap *M, Player *Play) {
 //Mengembalikan current unit ke posisi sebelumya dan menambah movement points jika ada.
 	POINT P;
+	Unit U;
 
-	if (IsEmpty(*History)){
-		printf("You don't have any movement history");
+	if (IsEmpty(*S)){
+		printf("You don't have any movement history\n");
 	} else {
-		Pop(History, &P);
-		Absis(Locate(*U)) = Absis(P);
-		Ordinat(Locate(*U)) =  Ordinat(P);
+		U = getUnit(P1,*M);
+		Pop(S, &P);
+		UnitIn(Elmt(*M,Absis(P),Ordinat(P)))=U;
+		InsVFirst(&UnitList(*Play),P);
+		MP(UnitIn(Elmt(*M,Absis(P),Ordinat(P))))+=Distance(P1,P);
+		Locate(UnitIn(Elmt(*M,Absis(P),Ordinat(P))))=P;
+		UnitIn(Elmt(*M,Absis(P1),Ordinat(P1)))=NullUnit();
+		DelP(&UnitList(*Play),P1);
+		CurrentUnitPos(*Play) = P;
 	}
 }
 

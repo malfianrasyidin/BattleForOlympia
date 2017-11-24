@@ -51,10 +51,10 @@ int main()	{
 			// PrintInfoPlayer(CurrPlayer);
 			PrintInfoUnit(CurrUnit);
 			if (cmd==1)	{ //MOVE
-				MainMove(&SUndo, &CurrUnit, &M);
+				MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
 			if (cmd==2)	{ //UNDO
-				Undo(&SUndo,&CurrUnit);
+				Undo (&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
 			if (cmd==3)	{ //CHANGE UNIT
 				ChangeCurrUnit(&Q,M,&CurrPlayer);

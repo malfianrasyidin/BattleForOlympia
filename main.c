@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "stringt.h"
+#include "mesininput.h"
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
@@ -7,7 +7,6 @@
 #include "stackt.h"
 #include "player.h"
 #include "queuelist.h"
-#include "mesininput.h"
 
 int main()	{
 	int n, NB, NK;
@@ -43,22 +42,21 @@ int main()	{
 		M = MatGen(NB,NK);
 		CreateTurn(&QP, P1, P2);
 		InitPlayer(&P1, &P2, NB,NK);
-		cmd=" ";
+		printf("Your Input : \n");
+		BACAINPUT();
 		CurrPlayer = P1;
-		while (strcmp(cmd,"EXIT")!=0)	{
+		while (CmpInpStr("EXIT",CInput))	{
 			PrintMap(M);
 			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
 			// PrintInfoPlayer(CurrPlayer);
-			printf("Your Input : ");
-			BACAINPUT();
-			PrintMap(M);
+
 			if (CmpInpStr("MOVE",CInput))	{
-				MainMove(&SUndo, Locate(CurrUnit), &M, &CurrPlayer);
+				MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
 			if (CmpInpStr("UNDO",CInput))	{
-				Undo(&SUndo,&CurrUnit);
+				Undo (&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
 			if (CmpInpStr("CHANGE UNIT",CInput))	{
 				ChangeCurrUnit(&Q,M,&CurrPlayer);
@@ -84,6 +82,8 @@ int main()	{
 			if (CmpInpStr("EXIT",CInput))	{
 
 			}
+			printf("Your Input : ");
+			BACAINPUT();
 		}
 
 	} else if (n==2)	{

@@ -25,7 +25,7 @@ MatriksMap PossibleMove (POINT PIn, MatriksMap M);
 void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play);
 //MainMove
 
-void Undo (Stack *History, Unit *U);
+void Undo (Stack *S, POINT P1, MatriksMap *M, Player *Play);
 //Mengembalikan current unit ke posisi sebelumya dan menambah movement points jika ada.
 
 // CHANGE & RECRUIT UNIT

@@ -20,7 +20,7 @@ void EmbraceBlank()
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = MARK */
 {	/* ALGORITMA */
-	while (((CCI == BLANK) || (CCI == ENTER)) && (CCI != MARK)) {
+	while ((CCI == BLANK) || (CCI != MARK)) {
 		ADVIN();
 	}
 }
