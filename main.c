@@ -7,6 +7,7 @@
 #include "player.h"
 #include "queuelist.h"
 #include <string.h>
+#include "save.h"
 
 int main()	{
 	//Initialize
@@ -37,26 +38,29 @@ int main()	{
 	//Input menu
 	printf("Choose Menu : ");	scanf("%d", &n);
 	if (n==1)	{
-		printf("== Create Map ==\n");	
+		printf("\n== Create Map ==\n");	
 		printf("Row : "); scanf("%d", &NB);
 		printf("Column : "); scanf("%d", &NK);
+		printf("\n");
 		//Generate Map
 		M = MatGen(NB,NK);
 		//Create Queue of Player
-		CreateTurn(&QP, P1, P2);
+		CreateTurn(&QP);
 		//Initialize player
 		InitPlayer(&P1, &P2, NB,NK);
-		//Input Command
-		printf("Your Input : "); scanf("%s", command);
 		CurrPlayer = P1;
+		//Initialize command
+		command[0]='\0';
 		while (strcmp(command,"EXIT")!=0)	{
 			//Initialize Current Unit
 			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
 			//Make Queue of Unit of Player
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
-			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
-			// PrintInfoPlayer(CurrPlayer);
+			printf("\nPlayer %d's Turn\n", PlayNumber(CurrPlayer));
+			PrintInfoPlayer(CurrPlayer);
 			PrintInfoUnit(CurrUnit);
+			//Input Command
+			printf("Your Input : "); scanf("%s", command);
 			if (strcmp(command,"MOVE")==0)	{
 				MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			}
@@ -79,17 +83,15 @@ int main()	{
 				MainInfo(M);
 			}
 			if (strcmp(command,"END_TURN")==0)	{
-				NextTurn(&QP,&CurrPlayer);
+				NextTurn (&M, &QP, P1, P2, &CurrPlayer, &SUndo);
 			}
 			if (strcmp(command,"SAVE")==0)	{
-				//Save
+				//Save(MatMap, P1, P2, Turn, file);
 			}
 			if (strcmp(command,"LOAD")==0)	{
 				MainInfo(M);
 			}
 			command[0]='\0';
-			//Next command
-			printf("Your Input : "); scanf("%s", command);
 		}
 	} else if (n==2)	{
 

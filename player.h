@@ -6,6 +6,7 @@
 #include "unit.h"
 #include "point.h"
 #include "queuelist.h"
+#include "stackt.h"
 
 
 #define Nol 0
@@ -61,6 +62,8 @@ typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
 
 void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 //Membuat player pada kondisi awal
+
+void PrintInfoPlayer (Player P);
 
 void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 //Membuat Unit 1 Menyerang Unit 2

@@ -53,6 +53,34 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK)
 
 }
 
+void PrintInfoPlayer (Player P)
+/*
+F.S : Cash: 50G | Income: 2G | Upkeep: 1G
+++++
+*/
+{
+	addressList Po;
+	int i=1;
+	printf("Cash : %dG | Income : %dG | Upkeep : %dG\n", PGold(P), PIncome(P), PUpKeep(P));
+	//List Unit
+	printf("== List Of Units ==\n");
+	Po = First(UnitList(P));
+	while (Po!=Nil)	{
+		printf("%d. (%d,%d)\n", i, Absis(Info(Po)),Ordinat(Info(Po)));
+		Po=Next(Po);
+	}
+	//List Village
+	i=1;
+	printf("== List Of Villages ==\n");
+	Po = First(VillageList(P));
+	while (Po!=Nil)	{
+		printf("%d. (%d,%d)\n", i, Absis(Info(Po)),Ordinat(Info(Po)));
+		Po=Next(Po);
+	}
+	//Current Unit Pos
+	printf("Current Unit Position : (%d,%d)\n", Absis(CurrentUnitPos(P)),Ordinat(CurrentUnitPos(P)));
+}
+
 void WinningPlayer(Player P)
 // Menyerahkan kemenangan permainan kepada Player P
 {
