@@ -1,11 +1,16 @@
 #ifndef PLAYER__H
 #define PLAYER__H
 
+#include "player.h"
 #include "boolean.h"
 #include "listdpUnit.h"
 #include "unit.h"
 #include "point.h"
 #include "queuelist.h"
+#include "MatriksMap.h"
+#include "stackt.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 #define Nol 0

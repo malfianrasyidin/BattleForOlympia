@@ -21,7 +21,9 @@ int main () {
 	CreateTurn(&Q);
 	char filename[256];
 
-	scanf("%s", &filename);
+	printf("--This is a driver for Module Save--\n");
+	printf("Please enter your desired filename: ");
+	scanf("%s", filename);
 	Save(M,P1,P2,Q, filename);
 
 	return 0;
