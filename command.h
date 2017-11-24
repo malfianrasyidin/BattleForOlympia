@@ -52,7 +52,7 @@ void InfoRecruit(int *N);
 
 int EmptyTower(Player P, MatriksMap M);
 
-void RecruitUnit (Player P, List *L, QueueU *Q, MatriksMap M);
+void RecruitUnit (Player *P, List *L, QueueU *Q, MatriksMap *M);
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
 

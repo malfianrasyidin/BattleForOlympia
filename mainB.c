@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "stringt.h"
 #include "command.h"
 #include "point.h"
 #include "MatriksMap.h"
@@ -9,7 +10,7 @@
 
 int main()	{
 	int n, NB, NK;
-	int cmd;
+	char* cmd;
 	POINT P;
 	MatriksMap M;
 	Player CurrPlayer, P1, P2;
@@ -41,40 +42,19 @@ int main()	{
 		M = MatGen(NB,NK);
 		CreateTurn(&QP, P1, P2);
 		InitPlayer(&P1, &P2, NB,NK);
-		printf("Your Input : "); scanf("%d", &cmd);
-		CurrPlayer = P1;
-		while (cmd!=0)	{
+		cmd=" ";
+		Player* CurrPlayer;
+		&CurrPlayer = P1;
+		while (strcmp(cmd,"EXIT")!=0)	{
+			PrintMap(M);
+			MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
 			CurrUnit = getUnit(CurrentUnitPos(CurrPlayer),M);
 			Q = MakeUnitQueue(UnitList(CurrPlayer));
 			printf("Player %d's Turn\n", PlayNumber(CurrPlayer));
 			// PrintInfoPlayer(CurrPlayer);
-			PrintInfoUnit(CurrUnit);
-			if (cmd==1)	{ //MOVE
-				MainMove(&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
-			}
-			if (cmd==2)	{ //UNDO
-				Undo (&SUndo, CurrentUnitPos(CurrPlayer), &M, &CurrPlayer);
-			}
-			if (cmd==3)	{ //CHANGE UNIT
-				ChangeCurrUnit(&Q,M,&CurrPlayer);
-			}
-			if (cmd==4)	{ //RECRUIT
-				RecruitUnit (&CurrPlayer, &UnitList(CurrPlayer), &Q, &M);
-			}
-			if (cmd==5)	{ //ATTACK
-				//Attack
-			}
-			if (cmd==6)	{ //MAP
-				PrintMap(M);
-			}
-			if (cmd==7)	{ //MAIN INFO
-				MainInfo(M);
-			}
-			if (cmd==8)	{ //NEXT TURN
-				NextTurn(&QP,&CurrPlayer);
-			}
-			printf("Your Input : "); scanf("%d", &cmd);
+			//PrintInfoUnit(CurrUnit);
 		}
+
 	} else if (n==2)	{
 
 	}
