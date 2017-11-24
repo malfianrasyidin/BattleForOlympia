@@ -70,7 +70,7 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 //Membuat Unit 1 Menyerang Unit 2
 
-void Attack (MatriksMap *M, Player *P1, Player *P2);
+void Attack (MatriksMap *M, Player *P1, Player *P2, Stack *SUndo);
 /* Menyerang  */
 
 /*** QUEUE PLAYER ***/

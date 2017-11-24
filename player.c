@@ -133,7 +133,7 @@ POINT ChooseAttack (List L, int Choice)
 	return Po;
 }
 
-void Attack (MatriksMap *M, Player *P1, Player *P2)
+void Attack (MatriksMap *M, Player *P1, Player *P2, Stack *SUndo)
 /* Menyerang  */
 {
 	if (CanAttack(getUnit(CurrentUnitPos(*P1), *M))) {
@@ -152,6 +152,8 @@ void Attack (MatriksMap *M, Player *P1, Player *P2)
 			
 			AttackU(M, P1, P2, ChooseAttack(L, AttackChoice));
 			CanAttack(UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1))))) = false;
+			MP(UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1))))) = 0;
+			CreateEmpty(SUndo);
 		} else {
 			printf("There are no enemy units nearby\n");
 		}
