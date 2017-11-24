@@ -82,5 +82,11 @@ boolean CmpInpStr(char Str[], Input II){
 		sama = CInput.TabInput[i] == CStr;
 		i++;
 	}
-	return(sama);
+	printf("%c",CStr);
+	if (i != CInput.Length ){
+		return(false);
+	}
+	else{
+		return(sama);
+	}
 }
