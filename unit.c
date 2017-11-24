@@ -110,6 +110,7 @@ char* UnitTranslation(char Tipe){
 		case 'T' : return "Tower"; break;
 		case 'V' : return "Village"; break;
 	}
+	return 0;
 }
 
 void PrintInfoUnit (Unit U)

@@ -1,11 +1,16 @@
 #ifndef PLAYER__H
 #define PLAYER__H
 
+#include "player.h"
 #include "boolean.h"
 #include "listdpUnit.h"
 #include "unit.h"
 #include "point.h"
 #include "queuelist.h"
+#include "MatriksMap.h"
+#include "stackt.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 #define Nol 0
@@ -65,7 +70,8 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 //Membuat Unit 1 Menyerang Unit 2
 
-
+void Attack (MatriksMap *M, Player *P1, Player *P2);
+/* Menyerang  */
 
 /*** QUEUE PLAYER ***/
 

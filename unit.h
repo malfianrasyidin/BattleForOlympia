@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+<<<<<<< HEAD
 #define BaseMaxHPArcher 29
 #define BaseMaxHPSwordsman 55
 #define BaseMaxHPMage 35
@@ -25,6 +26,26 @@
 #define BaseDmgPointArcher 13
 #define BaseDmgPointMage 8
 #define BaseDmgPointKing 18
+=======
+#define BaseMaxHPArcher 70
+#define BaseMaxHPSwordsman 90
+#define BaseMaxHPMage 120
+#define BaseMaxHPKing 200
+
+#define BaseMaxMPArcher 100
+#define BaseMaxMPSwordsman 80
+#define BaseMaxMPMage 150
+#define BaseMaxMPKing 15
+
+#define PriceSwordsman 10
+#define PriceArcher  20
+#define PriceMage    30
+
+#define BaseDmgPointSwordsman 60
+#define BaseDmgPointArcher 50
+#define BaseDmgPointMage 10
+#define BaseDmgPointKing 1000
+>>>>>>> 53c2d7cdbaa18c114dc803b11686b99dee1bc646
 
 #define BaseHealMage 8
 #define BaseHealVillage 10
