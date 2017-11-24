@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "unit.h"
+#include "point.h"
 #include "MatriksMap.h"
 
 /* PROTOTYPE */
@@ -57,10 +58,10 @@ addressList Search (List L, infotype X)
 		return Nil;
 	} else {
 		addressList P = First(L);
-		while ((Next(P)!=Nil) && (!CmpUnit(Info(P),X))) {
+		while ((Next(P)!=Nil) && (!EQ(Info(P),X))) {
 			P=Next(P);
 		}
-		if (!CmpUnit(Info(P),X)) {
+		if (!EQ(Info(P),X)) {
 			return Nil;
 		} else {
 			return P;
@@ -237,7 +238,7 @@ void DelP (List *L, infotype X)
 		infotype Y;
 		boolean stop = false;
 		while (!stop) {
-			if (CmpUnit(Info(First(*L)),X)) {
+			if (EQ(Info(First(*L)),X)) {
 				DelVFirst(L,&Y);
 				stop = IsEmptyList(*L);
 			} else {
@@ -247,7 +248,7 @@ void DelP (List *L, infotype X)
 		if (!IsEmptyList(*L)) {
 			P = First(*L);
 			while (Next(P)!=Nil) {
-				if (CmpUnit(Info(Next(P)),X)) {
+				if (EQ(Info(Next(P)),X)) {
 					DelAfter(L,&Q,P);
 					Dealokasi(Q);
 				} else {

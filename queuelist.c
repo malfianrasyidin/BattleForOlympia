@@ -69,8 +69,8 @@ void AddQU (QueueU * Q, infotypeQU X){
 		Tail(*Q) = P;
 	}
 	else {
-		NextQU(P) = Head(*Q);
 		NextQU(Tail(*Q)) = P;
+		NextQU(P) = Head(*Q);
 		Tail(*Q) = P;
 	}
 }

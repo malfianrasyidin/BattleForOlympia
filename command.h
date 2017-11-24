@@ -25,7 +25,7 @@ MatriksMap PossibleMove (POINT PIn, MatriksMap M);
 void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play);
 //MainMove
 
-void Undo (Stack *History, Unit *U);
+void Undo (Stack *S, POINT P1, MatriksMap *M, Player *Play);
 //Mengembalikan current unit ke posisi sebelumya dan menambah movement points jika ada.
 
 // CHANGE & RECRUIT UNIT
@@ -52,7 +52,7 @@ void InfoRecruit(int *N);
 
 int EmptyTower(Player P, MatriksMap M);
 
-void RecruitUnit (Player P, List *L, QueueU *Q, MatriksMap M);
+void RecruitUnit (Player *P, List *L, QueueU *Q, MatriksMap *M);
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
 
