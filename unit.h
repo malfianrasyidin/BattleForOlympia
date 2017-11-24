@@ -14,9 +14,9 @@
 #define BaseMaxMPMage 150
 #define BaseMaxMPKing 210
 
-#define PriceWarrior 120
-#define PriceArcher  150
-#define PriceMage    200
+#define PriceWarrior 10
+#define PriceArcher  20
+#define PriceMage    30
 
 #define BaseDmgPointWarrior 60
 #define BaseDmgPointArcher 50

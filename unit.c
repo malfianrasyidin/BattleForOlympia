@@ -31,13 +31,13 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 	if (N == 1){
 		Locate(U) = P;
 		Tipe(U) = 'W';
-		MaxHP(U) = BaseMaxHPWarrior;
+		MaxHP(U) = BaseMaxHPMage;
 		HP(U) = MaxHP(U);
 		MaxMP(U) = BaseMaxMPMage;
 		MP(U) = MaxMP(U);
-		AttackType(U) = 'M';
-		DamagePoints(U) = BaseDmgPointWarrior;
-		HealPoints(U)  = 0;
+		AttackType(U) = 'R';
+		DamagePoints(U) = BaseDmgPointMage;
+		HealPoints(U)  = BaseHealMage;
 		CanAttack(U) = true;
 	}
 	else if (N == 2){
@@ -54,14 +54,14 @@ Unit MakeNewUnit(int N, int Play, POINT P){
 	}
 	else if (N==3) {
 		Locate(U) = P;
-		Tipe(U) = 'M';
-		MaxHP(U) = BaseMaxHPMage;
+		Tipe(U) = 'S';
+		MaxHP(U) = BaseMaxHPWarrior;
 		HP(U) = MaxHP(U);
-		MaxMP(U) = BaseMaxMPMage;
+		MaxMP(U) = BaseMaxMPWarrior;
 		MP(U) = MaxMP(U);
-		AttackType(U) = 'R';
-		DamagePoints(U) = BaseDmgPointMage;
-		HealPoints(U)  = BaseHealMage;
+		AttackType(U) = 'M';
+		DamagePoints(U) = BaseDmgPointWarrior;
+		HealPoints(U)  = 0;
 		CanAttack(U) = true;
 	} else if (N==4)	{
 		Locate(U) = P;
