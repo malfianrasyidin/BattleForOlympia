@@ -150,7 +150,7 @@ void Attack (MatriksMap *M, Player *P1, Player *P2)
 			} while (AttackChoice <= 0 || AttackChoice > NbElmtList(L));
 			
 			AttackU(M, P1, P2, ChooseAttack(L, AttackChoice));
-
+			CanAttack(UnitIn(Elmt(*M, Absis(CurrentUnitPos(*P1)), Ordinat(CurrentUnitPos(*P1))))) = false;
 		} else {
 			printf("There are no enemy units nearby\n");
 		}
