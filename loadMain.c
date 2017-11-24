@@ -18,19 +18,18 @@ int main () {
 	Player P1, P2;
 	MatriksMap M;
 	Queue Q;
-	int trash;
 	char filename[256];
 
-	scanf("%s", &filename);
-	printf("'%s'\n", filename);
+	printf("--This is a driver for Module Load--\n");
+	printf("Input a filename do you would like to load: ");
+	scanf("%s", filename);
 
 	Load(&M, &P1, &P2, &Q, filename);
 
-	scanf("%s", &filename);
-	printf("'%s'\n", filename);
+	printf("--Load Check--\n");
+	printf("Please enter your desired filename to save: ");
+	scanf("%s", filename);
 	Save(M,P1,P2,Q, filename);
-
-	//printf("Cek apakah pitakar saat ini sama dengan isi dari yang sebelumnya\n");
 
 	return 0;
 }
