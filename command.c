@@ -226,6 +226,7 @@ void RecruitUnit (Player *P, List *L, QueueU *Q, MatriksMap *M){
 			Unit U = MakeNewUnit(N,PlayNumber(*P),PlayerCastle(*P,i));
 			UnitIn(Elmt(*M,Absis(PlayerCastle(*P,i)),Ordinat(PlayerCastle(*P,i)))) = U;
 			AddUnit(&*L,&*Q,U);
+			PUpKeep(*P) += UnitSalary;
 		}
 	}
 }
