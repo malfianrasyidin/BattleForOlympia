@@ -97,7 +97,7 @@ int main()	{
 				MainInfo(M);
 			}
 			if (strcmp(command,"END_TURN")==0)	{
-				NextTurn (&M, &QP, &P1, &P2, CurrPlayer, CurrEnemy, &SUndo);
+				NextTurn (&M, &QP, CurrPlayer, CurrEnemy, &SUndo);
 			}
 			if (strcmp(command,"SAVE")==0)	{
 				Save(M, P1, P2, QP);

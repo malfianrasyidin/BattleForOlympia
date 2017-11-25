@@ -328,7 +328,7 @@ void CreateTurn (Queue * Q) {
 	AddQ(Q, 2);
 }
 
-void NextTurn (MatriksMap *M, Queue * Q, Player *P1, Player *P2, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S) {
+void NextTurn (MatriksMap *M, Queue * Q, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S) {
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
 	/* ALGORITMA */
@@ -340,12 +340,12 @@ void NextTurn (MatriksMap *M, Queue * Q, Player *P1, Player *P2, Player * Curren
 				PIncome(*CurrentEnemy) -= GoldPerVillage;
 				DelP(&VillageList(*CurrentEnemy), Info(P));
 			}
-			OwnerB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = PlayNumber(*CurrentPlayer);
-			InsVFirst(&VillageList(*CurrentPlayer), Info(P));
 			
-			PIncome(*CurrentPlayer) += GoldPerVillage;
-			printf("%d\n", PIncome(*CurrentPlayer));
-			printf("%d\n", PIncome(*P1));
+			if (Search(VillageList(*CurrentPlayer), Info(P)) == Nil) {
+				OwnerB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = PlayNumber(*CurrentPlayer);
+				InsVFirst(&VillageList(*CurrentPlayer), Info(P));
+				PIncome(*CurrentPlayer) += GoldPerVillage;
+			}
 		}
 
 		P = Next(P);
@@ -355,13 +355,10 @@ void NextTurn (MatriksMap *M, Queue * Q, Player *P1, Player *P2, Player * Curren
 	DelQ(Q, &X);
 	AddQ(Q, X);
 	
-	if (InfoHead(*Q) == PlayNumber(*P1)) {
-		*CurrentPlayer = *P1;
-		*CurrentEnemy = *P2;
-	} else {
-		*CurrentPlayer = *P2;
-		*CurrentEnemy = *P1;
-	}
+	Player PTemp;
+	PTemp = *CurrentPlayer;
+	*CurrentPlayer = *CurrentEnemy;
+	*CurrentEnemy = PTemp;
 
 	// Updating gold...
 	PGold(*CurrentPlayer) += (PIncome(*CurrentPlayer) - PUpKeep(*CurrentPlayer));
