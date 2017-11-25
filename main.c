@@ -66,14 +66,14 @@ int main()	{
 		//Initialize command
 		//Input Command
 		printf("Your Input : "); scanf("%s", command);
+		//Initialize Current Unit
+		CurrUnit = getUnit(CurrentUnitPos(*CurrPlayer),M);
+		//Make Queue of Unit of Player
+		Q = MakeUnitQueue(UnitList(*CurrPlayer));
+		printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
+		PrintInfoPlayer(*CurrPlayer);
+		PrintInfoUnit(CurrUnit);
 		while (strcmp(command,"EXIT")!=0)	{
-			//Initialize Current Unit
-			CurrUnit = getUnit(CurrentUnitPos(*CurrPlayer),M);
-			//Make Queue of Unit of Player
-			Q = MakeUnitQueue(UnitList(*CurrPlayer));
-			printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
-			PrintInfoPlayer(*CurrPlayer);
-			PrintInfoUnit(CurrUnit);
 			if (strcmp(command,"MOVE")==0)	{
 				MainMove(&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer);
 			}
@@ -104,7 +104,17 @@ int main()	{
 			if (strcmp(command,"LOAD")==0)	{
 				MainInfo(M);
 			}
+
+			//Initialize Current Unit
+			CurrUnit = getUnit(CurrentUnitPos(*CurrPlayer),M);
+			//Make Queue of Unit of Player
+			Q = MakeUnitQueue(UnitList(*CurrPlayer));
+			printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
+			PrintInfoPlayer(*CurrPlayer);
+			PrintInfoUnit(CurrUnit);
+
 			command[0]='\0';
+			
 			//Input Command
 			printf("Your Input : "); scanf("%s", command);
 		}
