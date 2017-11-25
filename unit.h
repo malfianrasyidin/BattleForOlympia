@@ -21,6 +21,9 @@
 #define PriceArcher  17
 #define PriceMage    30
 
+#define GoldPerVillage	3
+#define UnitSalary	1
+
 #define BaseDmgPointSwordsman 16
 #define BaseDmgPointArcher 13
 #define BaseDmgPointMage 8

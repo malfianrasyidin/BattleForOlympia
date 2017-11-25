@@ -199,6 +199,7 @@ void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2)
 	printf("Enemy's %s is damaged by %d.\n", UnitTranslation(Tipe(getUnit(PU2, *M))), DamagePoints(getUnit(CurrentUnitPos(*P1), *M)));
 	if (HP(getUnit(PU2, *M)) <= 0) { // Jika HP dari U2 habis
 		printf("Enemy's %s is dead.\n", UnitTranslation(Tipe(getUnit(PU2, *M))));
+		PUpKeep(*P2) -= UnitSalary;
 		if (Tipe(getUnit(PU2, *M)) == 'K') {
 			WinningPlayer(*P1); // Jika karakter yang diserang dan HPnya habis adalah king maka player yang menyerang memenangkan permainan
 		}
@@ -210,6 +211,7 @@ void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2)
 		printf("Your %s is damaged by %d.\n", UnitTranslation(Tipe(getUnit(CurrentUnitPos(*P1), *M))), DamagePoints(getUnit(PU2, *M)));
 		if (HP(getUnit(CurrentUnitPos(*P1), *M)) <= 0) { // Jika HP dari U1 habis setelah counter attack
         	printf("Your %s is dead.\n", UnitTranslation(Tipe(getUnit(CurrentUnitPos(*P1), *M))));
+			PUpKeep(*P1) -= UnitSalary;
 			if (Tipe(getUnit(CurrentUnitPos(*P1), *M)) == 'K') {
 				WinningPlayer(*P2); // Jika karakter yang menyerang dan terkena counter attack lalu HPnya habis adalah king maka player yang diserang memenangkan permainan
 			}
@@ -219,7 +221,6 @@ void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2)
 	}
 }
 
-/*** BUAT QUEUE PLS JGN DIGANGGU GUGAT ***/
 
 /* ********* Prototype ********* */
 boolean IsQEmpty (Queue Q)
@@ -330,13 +331,19 @@ void CreateTurn (Queue * Q) {
 void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S) {
 	/* Mengubah head -> tail dan tail -> head */
 	infotypeQ X;
-	POINT stacktemp;
 	/* ALGORITMA */
 
 	addressList P = First(UnitList(*CurrentPlayer));
 	while (P != Nil) {
 		if (TipeB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) == 'V') {
+			if (OwnerB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) == PlayNumber(*CurrentEnemy)) {
+				PIncome(*CurrentEnemy) -= GoldPerVillage;
+				DelP(&VillageList(*CurrentEnemy), Info(P));
+			}
 			OwnerB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = PlayNumber(*CurrentPlayer);
+			InsVFirst(&VillageList(*CurrentPlayer), Info(P));
+			
+			PIncome(*CurrentPlayer) += GoldPerVillage;
 		}
 
 		P = Next(P);
@@ -372,14 +379,11 @@ void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentP
 		MP(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = MaxMP(getUnit(Info(P), *M));
 		CanAttack(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = true;
 		
-
 		P = Next(P);
 	}
 
 	//Delete Stack Undo
-	while(!IsEmpty(*S)) {
-		Pop(S,&stacktemp);
-	}
+	CreateEmpty(S);
 
 }
 
@@ -388,7 +392,9 @@ infotypeQ CurrentTurn (Queue Q) {
 	return InfoHead(Q);
 }
 
-void Heal (POINT P, int HealP, MatriksMap *M) {
+void Heal (POINT P, int HealP, MatriksMap *M) 
+/* Menyembuhkan unit yang berada di titik P sebesar HealP */
+{
 	HP(UnitIn(Elmt(*M, Absis(P), Ordinat(P)))) += HealP;
 	if (HP(getUnit(P, *M)) > MaxHP(getUnit(P, *M))) {
 		HP(UnitIn(Elmt(*M, Absis(P), Ordinat(P)))) = MaxHP(getUnit(P, *M));
@@ -396,7 +402,7 @@ void Heal (POINT P, int HealP, MatriksMap *M) {
 }
 
 void HealUnitsAround (Unit U, MatriksMap *M) {
-//Mengembalikan List enemy yg bisa di attack.	
+/* Menyembuhkan unit-unit yang berada di sekitar U */
 	boolean Top, Bottom, Right, Left;
 	POINT PTop,PBottom, PRight, PLeft;
 	List L;
