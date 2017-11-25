@@ -68,6 +68,7 @@ F.S : Cash: 50G | Income: 2G | Upkeep: 1G
 	while (Po!=Nil)	{
 		printf("%d. (%d,%d)\n", i, Absis(Info(Po)),Ordinat(Info(Po)));
 		Po=Next(Po);
+		i++;
 	}
 	//List Village
 	i=1;
@@ -76,6 +77,7 @@ F.S : Cash: 50G | Income: 2G | Upkeep: 1G
 	while (Po!=Nil)	{
 		printf("%d. (%d,%d)\n", i, Absis(Info(Po)),Ordinat(Info(Po)));
 		Po=Next(Po);
+		i++;
 	}
 	//Current Unit Pos
 	printf("Current Unit Position : (%d,%d)\n", Absis(CurrentUnitPos(P)),Ordinat(CurrentUnitPos(P)));
