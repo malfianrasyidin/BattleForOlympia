@@ -36,11 +36,10 @@ boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 	}
 }
 
-MatriksMap PossibleMove (POINT PIn, MatriksMap M)
+void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt)
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 {
-	MatriksMap MOut;
-	MOut=M;
+	*MOut=M;
 	POINT P;
 	int i;
 	int j;
@@ -49,11 +48,11 @@ MatriksMap PossibleMove (POINT PIn, MatriksMap M)
 			Absis(P)=i;
 			Ordinat(P)=j;
 			if (IsMoveValid(PIn,P,M))	{
-				UnitIn(Elmt(MOut,i,j)).UnitType = '$';
+				Tipe(UnitIn(Elmt(*MOut,i,j))) = '$';
+				*cnt+=1;
 			}
 		}
-	}	
-	return MOut;
+	}
 }
 
 void History(Stack *S, POINT P){
@@ -64,31 +63,36 @@ void History(Stack *S, POINT P){
 void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 //MainMove
 {
+	int cnt=0;
 	MatriksMap MPrint;
-	MPrint = PossibleMove(PIn,*M);
-	PrintMap(MPrint);
-	int x,y;
-	printf("Please enter cell’s coordinate x y: ");
-	scanf("%d %d", &x, &y);
-	POINT P = MakePOINT(x,y);
-	Unit U = getUnit(PIn,*M);
-	while (!IsMoveValid(PIn,P,*M))	{
-		printf("You can’t move there\n");
+	PossibleMove(PIn,*M, &MPrint,&cnt);
+	if (cnt>0)	{
+		PrintMap(MPrint);
+		int x,y;
 		printf("Please enter cell’s coordinate x y: ");
 		scanf("%d %d", &x, &y);
-		P = MakePOINT(x,y);
+		POINT P = MakePOINT(x,y);
+		Unit U = getUnit(PIn,*M);
+		while (!IsMoveValid(PIn,P,*M))	{
+			printf("You can’t move there\n");
+			printf("Please enter cell’s coordinate x y: ");
+			scanf("%d %d", &x, &y);
+			P = MakePOINT(x,y);
+		}
+		//update
+		UnitIn(Elmt(*M,x,y))=U;
+		InsVFirst(&UnitList(*Play),P);
+		MP(UnitIn(Elmt(*M,x,y)))-=Distance(PIn,P);
+		Locate(UnitIn(Elmt(*M,x,y)))=P;
+		UnitIn(Elmt(*M,Absis(PIn),Ordinat(PIn)))=NullUnit();
+		DelP(&UnitList(*Play),PIn);
+		CurrentUnitPos(*Play) = P;
+		printf("You have successfully moved to (%d, %d)\n", Absis(P), Ordinat(P));
+		//push P
+		History(S,PIn);
+	} else {
+		printf("Your unit can't move anywhere\n");
 	}
-	//update
-	UnitIn(Elmt(*M,x,y))=U;
-	InsVFirst(&UnitList(*Play),P);
-	MP(UnitIn(Elmt(*M,x,y)))-=Distance(PIn,P);
-	Locate(UnitIn(Elmt(*M,x,y)))=P;
-	UnitIn(Elmt(*M,Absis(PIn),Ordinat(PIn)))=NullUnit();
-	DelP(&UnitList(*Play),PIn);
-	CurrentUnitPos(*Play) = P;
-	printf("You have successfully moved to (%d, %d)\n", Absis(P), Ordinat(P));
-	//push P
-	History(S,PIn);
 }
 
 void Undo (Stack *S, POINT P1, MatriksMap *M, Player *Play) {

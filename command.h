@@ -19,7 +19,7 @@ boolean IsMoveValid(POINT PU, POINT P, MatriksMap M);
 void History(Stack *S, POINT P);
 //Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
 
-MatriksMap PossibleMove (POINT PIn, MatriksMap M);
+void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt);
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 
 void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play);
