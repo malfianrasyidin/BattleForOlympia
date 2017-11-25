@@ -64,7 +64,8 @@ int main()	{
 			}
 		} 
 		//Initialize command
-		command[0]='\0';
+		//Input Command
+		printf("Your Input : "); scanf("%s", command);
 		while (strcmp(command,"EXIT")!=0)	{
 			//Initialize Current Unit
 			CurrUnit = getUnit(CurrentUnitPos(*CurrPlayer),M);
@@ -73,8 +74,6 @@ int main()	{
 			printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
 			PrintInfoPlayer(*CurrPlayer);
 			PrintInfoUnit(CurrUnit);
-			//Input Command
-			printf("Your Input : "); scanf("%s", command);
 			if (strcmp(command,"MOVE")==0)	{
 				MainMove(&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer);
 			}
@@ -105,10 +104,9 @@ int main()	{
 			if (strcmp(command,"LOAD")==0)	{
 				MainInfo(M);
 			}
-			if (strcmp(command,"EXIT")==0)	{
-				break;
-			}
 			command[0]='\0';
+			//Input Command
+			printf("Your Input : "); scanf("%s", command);
 		}
 	}
 	printf("\n======================================\n");
