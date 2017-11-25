@@ -164,8 +164,8 @@ void AddUnit (List *L, QueueU *Q, Unit U){
 }
 
 void InfoRecruit(int *N){
-	printf("1. Mage\n2. Archer\n3. Swordsman \n");
-	printf("Unit yang diinginkan : ");
+	printf("1. Mage (30G) \n2. Archer (17G) \n3. Swordsman (25)\n");
+	printf("Your desired unit : ");
 	scanf("%d", &*N);
 }
 
@@ -190,34 +190,35 @@ void RecruitUnit (Player *P, List *L, QueueU *Q, MatriksMap *M){
 //I.S Unit UR unit yang merecruit, L dan Q terdefinisi
 //F.S Mengembalikan **Pesan kesalahan jika UR bukan King atau L dan Q yang sudah terisi Unit Baru jika True
 	if (Tipe(getUnit(CurrentUnitPos(*P), *M)) != 'K'){
-		printf("Unit yang dipakai Bukan King, Recruit Gagal.\n");
+		printf("Recruit failed, only King can do this command.\n");
 	}
 	else if (!EQ(CurrentUnitPos(*P),PlayerTower(*P))){
-		printf("King Tidak di Tower, Recruit Gagal\n");
+		printf("King is not in the Tower, King needs to be in the Tower to do this command.\n");
 	}
 	else {
-		printf("Pilih Unit yang Ingin di recruit\n");
+		printf("Which unit do you want to recruit?\n");
 		int N, UPrice;
 		InfoRecruit(&N);
 		if (N == 1){
-			UPrice = PriceSwordsman;
+			UPrice = PriceMage;
 		}
 		else if (N == 2){
 			UPrice = PriceArcher;
 		}
 		else{
-			UPrice = PriceMage;
+			UPrice = PriceSwordsman;
 		}
 
 		int i = EmptyCastle(*P,*M);
 		if (UPrice > PGold(*P)){
-			printf("Anda tidak memiliki Gold yang Cukup\n");
+			printf("Recruit failed, you do not have enough gold.\n");
 		}
 		else if (!i){
-			printf("Tidak Ada Castle yang kosong\n");
+			printf("Recruit failed, there is no empty castle.\n");
 		}
 		else{
-			printf("Recruit berhasil\n");
+			printf("Recruit success.\n");
+			PGold(*P) -= UPrice;
 			Unit U = MakeNewUnit(N,PlayNumber(*P),PlayerCastle(*P,i));
 			UnitIn(Elmt(*M,Absis(PlayerCastle(*P,i)),Ordinat(PlayerCastle(*P,i)))) = U;
 			AddUnit(&*L,&*Q,U);
