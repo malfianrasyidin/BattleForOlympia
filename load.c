@@ -100,7 +100,7 @@ void ReadUnit (Unit *U)
 	ADVKATA();
 	kataToInt(CKata, &Owner(*U));
 	ADVKATA();
-	kataToInt(CKata, &MaxMP(*U));
+	kataToInt(CKata, &MaxHP(*U));
 	ADVKATA();
 	kataToInt(CKata, &MaxMP(*U));
 	ADVKATA();
@@ -199,14 +199,17 @@ void ReadTurn(Queue *Q)
 	ADVKATA();
 }
 
-void Load(MatriksMap *MatMap, Player *Player1, Player *Player2, Queue *Turn, char filename[])
+void Load(MatriksMap *MatMap, Player *Player1, Player *Player2, Queue *Turn)
 /* Melakukan load file */
 /* I.S. file pitakar.txt berisi hasil save, semua parameter tidak terdefinisi*/
 /* F.S. mendefinisikan semua parameter */
 {	/* KAMUS LOKAL */
 	TANGGAL T;
 	JAM J;
+	char filename[256];
 	/* ALGORITMA */
+	printf("Enter your filename (<filename.txt>)\n");
+	scanf("%s", filename);
 	printf("Loading file '%s' ...\n", filename);
 	STARTKATA(filename);
 	ReadTime(&T, &J);
