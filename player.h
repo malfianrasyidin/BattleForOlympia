@@ -72,7 +72,7 @@ void PrintInfoPlayer (Player P);
 void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 //Membuat Unit 1 Menyerang Unit 2
 
-void Attack (MatriksMap *M, Player *P1, Player *P2);
+void Attack (MatriksMap *M, Player *P1, Player *P2, Stack *SUndo);
 /* Menyerang  */
 
 /*** QUEUE PLAYER ***/
@@ -125,5 +125,11 @@ infotypeQ CurrentTurn (Queue Q);
 /* I.S. Q terdefinisi dengan elemen head A (turn saat ini) dan elemen tail B
 		(turn berikutnya) */
 /* F.S. mengembalikan A (turn saat ini)*/
+
+void Heal (POINT P, int HealP, MatriksMap *M);
+/* Heal unit yang berada di posisi P */
+
+void HealUnitsAround (Unit U, MatriksMap *M);
+/* Heal unit yang berada di sekitar unit U */
 
 #endif
