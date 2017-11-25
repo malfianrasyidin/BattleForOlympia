@@ -66,7 +66,7 @@ void ReadTurn(Queue *Q);
 /* I.S. Q sembarang, CKata ada di kata pertama*/
 /* F.S. Queue Q terdefinisi */
 
-void Load(MatriksMap *MatMap, Player *Player1, Player *Player2, Queue *Turn, char filename[]);
+void Load(MatriksMap *MatMap, Player *Player1, Player *Player2, Queue *Turn);
 /* Melakukan load file */
 /* I.S. file pitakar.txt berisi hasil save, semua parameter tidak terdefinisi*/
 /* F.S. mendefinisikan semua parameter */

@@ -40,18 +40,29 @@ int main()	{
 	printf("3. EXIT\n");
 	//Input menu
 	printf("Choose Menu : ");	scanf("%d", &n);
-	if (n==1)	{
-		printf("\n== Create Map ==\n");	
-		printf("Row : "); scanf("%d", &NB);
-		printf("Column : "); scanf("%d", &NK);
-		//Generate Map
-		M = MatGen(NB,NK);
-		//Create Queue of Player
-		CreateTurn(&QP);
-		//Initialize player
-		InitPlayer(&P1, &P2, NB,NK);
-		CurrPlayer = &P1;
-		CurrEnemy = &P2;
+	if (n != 3) {
+		if (n==1)	{
+			printf("\n== Create Map ==\n");	
+			printf("Row : "); scanf("%d", &NB);
+			printf("Column : "); scanf("%d", &NK);
+			//Generate Map
+			M = MatGen(NB,NK);
+			//Create Queue of Player
+			CreateTurn(&QP);
+			//Initialize player
+			InitPlayer(&P1, &P2, NB,NK);
+			CurrPlayer = &P1;
+			CurrEnemy = &P2;
+		} else if (n==2)	{
+			Load(&M, &P1, &P2, &QP);
+			if (InfoHead(QP) == PlayNumber(P1)) {
+				CurrPlayer = &P1;
+				CurrEnemy = &P2;
+			} else {
+				CurrPlayer = &P2;
+				CurrEnemy = &P1;
+			}
+		} 
 		//Initialize command
 		command[0]='\0';
 		while (strcmp(command,"EXIT")!=0)	{
@@ -89,7 +100,7 @@ int main()	{
 				NextTurn (&M, &QP, P1, P2, CurrPlayer, CurrEnemy, &SUndo);
 			}
 			if (strcmp(command,"SAVE")==0)	{
-				//Save(MatMap, P1, P2, Turn, file);
+				Save(M, P1, P2, QP);
 			}
 			if (strcmp(command,"LOAD")==0)	{
 				MainInfo(M);
@@ -99,8 +110,6 @@ int main()	{
 			}
 			command[0]='\0';
 		}
-	} else if (n==2)	{
-
 	}
 	printf("\n======================================\n");
 	printf("=========== GOOD BYE COOPS ===========\n");
