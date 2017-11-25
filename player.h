@@ -126,4 +126,10 @@ infotypeQ CurrentTurn (Queue Q);
 		(turn berikutnya) */
 /* F.S. mengembalikan A (turn saat ini)*/
 
+void Heal (POINT P, int HealP, MatriksMap *M);
+/* Heal unit yang berada di posisi P */
+
+void HealUnitsAround (Unit U, MatriksMap *M);
+/* Heal unit yang berada di sekitar unit U */
+
 #endif

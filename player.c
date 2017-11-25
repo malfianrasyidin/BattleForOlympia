@@ -330,6 +330,16 @@ void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentP
 	infotypeQ X;
 	POINT stacktemp;
 	/* ALGORITMA */
+
+	addressList P = First(UnitList(*CurrentPlayer));
+	while (P != Nil) {
+		if (TipeB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) == 'V') {
+			OwnerB(BuildIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = PlayNumber(*CurrentPlayer);
+		}
+
+		P = Next(P);
+	}
+
 	/* PENERAPAN QUEUE PADA TURN */
 	DelQ(Q, &X);
 	AddQ(Q, X);
@@ -346,15 +356,20 @@ void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentP
 	PGold(*CurrentPlayer) += (PIncome(*CurrentPlayer) - PUpKeep(*CurrentPlayer));
 	
 	// Healing units in villages and restoring units' Movement Points
-	addressList P = First(UnitList(*CurrentPlayer));
+	P = First(UnitList(*CurrentPlayer));
 	while (P != Nil) {
+		// Heal every unit in village
 		if (Search(VillageList(*CurrentPlayer), Info(P)) != Nil) {
-			HP(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = (HP(getUnit(Info(P), *M)) + BaseHealVillage) % ((Tipe(getUnit(Info(P), *M)) == 'W')? BaseMaxHPMage : (Tipe(getUnit(Info(P), *M)) == 'A')? BaseMaxHPArcher : (Tipe(getUnit(Info(P), *M)) == 'S')? BaseMaxHPSwordsman : BaseMaxHPKing);
+			// HP(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = (HP(getUnit(Info(P), *M)) + BaseHealVillage) % ((Tipe(getUnit(Info(P), *M)) == 'W')? BaseMaxHPMage : (Tipe(getUnit(Info(P), *M)) == 'A')? BaseMaxHPArcher : (Tipe(getUnit(Info(P), *M)) == 'S')? BaseMaxHPSwordsman : BaseMaxHPKing);
+			Heal(Info(P), BaseHealVillage, M);
+		}
+		// Heal every unit adjacent to white mage
+		if (Tipe(getUnit(Info(P), *M)) == 'W') {
+			HealUnitsAround(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P)))), M);
 		}
 		MP(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = MaxMP(getUnit(Info(P), *M));
 		CanAttack(UnitIn(Elmt(*M, Absis(Info(P)), Ordinat(Info(P))))) = true;
-		// Heal every unit adjacent to white mage
-		// if Tipe(Res(Elmt(*M,)))
+		
 
 		P = Next(P);
 	}
@@ -369,4 +384,41 @@ void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentP
 infotypeQ CurrentTurn (Queue Q) {
 	/* Mengambilkan turn saat ini */
 	return InfoHead(Q);
+}
+
+void Heal (POINT P, int HealP, MatriksMap *M) {
+	HP(UnitIn(Elmt(*M, Absis(P), Ordinat(P)))) += HealP;
+	if (HP(getUnit(P, *M)) > MaxHP(getUnit(P, *M))) {
+		HP(UnitIn(Elmt(*M, Absis(P), Ordinat(P)))) = MaxHP(getUnit(P, *M));
+	}
+}
+
+void HealUnitsAround (Unit U, MatriksMap *M) {
+//Mengembalikan List enemy yg bisa di attack.	
+	boolean Top, Bottom, Right, Left;
+	POINT PTop,PBottom, PRight, PLeft;
+	List L;
+	CreateEmptyList(&L);
+	
+	PTop = NextY(Locate(U));
+	PRight = NextX(Locate(U));
+	PLeft = PlusDelta(Locate(U), -1, 0);
+	PBottom = PlusDelta(Locate(U), 0, -1);
+	
+	Top = IsUnitIn(PTop,*M) && !IsEnemy(U,getUnit(PTop,*M));
+	if (Top){
+		Heal(PTop, HealPoints(U), M);
+	}
+	Bottom = IsUnitIn(PBottom,*M) && !IsEnemy(U,getUnit(PBottom,*M));
+	if (Bottom) {
+		Heal(PBottom, HealPoints(U), M);
+	}
+	Right = IsUnitIn(PRight,*M) && !IsEnemy(U,getUnit(PRight,*M));
+	if (Right) {
+		Heal(PRight, HealPoints(U), M);
+	}
+	Left = IsUnitIn(PLeft,*M) && !IsEnemy(U,getUnit(PLeft,*M));
+	if (Left) {
+		Heal(PLeft, HealPoints(U), M);
+	}
 }
