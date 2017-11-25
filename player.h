@@ -117,7 +117,7 @@ void CreateTurn(Queue * Q);
 /* I.S. sembarang */
 /* F.S. Queue dengan alokasi 2 memory, dengan angka 1 yang merepresentasikan
 		P1 pada Head dan angka 2 yang merepresentasikan P2 pada Tail */
-void NextTurn (MatriksMap *M, Queue * Q, Player P1, Player P2, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S);
+void NextTurn (MatriksMap *M, Queue * Q, Player *P1, Player *P2, Player * CurrentPlayer, Player * CurrentEnemy, Stack *S);
 /* I.S. Q terdefinisi 2 elemen dengan A sebagai head dan B sebagai Tail */
 /* F.S. A dihapus (selesai turn) sehingga B menjadi head (turn saat ini)
 		dan A sebagai tail (turn berikutnya) */
