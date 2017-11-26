@@ -16,15 +16,18 @@ int main () {
 	MatriksMap M;
 	Queue Q;
 
+	printf("--This is a driver for Module Save--\n");
+	
+	printf("*Initialize map, player, and turn*\n");
+
 	M = MatGen(10,10);
 	InitPlayer(&P1, &P2, 10, 10);
 	CreateTurn(&Q);
 	char filename[256];
 
-	printf("--This is a driver for Module Save--\n");
-	printf("Please enter your desired filename: ");
-	scanf("%s", filename);
-	Save(M,P1,P2,Q, filename);
+	printf("*Initialization finished*\n");
+	printf("*Save file*\n");
+	Save(M,P1,P2,Q);
 
 	return 0;
 }

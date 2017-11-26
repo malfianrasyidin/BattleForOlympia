@@ -18,18 +18,13 @@ int main () {
 	Player P1, P2;
 	MatriksMap M;
 	Queue Q;
-	char filename[256];
 
 	printf("--This is a driver for Module Load--\n");
-	printf("Input a filename do you would like to load: ");
-	scanf("%s", filename);
+	printf("*Load file*\n");
+	Load(&M, &P1, &P2, &Q);
 
-	Load(&M, &P1, &P2, &Q, filename);
-
-	printf("--Load Check--\n");
-	printf("Please enter your desired filename to save: ");
-	scanf("%s", filename);
-	Save(M,P1,P2,Q, filename);
+	printf("*Save file*\n");
+	Save(M,P1,P2,Q);
 
 	return 0;
 }
