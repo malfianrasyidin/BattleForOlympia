@@ -46,7 +46,7 @@ int main() {
 	space= false;
 	AkhirTelegram= false;
 	
-	STARTKATA();
+	STARTKATA("pitakar.txt");
 	
 	if (CC == BLANK) {
 		IgnoreBlank();

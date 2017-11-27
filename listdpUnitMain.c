@@ -73,7 +73,6 @@ int main () {
 	scanf("%d %d", &a, &b);
 		Absis(X) = a;
 		Ordinat(X) = b;
-	printf("addressList search = %d\n", Search(L,X));
 	printf("DelP. Format masukan: <X> <Y>\n");
 	printf("Masukan akan diterima hingga pengguna memasukkan -999 -999\n");
 	scanf("%d %d", &a, &b);
