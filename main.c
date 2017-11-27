@@ -10,6 +10,36 @@
 #include "save.h"
 #include "load.h"
 
+void Help(){
+	printf("These are the available commands:\n");
+	printf("> MOVE\n");
+	printf("This command will let you move to your desired position.\n");
+	printf("> UNDO\n");
+	printf("In case you change your mind, you can undo your action. \nBut, be mind that you only can use it if you previously only have done these commands: > MOVE, > MAP, > INFO.\n");
+	printf("> CHANGE_UNIT\n");
+	printf("CHANGE_UNIT command lets you switch your current player.\n");
+	printf("> NEXT_UNIT\n");
+	printf("It eases you to change the unit which is available to move \n");
+	printf("> RECRUIT\n");
+	printf("You can use this command to recruit new players! Make sure you have enough gold to buy it.\n");
+	printf("> ATTACK\n");
+	printf("Protect your kingdom! Be the last kingdom left to win the game.\n");
+	printf("> MAP\n");
+	printf("Avoid getting lost! Make sure you know the maps of this island.\n");
+	printf("> INFO\n");
+	printf("Look up important informations that you might be considered.\n");
+	printf("> END_TURN\n");
+	printf("Give the next player chance to play.\n");
+	printf("> SAVE\n");
+	printf("Get some breaks, save your progress by using this command.\n");
+	printf("> LOAD\n");
+	printf("Get the previously saved game.\n");
+	printf("> HELP\n");
+	printf("In case you forget, use this to show all informations you need.\n");
+	printf("> EXIT\n");
+	printf("Leave the game.\n");
+}
+
 int main()	{
 	//Initialize
 	int n, NB, NK;
@@ -70,6 +100,7 @@ int main()	{
 			}
 		} 
 		//Initialize command
+		Help();
 		//Input Command
 		printf("Your Input : "); scanf("%s", command);
 		//Initialize Current Unit
@@ -133,7 +164,9 @@ int main()	{
 				CreateEmpty(&SUndo);
 				MainInfo(M);
 			}
-
+			if (strcmp(command,"HELP")==0) {
+				Help();
+			}
 			//Initialize Current Unit
 			CurrUnit = getUnit(CurrentUnitPos(*CurrPlayer),M);
 			//Make Queue of Unit of Player
