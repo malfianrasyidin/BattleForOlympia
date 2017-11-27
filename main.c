@@ -22,6 +22,7 @@ int main()	{
 	QueueU Q;
 	Queue QP;
 	Unit CurrUnit;
+	int next;
 	//Welcoming Party
 	printf("=====================================\n");
 	printf("=== WELCOME TO BATTLE FOR OLYMPIA ===\n");
@@ -45,6 +46,11 @@ int main()	{
 			printf("\n== Create Map ==\n");	
 			printf("Row : "); scanf("%d", &NB);
 			printf("Column : "); scanf("%d", &NK);
+			while (NB<8 || NK<8)	{
+				printf("Map minimum size is 8x8\n");
+				printf("Row : "); scanf("%d", &NB);
+				printf("Column : "); scanf("%d", &NK);
+			}
 			//Generate Map
 			M = MatGen(NB,NK);
 			//Create Queue of Player
@@ -71,22 +77,38 @@ int main()	{
 		//Make Queue of Unit of Player
 		Q = MakeUnitQueue(UnitList(*CurrPlayer));
 		printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
-		PrintInfoPlayer(*CurrPlayer);
+		PrintInfoPlayer(*CurrPlayer,M);
 		PrintInfoUnit(CurrUnit);
+		printf("\n");
+		int jml=0;
+		List LNEXT;
+		CreateEmptyList(&LNEXT);
+		UnitCanBeChanged2(&LNEXT, *CurrPlayer, M,*CurrEnemy,&jml);
+		if (Search(LNEXT, CurrentUnitPos(*CurrPlayer))!=Nil)	{
+			next=2; 
+		} else next=1;
 		while (strcmp(command,"EXIT")!=0)	{
 			if (strcmp(command,"MOVE")==0)	{
-				MainMove(&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer);
+				MainMove(&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer,*CurrEnemy);
 			}
 			if (strcmp(command,"UNDO")==0)	{
 				Undo (&SUndo, CurrentUnitPos(*CurrPlayer), &M, CurrPlayer);
 			}
 			if (strcmp(command,"CHANGE_UNIT")==0)	{
-				ChangeCurrUnit(&Q,M,CurrPlayer);
+				CreateEmpty(&SUndo);
+				ChangeUNIT(CurrPlayer, M);
+			}
+			if (strcmp(command,"NEXT_UNIT")==0)	{
+				CreateEmpty(&SUndo);
+				NextUNIT(CurrPlayer,M,*CurrEnemy,next,&jml);
+				next++;
 			}
 			if (strcmp(command,"RECRUIT")==0)	{
+				CreateEmpty(&SUndo);
 				RecruitUnit (CurrPlayer, &UnitList(*CurrPlayer), &Q, &M);
 			}
 			if (strcmp(command,"ATTACK")==0)	{
+				CreateEmpty(&SUndo);
 				Attack (&M, CurrPlayer, CurrEnemy, &SUndo);
 			}
 			if (strcmp(command,"MAP")==0)	{
@@ -96,12 +118,19 @@ int main()	{
 				MainInfo(M);
 			}
 			if (strcmp(command,"END_TURN")==0)	{
+				UnitCanBeChanged2(&LNEXT, *CurrPlayer, M,*CurrEnemy,&jml);
+				if (Search(LNEXT, CurrentUnitPos(*CurrPlayer))!=Nil)	{
+					next=2; 
+				} else next=1;
+				CreateEmpty(&SUndo);
 				NextTurn (&M, &QP, CurrPlayer, CurrEnemy, &SUndo);
 			}
 			if (strcmp(command,"SAVE")==0)	{
+				CreateEmpty(&SUndo);
 				Save(M, P1, P2, QP);
 			}
 			if (strcmp(command,"LOAD")==0)	{
+				CreateEmpty(&SUndo);
 				MainInfo(M);
 			}
 
@@ -110,9 +139,9 @@ int main()	{
 			//Make Queue of Unit of Player
 			Q = MakeUnitQueue(UnitList(*CurrPlayer));
 			printf("\nPlayer %d's Turn\n", PlayNumber(*CurrPlayer));
-			PrintInfoPlayer(*CurrPlayer);
+			PrintInfoPlayer(*CurrPlayer,M);
 			PrintInfoUnit(CurrUnit);
-
+			printf("\n");
 			command[0]='\0';
 			
 			//Input Command

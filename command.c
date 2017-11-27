@@ -13,7 +13,42 @@
 boolean PointInMap (POINT P, MatriksMap M){
 	return((Ordinat(P) <= NKolEff(M)) && (Absis(P) <= NBrsEff(M)));
 }
-boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
+
+boolean IsDiagonal(POINT PU, POINT P)	{
+	if ((Absis(P)-Absis(PU))==(Ordinat(P)-Ordinat(PU)))	return true;
+	if ((Absis(P)+Ordinat(P))==(Absis(PU)+Ordinat(PU)))	return true;
+	return false;
+}
+
+boolean IsStraight(POINT PU, POINT P)	{
+	if (Absis(PU)==Absis(P))	return true;
+	if (Ordinat(PU)==Ordinat(P))	return true;
+	return false;
+}
+
+boolean isNembus (POINT PU,POINT PA, Player Enemy)	{
+	addressList P = First(UnitList(Enemy));
+	while (P!=Nil)	{
+		if (((Ordinat(PU)<Ordinat(Info(P)))&&(Ordinat(PA)>Ordinat(Info(P)))&&(Absis(PA)==Absis(Info(P)))&&(Absis(PU)==Absis(Info(P))))||((Absis(PU)<Absis(Info(P)))&&(Absis(PA)>Absis(Info(P)))&&(Ordinat(PA)==Ordinat(Info(P)))&&(Ordinat(PU)==Ordinat(Info(P)))))	return true;
+		if (((Ordinat(PU)>Ordinat(Info(P)))&&(Ordinat(PA)<Ordinat(Info(P)))&&(Absis(PA)==Absis(Info(P)))&&(Absis(PU)==Absis(Info(P))))||((Absis(PU)>Absis(Info(P)))&&(Absis(PA)<Absis(Info(P)))&&(Ordinat(PA)==Ordinat(Info(P)))&&(Ordinat(PU)==Ordinat(Info(P)))))	return true;
+		P=Next(P);
+	}
+	P = First(UnitList(Enemy));
+	while (P!=Nil)	{
+		if (IsDiagonal(PU,Info(P)))	{
+			if ((Ordinat(PU)<Ordinat(Info(P)))&&(Absis(PU)<Absis(Info(P)))&&(Ordinat(PA)>Ordinat(Info(P)))&&(Absis(PA)>Absis(Info(P))))	return true;
+			if ((Ordinat(PU)>Ordinat(Info(P)))&&(Absis(PU)>Absis(Info(P)))&&(Ordinat(PA)<Ordinat(Info(P)))&&(Absis(PA)<Absis(Info(P))))	return true;
+			if ((Ordinat(PU)>Ordinat(Info(P)))&&(Absis(PU)<Absis(Info(P)))&&(Ordinat(PA)<Ordinat(Info(P)))&&(Absis(PA)>Absis(Info(P))))	return true;
+			if ((Ordinat(PU)<Ordinat(Info(P)))&&(Absis(PU)>Absis(Info(P)))&&(Ordinat(PA)>Ordinat(Info(P)))&&(Absis(PA)<Absis(Info(P))))	return true;
+		}
+		P=Next(P);
+	}
+	return false;
+}
+
+
+
+boolean IsMoveValid(POINT PU, POINT P, MatriksMap M, Player Enemy){
 //Mengembalikan True jika Move Unit U ke Point P Valid, False Jika Tidak.
 	if (MP(UnitIn(Elmt(M,Absis(PU),Ordinat(PU)))) == 0){
 		//printf("%d tes1 (%d,%d)\n", MP(UnitIn(Elmt(M,Absis(PU),Ordinat(PU)))), Absis(PU) ,Ordinat(PU));
@@ -27,6 +62,13 @@ boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 		//printf("tes3\n");
 		return(false);
 	}
+	else if (!(IsDiagonal(PU, P)||IsStraight(PU, P))) {
+		//printf("tes3\n");
+		return(false);
+	} 
+	else if (isNembus(PU,P,Enemy))	{
+		return false;
+	}
 	else{
 		if ((MP(getUnit(PU,M))-Distance(PU, P))>=0) return true;
 		else {
@@ -36,7 +78,7 @@ boolean IsMoveValid(POINT PU, POINT P, MatriksMap M){
 	}
 }
 
-void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt)
+void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt, Player Enemy)
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 {
 	*MOut=M;
@@ -47,7 +89,7 @@ void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt)
 		for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++)	{
 			Absis(P)=i;
 			Ordinat(P)=j;
-			if (IsMoveValid(PIn,P,M))	{
+			if (IsMoveValid(PIn,P,M,Enemy))	{
 				Tipe(UnitIn(Elmt(*MOut,i,j))) = '$';
 				*cnt+=1;
 			}
@@ -60,12 +102,12 @@ void History(Stack *S, POINT P){
 	Push(S, P);
 }
 
-void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
+void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play, Player Enemy)
 //MainMove
 {
 	int cnt=0;
 	MatriksMap MPrint;
-	PossibleMove(PIn,*M, &MPrint,&cnt);
+	PossibleMove(PIn,*M, &MPrint,&cnt, Enemy);
 	if (cnt>0)	{
 		PrintMap(MPrint);
 		int x,y;
@@ -73,7 +115,7 @@ void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 		scanf("%d %d", &x, &y);
 		POINT P = MakePOINT(x,y);
 		Unit U = getUnit(PIn,*M);
-		while (!IsMoveValid(PIn,P,*M))	{
+		while (!IsMoveValid(PIn,P,*M, Enemy))	{
 			printf("You can’t move there\n");
 			printf("Please enter cell’s coordinate x y: ");
 			scanf("%d %d", &x, &y);
@@ -83,6 +125,7 @@ void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play)
 		UnitIn(Elmt(*M,x,y))=U;
 		InsVFirst(&UnitList(*Play),P);
 		MP(UnitIn(Elmt(*M,x,y)))-=Distance(PIn,P);
+		if (TipeB(BuildIn(Elmt(*M,x,y)))=='V')	MP(UnitIn(Elmt(*M,x,y)))=0;
 		Locate(UnitIn(Elmt(*M,x,y)))=P;
 		UnitIn(Elmt(*M,Absis(PIn),Ordinat(PIn)))=NullUnit();
 		DelP(&UnitList(*Play),PIn);
@@ -133,7 +176,7 @@ QueueU MakeUnitQueue (List L){
 void NextUnit(QueueU *Q, POINT *U, MatriksMap M){
 //I.S Q terdefinisi
 //F.S Mengembalikan Unit yang akan digunakan setelahnya
-	RoundP(&*Q);
+	RoundP(Q);
 	*U = InfoQU(Head(*Q));
 }
 
@@ -148,15 +191,81 @@ POINT SearchUnit(QueueU Q, int x){
 	return(InfoQU(P));
 }
 
-void ChangeCurrUnit(QueueU *Q, MatriksMap M, Player *P){
-//I.S Q terdefinisi, U sembarang.
-//F.S Mengganti Current Unit yang diapakai player dengan unit selanjutnya pada Queue,  
-	POINT U;
-	NextUnit(&*Q, &U, M);
-	CurrentUnitPos(*P) = U;
-	printf("%s\n",UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(InfoTailQU(*Q)),Ordinat(InfoTailQU(*Q)))))) );
-	printf("%s\n",UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(InfoHeadQU(*Q)),Ordinat(InfoHeadQU(*Q)))))) );
-	printf("You have changed your Unit to %s\n", UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(U),Ordinat(U))))));
+// void ChangeCurrUnit(QueueU *Q, MatriksMap M, Player *P){
+// //I.S Q terdefinisi, U sembarang.
+// //F.S Mengganti Current Unit yang diapakai player dengan unit selanjutnya pada Queue,  
+// 	POINT U;
+// 	NextUnit(&*Q, &U, M);
+// 	CurrentUnitPos(*P) = U;
+// 	printf("%s\n",UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(InfoTailQU(*Q)),Ordinat(InfoTailQU(*Q)))))) );
+// 	printf("%s\n",UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(InfoHeadQU(*Q)),Ordinat(InfoHeadQU(*Q)))))) );
+// 	printf("You have changed your Unit to %s\n", UnitTranslation(Tipe(UnitIn(Elmt(M,Absis(U),Ordinat(U))))));
+// }
+
+List UnitCanBeChanged1(Player P)	{
+	List L;
+	CreateEmptyList(&L);
+	addressList P0=First(UnitList(P));
+	while (P0!=Nil)	{
+		InsVFirst(&L,Info(P0));
+		P0=Next(P0);
+	}
+	DelP(&L,CurrentUnitPos(P));
+	return(L);
+}
+
+void UnitCanBeChanged2(List *L, Player P, MatriksMap M, Player Enemy, int *jml)	{
+	addressList P0=First(UnitList(P));
+	Unit U;
+	MatriksMap Mdum;
+	int cnt;
+	*jml=0;
+	while (P0!=Nil)	{
+		cnt=0;
+		Mdum=M;
+		U=getUnit(Info(P0),M);
+		PossibleMove (Info(P0),M,&Mdum,&cnt,Enemy);
+		if ((cnt>0) || (CanAttack(U)==true))	{
+			InsVFirst(L,Info(P0));
+			*jml=*jml+1;
+		}
+		P0=Next(P0);
+	}
+}
+
+void NextUNIT(Player *P, MatriksMap M, Player Enemy, int pil, int *jml)	{
+	POINT PA;
+	List L;
+	CreateEmptyList(&L);
+	UnitCanBeChanged2(&L, *P,M,Enemy,jml);
+	if (jml>0) {
+		pil=pil%*jml;
+		if(	pil==0)	pil=*jml;
+	}
+	if (jml>0)	{
+		PA = ChooseAttack(L,pil);
+		CurrentUnitPos(*P)=PA;
+		printf("You are now selecting %s\n", UnitTranslation(Tipe(getUnit(PA,M))));
+	} else {
+		printf("You haven't unit that has Movement point or attack opportunities\n");
+	}
+}
+
+void ChangeUNIT(Player *P, MatriksMap M)	{
+	POINT P0,PA;
+	P0 = CurrentUnitPos(*P);
+	List L;
+	Unit U;
+	CreateEmptyList(&L);
+	L=UnitCanBeChanged1(*P);
+	DelP(&L, P0);
+	U=NullUnit();
+	PrintListUnit(L, M, U);
+	int pil;
+	printf("Please enter the no. of unit you want to select: "); scanf("%d", &pil);
+	PA = ChooseAttack(L,pil);
+	CurrentUnitPos(*P)=PA;
+	printf("You are now selecting %s\n", UnitTranslation(Tipe(getUnit(PA,M))));
 }
 
 void AddUnit (List *L, QueueU *Q, Unit U){
@@ -168,7 +277,18 @@ void AddUnit (List *L, QueueU *Q, Unit U){
 }
 
 void InfoRecruit(int *N){
-	printf("1. Mage (30G) \n2. Archer (17G) \n3. Swordsman (25)\n");
+	printf("1. Unit: Mage (30G) | ");
+	printf("Health: %d/%d | ", BaseMaxHPMage, BaseMaxHPMage);
+	printf("Movement Point: %d | ", BaseMaxMPMage);
+	printf("Can Attack: Yes\n");
+	printf("2. Unit: Archer (17G) | ");
+	printf("Health: %d/%d | ", BaseMaxHPArcher, BaseMaxHPArcher);
+	printf("Movement Point: %d | ", BaseMaxMPArcher);
+	printf("Can Attack: Yes\n");
+	printf("3. Unit: Swordsman (25G) | ");
+	printf("Health: %d/%d | ", BaseMaxHPSwordsman, BaseMaxHPSwordsman);
+	printf("Movement Point: %d | ", BaseMaxMPSwordsman);
+	printf("Can Attack: Yes\n");
 	printf("Your desired unit : ");
 	scanf("%d", &*N);
 }

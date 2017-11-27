@@ -109,6 +109,8 @@ char* UnitTranslation(char Tipe){
 		case 'C' : return "Castle"; break;
 		case 'T' : return "Tower"; break;
 		case 'V' : return "Village"; break;
+		case 'R' : return "Ranged"; break;
+		case 'M' : return "Melee"; break;
 	}
 	return 0;
 }
@@ -120,8 +122,10 @@ Unit: King(2,1) | Health 20/20 | Movement Point: 2 | Can Attack: Yes */
 	printf("Unit: %s (%d,%d) | " ,UnitTranslation(Tipe(U)), Absis(Locate(U)), Ordinat(Locate(U)));
 	printf("Health: %d/%d | ", HP(U), MaxHP(U));
 	printf("Movement Point: %d | ", MP(U));
-	if (CanAttack(U))	printf("Can Attack: Yes\n");
-	else	printf("Can Attack: No\n");
+	printf("Attack Type: %s | ", UnitTranslation(AttackType(U)));	
+	printf("Damage: %d | ", DamagePoints(U));
+	if (CanAttack(U))	printf("Can Attack: Yes");
+	else	printf("Can Attack: No");
 }
 
 boolean IsNullUnit(Unit U){

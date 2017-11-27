@@ -12,17 +12,24 @@ boolean PointInMap (POINT P, MatriksMap M);
  * F.S Return true jika P terdefinisi di M dan 
  * 	   false jika P tidak terdefinisi di M
  */
-boolean IsMoveValid(POINT PU, POINT P, MatriksMap M);
+
+boolean IsDiagonal(POINT PU, POINT P);
+
+boolean IsStraight(POINT PU, POINT P);
+
+boolean isNembus (POINT PU,POINT PA, Player Enemy);
+
+boolean IsMoveValid(POINT PU, POINT P, MatriksMap M, Player Enemy);
 /* I.S Unit bukan unit Null, M Terdefinisi
  * F.S True jika Movement ke P Valid, False jika tidak */
 
 void History(Stack *S, POINT P);
 //Prekondisi : Sudah di cek command yang dibolehkan untuk menyimpan stack history
 
-void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt);
+void PossibleMove (POINT PIn, MatriksMap M, MatriksMap *MOut, int *cnt, Player Enemy);
 //Mengembalikan matriks disertakan tempat2 yang mungkin di move
 
-void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play);
+void MainMove(Stack *S, POINT PIn, MatriksMap *M, Player *Play, Player Enemy);
 //MainMove
 
 void Undo (Stack *S, POINT P1, MatriksMap *M, Player *Play);
@@ -43,6 +50,15 @@ POINT SearchUnit(QueueU Q, int x);
 void ChangeCurrUnit(QueueU *Q, MatriksMap M, Player *P);
 //I.S Q terdefinisi, U sembarang.
 //F.S Mengganti Current Unit yang diapakai player dengan unit selanjutnya pada Queue,  
+
+List UnitCanBeChanged1(Player P);
+
+void UnitCanBeChanged2(List *L, Player P, MatriksMap M, Player Enemy,int* jml);
+
+void ChangeUNIT(Player *P, MatriksMap M);
+
+void NextUNIT(Player *P, MatriksMap M, Player Enemy, int pil, int* jml);
+
 
 void AddUnit (List *L, QueueU *Q, Unit U);
 //I.S L dan U terdefinisi

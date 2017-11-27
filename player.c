@@ -53,7 +53,7 @@ void InitPlayer (Player *P1, Player *P2, int NB, int NK)
 
 }
 
-void PrintInfoPlayer (Player P)
+void PrintInfoPlayer (Player P, MatriksMap M)
 /*
 F.S : Cash: 50G | Income: 2G | Upkeep: 1G
 ++++
@@ -65,8 +65,12 @@ F.S : Cash: 50G | Income: 2G | Upkeep: 1G
 	//List Unit
 	printf("== List Of Units ==\n");
 	Po = First(UnitList(P));
+	Unit UU;
 	while (Po!=Nil)	{
-		printf("%d. (%d,%d)\n", i, Absis(Info(Po)),Ordinat(Info(Po)));
+		UU = getUnit(Info(Po), M);
+		printf("%d. ", i);
+		PrintInfoUnit(UU);
+		printf("\n");
 		Po=Next(Po);
 		i++;
 	}
@@ -74,13 +78,15 @@ F.S : Cash: 50G | Income: 2G | Upkeep: 1G
 	i=1;
 	printf("== List Of Villages ==\n");
 	Po = First(VillageList(P));
+	Build BB;
 	while (Po!=Nil)	{
-		printf("%d. (%d,%d)\n", i, Absis(Info(Po)),Ordinat(Info(Po)));
+		BB = BuildIn(Elmt(M,Absis(Info(Po)),Ordinat(Info(Po))));
+		printf("%d. Tipe : %s (%d,%d) | Owner : %d\n", i, UnitTranslation(TipeB(BB)), Absis(Info(Po)),Ordinat(Info(Po)), OwnerB(BB));
 		Po=Next(Po);
 		i++;
 	}
 	//Current Unit Pos
-	printf("Current Unit Position : (%d,%d)\n", Absis(CurrentUnitPos(P)),Ordinat(CurrentUnitPos(P)));
+	printf("== Current Unit ==\n");
 }
 
 void WinningPlayer(Player P)
@@ -135,17 +141,17 @@ void PrintListUnit (List L, MatriksMap M, Unit U)
 	printf("== List Of Unit ==\n");
 	addressList p = First(L);
 	int i=1;
+	Unit UU;
 	while (p!=Nil) {
+		UU = (UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))));
 		printf("%d. ",i);
-		printf("Unit: %s (%d,%d) | ", UnitTranslation(Tipe(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))))), 
-			Absis(Info(p)), Ordinat(Info(p)));
-		printf("Health: %d/%d ", HP(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p))))), 
-			MaxHP(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p))))));
+		PrintInfoUnit(UU);
 		if (AttackType(U) == AttackType(UnitIn(Elmt(M, Absis(Info(p)), Ordinat(Info(p)))))) {
 			printf(" (Retaliates)");
 		}
 		printf("\n");
 		p = Next(p);
+		i++;
 	}
 }
 
@@ -158,6 +164,9 @@ POINT ChooseAttack (List L, int Choice)
 		if (i == Choice) {
 			return Info(P);
 		}
+		i++;
+		P = Next(P);
+
 	} while ((P != Nil) && (i <= Choice));
 	POINT Po = MakePOINT(0,0);
 	return Po;

@@ -67,7 +67,7 @@ typedef struct { infotypeQ * T;   /* tabel penyimpan elemen */
 void InitPlayer (Player *P1, Player *P2, int NB, int NK);
 //Membuat player pada kondisi awal
 
-void PrintInfoPlayer (Player P);
+void PrintInfoPlayer (Player P, MatriksMap M);
 
 void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 //Membuat Unit 1 Menyerang Unit 2
@@ -75,6 +75,15 @@ void AttackU (MatriksMap *M, Player *P1, Player *P2, POINT PU2);
 void Attack (MatriksMap *M, Player *P1, Player *P2, Stack *SUndo);
 /* Menyerang  */
 
+void WinningPlayer(Player P);
+// Menyerahkan kemenangan permainan kepada Player P
+
+List EnemyCanBeAttacked(Unit U, MatriksMap M);
+//Mengembalikan List enemy yg bisa di attack. 
+
+void PrintListUnit (List L, MatriksMap M, Unit U);  
+
+POINT ChooseAttack (List L, int Choice);
 /*** QUEUE PLAYER ***/
 
 /* ********* Prototype ********* */
