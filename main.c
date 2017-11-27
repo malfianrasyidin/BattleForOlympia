@@ -149,6 +149,7 @@ int main()	{
 				MainInfo(M);
 			}
 			if (strcmp(command,"END_TURN")==0)	{
+				CreateEmptyList(&LNEXT);
 				UnitCanBeChanged2(&LNEXT, *CurrPlayer, M,*CurrEnemy,&jml);
 				if (Search(LNEXT, CurrentUnitPos(*CurrPlayer))!=Nil)	{
 					next=2; 
